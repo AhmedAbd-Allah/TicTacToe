@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xo.demo;
+package TicTacToe.Client;
 
 import java.util.ArrayList;
 import java.util.Scanner;
