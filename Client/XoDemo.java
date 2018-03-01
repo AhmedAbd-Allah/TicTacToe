@@ -5,6 +5,8 @@
  */
 package TicTacToe.Client;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.stream.IntStream;
@@ -18,7 +20,6 @@ public class XoDemo {
     int[] dummyBoard = new int[9];
 
     int index = 0;
-    
     
     public void init(){
         for (int i = 0; i < board.length; i++) {
@@ -82,19 +83,25 @@ public class XoDemo {
         System.out.println("cell index = "+cellIndex);
 
         dummyBoard[cellIndex] = 1;
-        System.out.println("getWinner() = "+getWinner(dummyBoard)+"\n\n");
-        view(dummyBoard);
+        //System.out.println("getWinner() = "+getWinner(dummyBoard)+"\n\n");
+      //  view(dummyBoard);
         
-        int defenseIndex = defense();
-        if(defenseIndex !=-1){
-            return defenseIndex;
-        }
+//        int defenseIndex = defense();
+//        if(defenseIndex !=-1){
+//            return defenseIndex;
+//        }
 
         if( getWinner(dummyBoard) == 1 || gameEnded(dummyBoard) || cellIndex == 8 || index == 8) {
             System.out.println("cell index = "+cellIndex);
             initDummyBoard();
             return cellIndex;
         }
+//        if(getWinner(dummyBoard)!=1){
+//            int defenseIndex = defense();
+//            if(defenseIndex !=-1){
+//                return defenseIndex;
+//            }
+//        }
         
         return getResult(freeCells);
     }
@@ -207,10 +214,10 @@ public class XoDemo {
             return board[0];
         }
         if(board[1]== board[4] &&  board[4] == board[7]){
-            return board[0];
+            return board[1];
         }
         if(board[2]== board[5] &&  board[5] == board[8]){
-            return board[0];
+            return board[2];
         }
         
         //check diagonals
@@ -236,15 +243,25 @@ public class XoDemo {
        //intialize gamed
        init();
        while(getWinner(board) == -1  && !gameEnded(board)){
-           //get user move
+         
+        //get user move
         System.out.println("Enter Your cell");
         Scanner scan = new Scanner(System.in);
         int cellIndex = scan.nextInt();
+        
+        //if user try to access non-free cell
         while(board[cellIndex] !=-1){
             System.out.println("please, Enter free cell");
             cellIndex = scan.nextInt();
+           
         }
+     
+        //set user choice
         board[cellIndex] = 0;
+        
+         //if user wins
+        if(getWinner(board) == 0)break;
+        
         int perfectCell = getBestMove();
         board[perfectCell] = 1;
         initDummyBoard();
@@ -257,18 +274,18 @@ public class XoDemo {
 
        }
        
-       if(getWinner(board) ==1){
-           System.out.println("Computer Wins");
-       }else if(getWinner(board) ==0){
-            System.out.println("User Wins");
-       }
-       else {
-            System.out.println("Tie");
-       }
+        switch (getWinner(board)) {
+            case 1:
+                System.out.println("Computer Wins");
+                break;
+            case 0:
+                System.out.println("User Wins");
+                break;
+            default:
+                System.out.println("Tie");
+                break;
+        }
        
-       
-       //view();
-
     }
 
     /**
@@ -278,7 +295,6 @@ public class XoDemo {
         // Symbols : user 0 , computer 1
         XoDemo xo = new XoDemo();
         xo.play();
-       // xo.view();
     }
 
     
