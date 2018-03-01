@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+//import tictactoe.controller.*;
 
 /**
  *
@@ -28,7 +29,7 @@ public class TicTacToe extends Application {
         try{
                 Parent root = FXMLLoader.load(getClass().getResource("ChooseMode.fxml"));
                 Scene scene = new Scene(root,600,600);     
-                primaryStage.setTitle("Hello World!");
+                primaryStage.setTitle("Tic Tac Toe");
                 primaryStage.setScene(scene);
                 primaryStage.show();
             }

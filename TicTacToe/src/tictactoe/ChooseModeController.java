@@ -20,6 +20,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
@@ -29,14 +30,10 @@ import javafx.stage.Stage;
  */
 public class ChooseModeController implements Initializable {
     private Stage stage;
-    private BorderPane root;
+    private Pane root;
 
     @FXML
     private Button one_player;
-    @FXML
-    private Button new_game;
-    @FXML
-    private Button quit;
     @FXML
     private Button two_player;
     @FXML
@@ -51,19 +48,11 @@ public class ChooseModeController implements Initializable {
         // TODO
     }    
 
-    @FXML
-    private void setAction(ActionEvent event) throws IOException {
-        stage = (Stage) one_player.getScene().getWindow();
-        BorderPane root;
-        root = (BorderPane) FXMLLoader.load(getClass().getResource("OnePlayer.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-    }
 
     @FXML
     private void onePlayerHandler(ActionEvent event) throws IOException {
         stage = (Stage) one_player.getScene().getWindow();
-        root = (BorderPane) FXMLLoader.load(getClass().getResource("OnePlayer.fxml"));
+        root = (Pane) FXMLLoader.load(getClass().getResource("OnePlayer.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
@@ -71,7 +60,7 @@ public class ChooseModeController implements Initializable {
     @FXML
     private void twoPlayerHandler(ActionEvent event) throws IOException {
         stage = (Stage) one_player.getScene().getWindow();
-        root = (BorderPane) FXMLLoader.load(getClass().getResource("TwoPlayer.fxml"));
+        root = (Pane) FXMLLoader.load(getClass().getResource("TwoPlayer.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
@@ -79,5 +68,6 @@ public class ChooseModeController implements Initializable {
     @FXML
     private void onlinePlayerHandler(ActionEvent event) {
     }
+
     
 }

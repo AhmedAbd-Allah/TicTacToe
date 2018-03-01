@@ -1,48 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.GameBoardController">
-   <top>
-      <Pane prefHeight="60.0" prefWidth="600.0" style="-fx-background-color: #A9A9A9;" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="52.0" fitWidth="62.0" layoutX="37.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@img/x.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="52.0" fitWidth="57.0" layoutX="511.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@img/o.jpeg" />
-               </image>
-            </ImageView>
-            <Label fx:id="player1_name" layoutX="108.0" layoutY="8.0" prefHeight="42.0" prefWidth="76.0" text="Player1">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <Label fx:id="player2_name" layoutX="424.0" layoutY="15.0" prefHeight="31.0" prefWidth="77.0" text="Player2">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
-   </top>
-   <bottom>
-      <Pane prefHeight="1.0" prefWidth="600.0" style="-fx-background-color: #A9A9A9;" BorderPane.alignment="CENTER" />
-   </bottom>
-   <center>
-      <GridPane prefHeight="266.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.GameBoardController">
+   <children>
+      <ImageView fitHeight="630.0" fitWidth="600.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@img/bg1.jpg" />
+         </image>
+      </ImageView>
+      <GridPane fx:id="gridborder" gridLinesVisible="true" layoutX="93.0" layoutY="-6.0" onMouseClicked="#BorderMouseEvent" prefHeight="447.0" prefWidth="407.0" style="-fx-background-color: white; -fx-border-color: black;">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -54,16 +28,36 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="b3" mnemonicParsing="false" onAction="#b3Action" prefHeight="137.0" prefWidth="236.0" style="-fx-background-color: #F5FFFA; -fx-border-color: #48D1CC;" GridPane.rowIndex="1" />
-            <Button fx:id="b6" mnemonicParsing="false" onAction="#b6Action" prefHeight="147.0" prefWidth="257.0" style="-fx-background-color: #F5FFFA; -fx-border-color: #48D1CC;" GridPane.rowIndex="2" />
-            <Button fx:id="b1" mnemonicParsing="false" onAction="#b1Action" prefHeight="162.0" prefWidth="238.0" style="-fx-background-color: #F5FFFA; -fx-border-color: #48D1CC;" GridPane.columnIndex="1" />
-            <Button fx:id="b2" mnemonicParsing="false" onAction="#b2Action" prefHeight="122.0" prefWidth="200.0" style="-fx-background-color: #F5FFFA; -fx-border-color: #48D1CC;" GridPane.columnIndex="2" />
-            <Button fx:id="b4" mnemonicParsing="false" onAction="#b4Action" prefHeight="150.0" prefWidth="261.0" style="-fx-background-color: #F5FFFA; -fx-border-color: #48D1CC;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Button fx:id="b7" mnemonicParsing="false" onAction="#b7Action" prefHeight="170.0" prefWidth="251.0" style="-fx-background-color: #F5FFFA; -fx-border-color: #48D1CC;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Button fx:id="b5" mnemonicParsing="false" onAction="#b5Action" prefHeight="120.0" prefWidth="250.0" style="-fx-background-color: #F5FFFA; -fx-border-color: #48D1CC;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Button fx:id="b8" mnemonicParsing="false" onAction="#b8Action" prefHeight="141.0" prefWidth="301.0" style="-fx-background-color: #F5FFFA; -fx-border-color: #48D1CC; -fx-padding: 30;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <Button fx:id="b0" mnemonicParsing="false" onAction="#b0Action" prefHeight="133.0" prefWidth="229.0" style="-fx-background-color: #F5FFFA; -fx-border-color: #48D1CC;" />
+            <ImageView fitHeight="142.0" fitWidth="136.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="150.0" fitWidth="136.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
+            <ImageView fitHeight="150.0" fitWidth="136.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2" />
+            <ImageView fitHeight="138.0" fitWidth="138.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
+            <ImageView fitHeight="150.0" fitWidth="135.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
+            <ImageView fitHeight="150.0" fitWidth="135.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ImageView fitHeight="150.0" fitWidth="135.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ImageView fitHeight="150.0" fitWidth="134.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <ImageView fitHeight="150.0" fitWidth="135.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
          </children>
       </GridPane>
-   </center>
-</BorderPane>
+      <ImageView fitHeight="75.0" fitWidth="94.0" layoutX="26.0" layoutY="500.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@img/o.jpeg" />
+         </image>
+      </ImageView>
+      <Label layoutX="124.0" layoutY="530.0" style="-fx-background-color: black;" text="player1" textFill="#ae2b2b">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Label layoutX="413.0" layoutY="532.0" style="-fx-background-color: black;" text="player2" textFill="#ae2525">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="48.0" fitWidth="65.0" layoutX="513.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@img/x.png" />
+         </image>
+      </ImageView>
+   </children>
+</Pane>

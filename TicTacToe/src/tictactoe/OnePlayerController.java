@@ -15,11 +15,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-//import static tictactoe.TwoPlayerController.two_player;
+import static tictactoe.TwoPlayerController.two_player_mode;
 //
 
 /**
@@ -29,10 +28,9 @@ import javafx.stage.Stage;
  */
 public class OnePlayerController implements Initializable {
     static String player="";
-    //static boolean one_player=false;
+    static boolean one_player_mode=false;
     private Stage stage;
-    private BorderPane root;
-
+    private Pane root;
     @FXML
     private TextField player_name;
     @FXML
@@ -45,27 +43,27 @@ public class OnePlayerController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
-
     @FXML
-    private void StartHandler(ActionEvent event) throws IOException {
-        player=player_name.getText();
-        if(player.equals(""))
-        {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Information Dialog");
-            alert.setHeaderText(null);
-            alert.setContentText("Plaese Fill Your Name :)");
-            alert.showAndWait(); 
-        } 
-        else 
-        {
+    private void StartHandler(ActionEvent event) throws IOException{
+//        player=player_name.getText();
+//        if(player.equals(""))
+//        {
+//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//            alert.setTitle("Information Dialog");
+//            alert.setHeaderText(null);
+//            alert.setContentText("Plaese Fill Your Name :)");
+//            alert.showAndWait(); 
+//        } 
+//        else 
+//        {
             stage = (Stage) start_button.getScene().getWindow();
-            root = (BorderPane) FXMLLoader.load(getClass().getResource("GameBoard.fxml"));
+            root = (Pane) FXMLLoader.load(getClass().getResource("GameBoard.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
-//            one_player=true;
-//            two_player=false;
-        }
+            one_player_mode=true;
+            two_player_mode=false;
+            //online_mood=false;
+        //}
     }
     
 }
