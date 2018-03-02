@@ -5,7 +5,7 @@
  */
 package server;
 
-import Models.*;
+import models.Player;
 import java.util.HashMap;
 
 /**
@@ -55,7 +55,7 @@ public class Request {
         return null;
     }
     
-    public void setplayer(String name, Player player)
+    public void setPlayer(String name, Player player)
     {
         players.put(name, player);
     }

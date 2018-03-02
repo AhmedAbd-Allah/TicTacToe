@@ -5,7 +5,7 @@
  */
 package server;
 
-import Models.*;
+import models.Player;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -25,9 +25,11 @@ class ClientThread implements Runnable
 {
     private ObjectInputStream inpObj;
     private ObjectOutputStream outObj;
-    private DataInputStream dis;
+    private Player player1;
+    private Player player2;
     private Request req;
     private Player player;
+    private Game game;
     public static HashMap<String,ClientThread> onlinePlayers = new HashMap<String,ClientThread>();
     public Thread th;
     
@@ -138,15 +140,9 @@ class ClientThread implements Runnable
         {
             Request removedPlayer = new Request("removePlayer");
             removedPlayer.setData(userName,userName);
-            this.sendToAll(removedPlayer);
             onlinePlayers.remove(userName);
             syncPlayersList();
         }
-        else
-        {
-            //do nothing
-        }
-
     }
     
     private void signUp(Request req)
@@ -160,9 +156,10 @@ class ClientThread implements Runnable
         if(check)
         {
             onlinePlayers.put(userName, this);
-            Request AddedPlayer = new Request("addPlayer");
-            AddedPlayer.setplayer(userName, player);
-            this.sendToAll(AddedPlayer);
+            syncPlayersList();
+//            Request AddedPlayer = new Request("addPlayer");
+//            AddedPlayer.setplayer(userName, player);
+//            this.sendToAll(AddedPlayer);
 
         }
     }
@@ -189,44 +186,49 @@ class ClientThread implements Runnable
         
         if (reply.equals("accept"))
         {
-            //new game
-            //player1, player2
-            //status = playing
-            //new game
-            
+            player1 = onlinePlayers.get(dest).player;
+            player2 = this.player;
+            game = new Game(player1,player2);
+            onlinePlayers.get(dest).game = game;
         }
         return replyReq;
     }
     
-    private void gameTurn(Request req)
+    private void gameTurn(Request turn)
     {
-//        String source = req.getData("userName");
-//        String destination = req.getData("destination");
-//        String choice= req.getData("choice");
-//        String place= req.getData("place");
-        
-        //game logic
-        
-        //send data from source to destination
-        
+        String dest = turn.getData("destination");
+        String src = this.player.getUsername();
+        ClientThread player2th = onlinePlayers.get(dest);
+        int xpos = Integer.parseInt(turn.getData("xpos"));
+        int ypos = Integer.parseInt(turn.getData("ypos"));
+        Player result = game.play(xpos, ypos);
+        Request reply = new Request("gameStatus");
+        if(result == game.draw)
+        {
+            reply.setData("status", "gameOn");
+        }
+        else if(result == player1)
+        {
+            reply.setData("status", "End");
+            reply.setPlayer("winner", player1 );
+            reply.setPlayer("loser", player2);
+            sendRequest(reply, this);
+            sendRequest(reply, player2th);
+        }
+        else if(result == game.player2)
+        {
+            reply.setData("status", "End");
+            reply.setPlayer("winner", player2 );
+            reply.setPlayer("loser", player1);
+            sendRequest(reply, this);
+            sendRequest(reply, player2th);
+        }
+        else
+        {
+            reply.setData("status", "invalidMove");
+        }
         
     }
-    
-//    private boolean requestOpponent(Request in)
-//    {
-//        String sender = player1.getUsername();
-//        String reciever = req.getData("destination");
-//        if(onlinePlayers.get(player2Name).equals(player2Name))
-//        {
-//            //send request to destination
-//            Request out = new Request("request_Opponent");
-//            out.setData("sender", sender);
-//            sendRequest(out);
-//
-//        }
-//        
-//        
-//    }
     
     public static void sendRequest(Request message,ClientThread th){
         try
@@ -258,7 +260,7 @@ class ClientThread implements Runnable
         Request playersList = new Request("playersList");
         onlinePlayers.entrySet().forEach((set) -> {
             Player p = set.getValue().player;
-            playersList.setplayer(p.getUsername(), p);
+            playersList.setPlayer(p.getUsername(), p);
         });
         
         sendToAll(playersList);

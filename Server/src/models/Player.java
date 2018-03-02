@@ -8,7 +8,7 @@
  *
  * @author MHassan
  */
-package Models;
+package models;
 
 public class Player {
     
