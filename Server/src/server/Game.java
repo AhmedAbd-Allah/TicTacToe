@@ -15,6 +15,7 @@ import models.Player;
 public class Game {
     public Player player1;
     public Player player2;
+    public Player gameOn;
     public Player draw;
     private static int move = 0;
     private int [][] gridboard= new int [3][3];
@@ -36,8 +37,13 @@ public class Game {
             if(move < 8)
             {
                 move++;
+                return p;
             }
-            else return p;
+            else
+            {
+                return draw;
+            }
+            
         }
         return null;
         
@@ -72,7 +78,7 @@ public class Game {
             return player2;
         }
         
-        return draw;
+        return gameOn;
     }
 
 }

@@ -5,7 +5,7 @@
  */
 package server;
 
-import models.Player;
+//import models.Player;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -15,7 +15,10 @@ import java.net.Socket;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
+import models.Player;
 import static server.Server.db;
+
+
 
 /**
  *
@@ -25,6 +28,7 @@ class ClientThread implements Runnable
 {
     private ObjectInputStream inpObj;
     private ObjectOutputStream outObj;
+//    private DataInputStream input;
     private Player player1;
     private Player player2;
     private Request req;
@@ -35,9 +39,10 @@ class ClientThread implements Runnable
     
     public ClientThread(Socket s)
     {
-        System.out.print("before starting 1");
+        System.out.println("before starting 1");
         try
         {
+//            input = new DataInputStream(s.getInputStream());
             inpObj = new ObjectInputStream(s.getInputStream());
             outObj = new ObjectOutputStream(s.getOutputStream());
             th = new Thread(this);
@@ -56,10 +61,11 @@ class ClientThread implements Runnable
     {
         try
         {
-            System.out.print("running thread");
+            System.out.println("running thread");
             while(true)
             {
-                req =(Request)inpObj.readObject();
+                Request req =(Request) inpObj.readObject();
+                System.out.println(req.getRequestType());
                 requestRedirection(req);
             }
         }
@@ -75,6 +81,7 @@ class ClientThread implements Runnable
         
         if("Login".equals(reqType))
         {
+            System.out.println("login");
             login(req);
         }
         else if(req.getRequestType().equals("SignUp"))
@@ -203,15 +210,18 @@ class ClientThread implements Runnable
         int ypos = Integer.parseInt(turn.getData("ypos"));
         Player result = game.play(xpos, ypos);
         Request reply = new Request("gameStatus");
-        if(result == game.draw)
+        if(result == game.gameOn)
         {
             reply.setData("status", "gameOn");
+            sendRequest(reply, this);
+            sendRequest(reply, player2th);
         }
         else if(result == player1)
         {
             reply.setData("status", "End");
-            reply.setPlayer("winner", player1 );
+            reply.setPlayer("winner", player1);
             reply.setPlayer("loser", player2);
+            game = null;
             sendRequest(reply, this);
             sendRequest(reply, player2th);
         }
@@ -220,6 +230,15 @@ class ClientThread implements Runnable
             reply.setData("status", "End");
             reply.setPlayer("winner", player2 );
             reply.setPlayer("loser", player1);
+            game = null;
+            sendRequest(reply, this);
+            sendRequest(reply, player2th);
+        }
+        else if(result == game.draw)
+        {
+            reply.setData("status", "End");
+            reply.setData("draw", "draw");
+            game = null;
             sendRequest(reply, this);
             sendRequest(reply, player2th);
         }
@@ -235,7 +254,7 @@ class ClientThread implements Runnable
         {
             th.outObj.writeObject(message);
         }
-        catch(IOException ioex){
+        catch(Exception ioex){
             //catch exception
         }
     }
@@ -260,7 +279,7 @@ class ClientThread implements Runnable
         Request playersList = new Request("playersList");
         onlinePlayers.entrySet().forEach((set) -> {
             Player p = set.getValue().player;
-            playersList.setPlayer(p.getUsername(), p);
+//            playersList.setPlayer(p.getUsername(), p);
         });
         
         sendToAll(playersList);
