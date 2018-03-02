@@ -5,6 +5,7 @@
  */
 package server;
 
+import Models.*;
 import java.util.HashMap;
 
 /**
@@ -14,6 +15,7 @@ import java.util.HashMap;
 public class Request {
     private String requestType;
     private HashMap<String, String>data;
+    private HashMap<String, Player>players;
 
     public Request(String reqType) {
         this.requestType = reqType;
@@ -42,5 +44,19 @@ public class Request {
     public void setData(String key, String value)
     {
         data.put(key, value);
+    }
+    
+    public Player getPlayer(String key)
+    {
+        if(players.containsKey(key))
+        {
+            return players.get(key);
+        }
+        return null;
+    }
+    
+    public void setplayer(String name, Player player)
+    {
+        players.put(name, player);
     }
 }

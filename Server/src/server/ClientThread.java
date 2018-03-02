@@ -114,6 +114,7 @@ class ClientThread implements Runnable
                     onlinePlayers.put(userName, this);
                     Request loginSuccess = new Request("Successful login");
                     sendRequest(loginSuccess, this);
+                    syncPlayersList();
                     
                };
                
@@ -135,7 +136,11 @@ class ClientThread implements Runnable
         String userName = req.getData("userName");
         if(onlinePlayers.containsKey(userName))
         {
+            Request removedPlayer = new Request("removePlayer");
+            removedPlayer.setData(userName,userName);
+            this.sendToAll(removedPlayer);
             onlinePlayers.remove(userName);
+            syncPlayersList();
         }
         else
         {
@@ -155,14 +160,11 @@ class ClientThread implements Runnable
         if(check)
         {
             onlinePlayers.put(userName, this);
-            Request allPlayers = new Request("playersList");
-            allPlayers.setData("playerslist", onlinePlayers.getValue());
-            sendToAll();
+            Request AddedPlayer = new Request("addPlayer");
+            AddedPlayer.setplayer(userName, player);
+            this.sendToAll(AddedPlayer);
 
         }
-//        Database.addPlayer(player1);
-        //change scene
-        
     }
     
     private Request requestGame(Request recieved)
@@ -226,7 +228,7 @@ class ClientThread implements Runnable
 //        
 //    }
     
-    public void sendRequest(Request message,ClientThread th){
+    public static void sendRequest(Request message,ClientThread th){
         try
         {
             th.outObj.writeObject(message);
@@ -236,7 +238,7 @@ class ClientThread implements Runnable
         }
     }
     
-    public void sendToAll(Request broadcast)
+    public static void sendToAll(Request broadcast)
     {
         try
         {
@@ -251,6 +253,15 @@ class ClientThread implements Runnable
         }
     }
 
-            
+    public static void syncPlayersList()
+    {
+        Request playersList = new Request("playersList");
+        onlinePlayers.entrySet().forEach((set) -> {
+            Player p = set.getValue().player;
+            playersList.setplayer(p.getUsername(), p);
+        });
+        
+        sendToAll(playersList);
+    }
 }
 
