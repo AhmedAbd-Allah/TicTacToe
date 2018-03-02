@@ -6,7 +6,7 @@
 package client;
 
 import java.io.Serializable;
-import models.Player;
+import Models.Player;
 import java.util.HashMap;
 
 /**

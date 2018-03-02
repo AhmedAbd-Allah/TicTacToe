@@ -5,7 +5,6 @@
 // */
 //package server;
 //
-//import java.io.Serializable;
 //import models.Player;
 //import java.util.HashMap;
 //
@@ -13,7 +12,7 @@
 // *
 // * @author MHassan
 // */
-//public class Request implements Serializable {
+//public class Request {
 //    private String requestType;
 //    private HashMap<String, String>data;
 //    private HashMap<String, Player>players;
@@ -56,7 +55,7 @@
 //        return null;
 //    }
 //    
-//    public void setPlayer(String name, Player player)
+//    public void setplayer(String name, Player player)
 //    {
 //        players.put(name, player);
 //    }

@@ -1,11 +1,9 @@
 
-//import clientdemo.Request;
-import client.Request;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
-
+import client.Request;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
