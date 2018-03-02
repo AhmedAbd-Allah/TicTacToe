@@ -5,11 +5,18 @@
  */
 package tictactoe;
 
+import java.util.List;
 import java.util.stream.IntStream;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+//import static tictactoe.GameBoardController.grid;
 import static tictactoe.GameBoardController.imageo;
 import static tictactoe.GameBoardController.imagex;
+import static tictactoe.GameBoardController.source;
+import static tictactoe.GameBoardController.*;
 
 /**
  *
@@ -19,20 +26,20 @@ public class OnePlayer {
 
     int[] board = new int[9];    
     int[] dummyBoard = new int[9];
-
     int index = 0;
-    public void init(){
+        public OnePlayer()
+    {
         for (int i = 0; i < board.length; i++) {
              board[i] = dummyBoard[i] = -1;             
-        }    
+        } 
+
     }
-    
     public void initDummyBoard(){
-        for (int i = 0; i < board.length; i++) {           
+            for (int i = 0; i < board.length; i++) {           
              dummyBoard[i] = board[i];             
-        }    
+        }
     }
-    
+
     public void view(int[] board){
         for (int i = 0; i < board.length; i++) {
             System.out.print(board[i]+"  ");
@@ -222,13 +229,55 @@ public class OnePlayer {
         return (IntStream.of(board).allMatch(x -> x != -1));  
     }
     
-    public void play(int cellIndex){
-        board[cellIndex] = 0;
-        setImage(board[cellIndex],cellIndex);
-        int perfectCell = getBestMove();
-        board[perfectCell] = 1;
-        setImage(board[perfectCell],perfectCell);
-        initDummyBoard();
+    public void play(int row , int col){
+        int cellIndex=-1;
+        if(row==0 && col==0)
+        {
+            cellIndex=0;
+        }   
+        else if(row==0 && col==1)
+        {
+            cellIndex=1;
+        }
+        else if(row==0 && col==2)
+        {
+            cellIndex=2;
+        }
+        else if(row==1 && col==0)
+        {
+            cellIndex=3;
+        }
+        else if(row==1 && col==1)
+        {
+            cellIndex=4;
+        }
+        else if(row==1 && col==2)
+        {
+            cellIndex=5;
+        }
+        else if(row==2 && col==0)
+        {
+            cellIndex=6;
+        }
+        else if(row==2 && col==1)
+        {
+            cellIndex=7;
+        }
+        else if(row==2 && col==2)
+        {
+            cellIndex=8;
+        }
+        int perfectCell=-1;
+        if(board[cellIndex]==-1)
+        {
+            board[cellIndex] = 0;
+            seti(board[cellIndex],cellIndex);
+            perfectCell = getBestMove();
+            board[perfectCell] = 1;
+            seti(board[perfectCell],perfectCell);
+            initDummyBoard();
+        }
+        
         
         
         System.out.println("My Cell"+perfectCell);
@@ -257,60 +306,89 @@ public class OnePlayer {
             System.out.println("Tie");
        }
     }
-    public void setImage(int player,int cell)
+    public void seti(int player,int cell)
     {
-        ImageView v;
+        ImageView img = (ImageView)source;
+        ImageView i ;        
+        int row=-1;
+        int col =-1;
         if(player==0)
         {
-             v = new ImageView(imageo);
-                     v.setFitHeight(67);
-        v.setFitWidth(69);
+            img.setImage(imageo);
         }
-        else
+        else if(player==1)
         {
-             v = new ImageView(imagex);
-                     v.setFitHeight(67);
-        v.setFitWidth(69);
-         }
+                    
+            switch(cell)
+            {
+                case 0 :
+                    row=0;
+                    col=0;
+                    break;
+                case 1 :
+                    row=0;
+                    col=1;
+                    break;
+                case 2 :
+                    row=0;
+                    col=2;
+                    break;
+                case 3 :
+                    row=1;
+                    col=0;
+                    break;
+                case 4:
+                    row=1;
+                    col=1;
+                    break;
+                case 5 :
+                    row=1;
+                    col=2;
+                    break;
+                case 6 :
+                    row=2;
+                    col=0;                
+                    break;
+                case 7 :
+                    row=2;
+                    col=1;
+                    break;
+                case 8 :
+                    row=2;
+                    col=2;
+                    break;
+            }
+        Node s = getNodeByRowColumnIndex(row, col, grid);
+        i=(ImageView)s;
+        i.setImage(imagex);
+        }
         
-        switch(cell)
-        {
-            case 0 :
-                b0.setGraphic(v);
-                b0.setDisable(true);
-                break;
-            case 1 :
-                b1.setGraphic(v);
-                b1.setDisable(true);
-                break;
-            case 2 :
-                b2.setGraphic(v);
-                b2.setDisable(true);
-                break;
-            case 3 :
-                b3.setGraphic(v);
-                b3.setDisable(true);
-                break;
-            case 4 :
-                b4.setGraphic(v);
-                b4.setDisable(true);
-                break;
-            case 5 :
-                b5.setGraphic(v);
-                b5.setDisable(true);
-                break;
-            case 6 :
-                b6.setGraphic(v);
-                b6.setDisable(true);
-                break;
-            case 7 :
-                b7.setGraphic(v);
-                b7.setDisable(true);
-                break;
-            case 8 :
-                b8.setGraphic(v);
-                b8.setDisable(true);
-                break;
+
+    }
+private Node getNodeByRowColumnIndex(final int row,  final int column, GridPane gridPane) {
+        Node result =null;
+        ObservableList<Node> childrens = gridPane.getChildren();
+        
+        for (Node node : childrens) {
+            
+            Integer colIndex = GridPane.getColumnIndex(node);
+            Integer rowIndex = GridPane.getRowIndex(node);
+
+            if(rowIndex==null)
+            {
+                rowIndex=0;
+            }
+            if(colIndex==null)
+            {
+                colIndex=0;
+            }
+                if (rowIndex == row && colIndex == column) {
+                    result = node;
+                    break;
+                }
         }
+
+        return result;
     }
 }
+

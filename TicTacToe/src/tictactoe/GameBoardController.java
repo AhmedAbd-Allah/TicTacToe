@@ -15,6 +15,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +30,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import tictactoe.OnePlayer;
+import tictactoe.TwoPlayer;
 //import tictactoe.TwoPlayer;
 import static tictactoe.OnePlayerController.one_player_mode;
 ////import static tictactoe.OnePlayerController.one_player;
@@ -54,6 +56,8 @@ public class GameBoardController implements Initializable {
     TwoPlayer p2;
     @FXML
     private GridPane gridborder;
+    static GridPane grid;
+    //GridPane s;
     /**
      * Initializes the controller class.
      */
@@ -74,7 +78,13 @@ public class GameBoardController implements Initializable {
     
     @FXML
     private void BorderMouseEvent(MouseEvent event) {
+        grid=gridborder;
         source = (Node)event.getTarget();
+        System.out.println(source);
+        //ImageView i = (ImageView)source;
+                //System.out.println(i);
+                
+
         Integer colIndex = GridPane.getColumnIndex(source);
         Integer rowIndex = GridPane.getRowIndex(source);
         if(rowIndex==null)
@@ -88,12 +98,14 @@ public class GameBoardController implements Initializable {
         System.out.println("col Index:"+colIndex);
         System.out.println("row Index:"+rowIndex);
         if(one_player_mode){
-            // p1.play(rowIndex,colIndex);
+             p1.play(rowIndex,colIndex);
         }
         else if(two_player_mode)
         {
             p2.play(rowIndex,colIndex);
 
         }
+                //getNodeByRowColumnIndex(1, 1, gridborder);
+
     }
-}
+        }

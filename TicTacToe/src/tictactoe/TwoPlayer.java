@@ -5,6 +5,7 @@
  */
 package tictactoe;
 
+import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
 import static tictactoe.GameBoardController.*;
 //import static tictactoe.controller.GameBoardController;
@@ -50,7 +51,12 @@ public class TwoPlayer {
           ||(gridboard[0][2]==0&&gridboard[1][1]==0&&gridboard[2][0]==0 )   
             )
         {
-            System.out.println("player o win");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("Player o Win :)");
+            alert.showAndWait(); 
+            System.exit(1);
         }
         if((gridboard[0][0]==1&&gridboard[0][1]==1&&gridboard[0][2]==1)
           ||(gridboard[1][0]==1&&gridboard[1][1]==1&&gridboard[1][2]==1 )   
@@ -62,7 +68,12 @@ public class TwoPlayer {
           ||(gridboard[0][2]==1&&gridboard[1][1]==1&&gridboard[2][0]==1 )   
             )
         {
-            System.out.println("player x win");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("Player x Win :)");
+            alert.showAndWait(); 
+            System.exit(1);
         }
         
     }
