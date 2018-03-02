@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tictactoe;
+package controller;
 
 import static java.awt.SystemColor.window;
 import java.io.IOException;
@@ -19,6 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -52,7 +53,7 @@ public class ChooseModeController implements Initializable {
     @FXML
     private void onePlayerHandler(ActionEvent event) throws IOException {
         stage = (Stage) one_player.getScene().getWindow();
-        root = (Pane) FXMLLoader.load(getClass().getResource("OnePlayer.fxml"));
+        root = (Pane) FXMLLoader.load(getClass().getResource("/views/OnePlayer.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
@@ -60,14 +61,20 @@ public class ChooseModeController implements Initializable {
     @FXML
     private void twoPlayerHandler(ActionEvent event) throws IOException {
         stage = (Stage) one_player.getScene().getWindow();
-        root = (Pane) FXMLLoader.load(getClass().getResource("TwoPlayer.fxml"));
+        root = (Pane) FXMLLoader.load(getClass().getResource("/views/TwoPlayer.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
 
     @FXML
-    private void onlinePlayerHandler(ActionEvent event) {
+    private void onlinePlayerHandler(ActionEvent event) throws IOException {
+        stage = (Stage) one_player.getScene().getWindow();
+        root = (Pane) FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
     }
+
+
 
     
 }

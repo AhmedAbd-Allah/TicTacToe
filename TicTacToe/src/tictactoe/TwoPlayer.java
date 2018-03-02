@@ -7,7 +7,7 @@ package tictactoe;
 
 import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
-import static tictactoe.GameBoardController.*;
+import static controller.GameBoardController.*;
 //import static tictactoe.controller.GameBoardController;
 /**
  *

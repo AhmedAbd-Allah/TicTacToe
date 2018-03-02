@@ -13,10 +13,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 //import static tictactoe.GameBoardController.grid;
-import static tictactoe.GameBoardController.imageo;
-import static tictactoe.GameBoardController.imagex;
-import static tictactoe.GameBoardController.source;
-import static tictactoe.GameBoardController.*;
+import static controller.GameBoardController.imageo;
+import static controller.GameBoardController.imagex;
+import static controller.GameBoardController.source;
+import static controller.GameBoardController.*;
 
 /**
  *

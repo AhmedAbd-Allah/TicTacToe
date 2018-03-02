@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tictactoe;
+package controller;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -32,12 +32,12 @@ import javafx.scene.layout.GridPane;
 import tictactoe.OnePlayer;
 import tictactoe.TwoPlayer;
 //import tictactoe.TwoPlayer;
-import static tictactoe.OnePlayerController.one_player_mode;
+import static controller.OnePlayerController.one_player_mode;
 ////import static tictactoe.OnePlayerController.one_player;
-import static tictactoe.OnePlayerController.player;
-import static tictactoe.TwoPlayerController.player1;
-import static tictactoe.TwoPlayerController.player2;
-import static tictactoe.TwoPlayerController.two_player_mode;
+import static controller.OnePlayerController.player;
+import static controller.TwoPlayerController.player1;
+import static controller.TwoPlayerController.player2;
+import static controller.TwoPlayerController.two_player_mode;
 //import static tictactoe.TwoPlayerController.two_player;
 
 /**
@@ -47,16 +47,16 @@ import static tictactoe.TwoPlayerController.two_player_mode;
  */
 public class GameBoardController implements Initializable {
     BorderPane root;
-    static Image imagex;
-    static Image imageo;
-    static Node source;
-    static int gridboard[][]=new int[3][3];
-    static int counter=-1;
+    public static Image imagex;
+    public static Image imageo;
+    public static Node source;
+    public static int gridboard[][]=new int[3][3];
+    public static int counter=-1;
     OnePlayer p1;
     TwoPlayer p2;
     @FXML
     private GridPane gridborder;
-    static GridPane grid;
+    public static GridPane grid;
     //GridPane s;
     /**
      * Initializes the controller class.
@@ -65,8 +65,8 @@ public class GameBoardController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         p1= new OnePlayer();
         p2 = new TwoPlayer();
-        imagex = new Image(getClass().getResource("img/x.png").toExternalForm());
-        imageo = new Image(getClass().getResource("img/o.jpeg").toExternalForm());
+        imagex = new Image(getClass().getResource("/img/x.png").toExternalForm());
+        imageo = new Image(getClass().getResource("/img/o.jpeg").toExternalForm());
         for(int i=0 ;i<gridboard.length;i++)
         {
             for(int j=0;j<gridboard.length;j++)

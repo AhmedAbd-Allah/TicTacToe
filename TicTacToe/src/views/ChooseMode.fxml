@@ -6,11 +6,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.ChooseModeController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ChooseModeController">
    <children>
       <ImageView fitHeight="603.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@img/bg1.jpg" />
+            <Image url="@../img/bg1.jpg" />
          </image>
       </ImageView>
       <Button fx:id="one_player" layoutX="200.0" layoutY="128.0" mnemonicParsing="false" onAction="#onePlayerHandler" prefHeight="52.0" prefWidth="216.0" style="-fx-background-color: #A52A2A; -fx-border-color: #000000;" text="Play VS Computer">
