@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ServerAppController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" prefWidth="497.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.0" minWidth="0.0" prefWidth="103.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="193.0" minHeight="10.0" prefHeight="109.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="317.0" minHeight="10.0" prefHeight="291.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <ImageView fitHeight="111.0" fitWidth="497.0" pickOnBounds="true">
+         <image>
+            <Image url="@../splash.png" />
+         </image>
+      </ImageView>
+      <TableView prefHeight="200.0" prefWidth="405.0" GridPane.rowIndex="1">
+        <columns>
+          <TableColumn id="userName" fx:id="userName" prefWidth="142.0" text="User Name" />
+          <TableColumn id="score" fx:id="score" prefWidth="183.0" text="Score" />
+            <TableColumn id="status" fx:id="status" prefWidth="171.0" text="Status" />
+        </columns>
+      </TableView>
+      <ToggleButton fx:id="toggleServer" mnemonicParsing="false" prefHeight="110.0" prefWidth="97.0" text="Start/Close Server" textAlignment="CENTER" GridPane.columnIndex="1" />
+      <Button mnemonicParsing="false" onAction="#endServer" text="close" />
+      <Button mnemonicParsing="false" onAction="#startServer" text="open" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+   </children>
+</GridPane>
