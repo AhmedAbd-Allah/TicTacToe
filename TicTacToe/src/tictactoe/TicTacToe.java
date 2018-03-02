@@ -27,7 +27,7 @@ public class TicTacToe extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         try{
-                Parent root = FXMLLoader.load(getClass().getResource("ChooseMode.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/views/ChooseMode.fxml"));
                 Scene scene = new Scene(root,600,600);     
                 primaryStage.setTitle("Tic Tac Toe");
                 primaryStage.setScene(scene);

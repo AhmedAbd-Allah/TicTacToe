@@ -9,11 +9,11 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.GameBoardController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GameBoardController">
    <children>
       <ImageView fitHeight="630.0" fitWidth="600.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@img/bg1.jpg" />
+            <Image url="@../img/bg1.jpg" />
          </image>
       </ImageView>
       <GridPane fx:id="gridborder" gridLinesVisible="true" layoutX="93.0" layoutY="-6.0" onMouseClicked="#BorderMouseEvent" prefHeight="447.0" prefWidth="407.0" style="-fx-background-color: white; -fx-border-color: black;">
@@ -41,7 +41,7 @@
       </GridPane>
       <ImageView fitHeight="75.0" fitWidth="94.0" layoutX="26.0" layoutY="500.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@img/o.jpeg" />
+            <Image url="@../img/o.jpeg" />
          </image>
       </ImageView>
       <Label layoutX="124.0" layoutY="530.0" style="-fx-background-color: black;" text="player1" textFill="#ae2b2b">
@@ -56,7 +56,7 @@
       </Label>
       <ImageView fitHeight="48.0" fitWidth="65.0" layoutX="513.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@img/x.png" />
+            <Image url="@../img/x.png" />
          </image>
       </ImageView>
    </children>
