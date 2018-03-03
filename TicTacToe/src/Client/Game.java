@@ -7,26 +7,40 @@ package Client;
 
 import java.util.Arrays;
 import Models.Player;
+
 /**
  *
  * @author MHassan
  */
 public class Game {
+
     public Player player1;
     public Player player2;
+    private boolean myTurn = true;
     public Player gameOn;
     public Player draw;
     private static int move = 0;
-    private int [][] gridboard= new int [3][3];
-    
-    public Game(Player play1, Player play2)
-    {
+    private int[][] gridboard = new int[3][3];
+
+    public Game(Player play1, Player play2) {
         this.player1 = play1;
         this.player2 = play2;
         Arrays.fill(gridboard, -1);
-        
+
     }
-    
+
+    public boolean validateMove(int xpos, int ypos) {
+        if (gridboard[xpos][ypos] == -1 && myTurn) 
+        {
+            myTurn = false;
+            return true;
+        }
+        else {
+            myTurn = true;
+            return false;
+        }
+    }
+
     public Player play(int xpos, int ypos)
     {
         if(gridboard[xpos][ypos]== -1)
@@ -79,5 +93,6 @@ public class Game {
         
         return gameOn;
     }
-
+    
+    
 }
