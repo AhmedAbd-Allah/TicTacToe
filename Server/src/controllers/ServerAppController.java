@@ -6,6 +6,7 @@ package controllers;
  * and open the template in the editor.
  */
 
+import Models.Player;
 import java.net.ServerSocket;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -30,85 +31,69 @@ import server.*;
  */
 public class ServerAppController implements Initializable {
     
-    Server server;
+    Server serverSoc;
     private final int PORT_NUM = 5000;
+    @FXML private TableView<Player> table;
     @FXML private TableColumn userName;
     @FXML private TableColumn status;
     @FXML private TableColumn score;
+    @FXML private ObservableList<Player> data;
     private boolean running = false;
-//    @FXML private Button toggleServer;
+    ObservableList<Player> players = FXCollections.observableArrayList();
+
     
-//    @FXML private observableList<player>;
-    
-//    @FXML
-//    public void startEndServer(ActionEvent event) {
-//        try
-//        {
-//            if(!running)
-//            {
-//                System.out.println(running);
-//                server = new Server(PORT_NUM);
-//                System.out.println(server);
-//                server.startServer();
-//                System.out.println(running);
-//                running = true;
-//                System.out.println(running);
-////                System.out.println(server);
-//
-//            }
-//            else
-//            {
-//                server.stopServer();
-//                running = false;
-//                System.out.println(running);
-//
-//            }
-//        }
-//        catch(Exception e)
-//        {
-//            e.printStackTrace();
-//        }       
-//    }
     @FXML
-    public void startServer(ActionEvent event) {
+    public void startEndServer(ActionEvent event) {
         try
         {
             if(!running)
             {
-                server = new Server(PORT_NUM);
-                System.out.println(server);
-                server.startServer();
+                System.out.println(running);
+                serverSoc = new Server(PORT_NUM);
+                System.out.println(serverSoc);
+                serverSoc.startServer();
+                System.out.println(running);
                 running = true;
+                System.out.println(running);
+                showPlayersList();
+//                System.out.println(server);
+
             }
-            
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-    
-    @FXML
-    public void endServer(ActionEvent event) {
-        try
-        {
-            if(running)
+            else
             {
-                System.out.println(server);
-                server.stopServer();
                 running = false;
+                System.out.println(running);
+                serverSoc.stopServer();
             }
-            
         }
         catch(Exception e)
         {
-            e.printStackTrace();
-        }
+//            e.printStackTrace();
+        }       
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("You initialized me!");
-    }    
+        
+        userName.setCellValueFactory(
+            new PropertyValueFactory<>("username"));
+        score.setCellValueFactory(
+            new PropertyValueFactory<>("score")
+        );
+//        status.setCellValueFactory(
+//            new PropertyValueFactory<>("status")
+//        );
+        data=FXCollections.observableArrayList();
+    }
+    
+    
+    public void showPlayersList(){
+        players.clear();
+        ClientThread.onlinePlayers.entrySet().forEach((player) -> {
+            players.add(player.getValue().player);
+        });
+        table.setItems(players);
+    }
     
 }
