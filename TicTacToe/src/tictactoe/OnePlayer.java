@@ -364,6 +364,7 @@ public class OnePlayer {
         }
         
 
+
     }
 private Node getNodeByRowColumnIndex(final int row,  final int column, GridPane gridPane) {
         Node result =null;

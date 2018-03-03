@@ -46,6 +46,7 @@ public class OnePlayerController implements Initializable {
     }    
     @FXML
     private void StartHandler(ActionEvent event) throws IOException{
+        
 //        player=player_name.getText();
 //        if(player.equals(""))
 //        {

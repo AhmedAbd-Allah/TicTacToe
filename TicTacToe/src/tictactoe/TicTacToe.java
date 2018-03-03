@@ -5,6 +5,7 @@
  */
 package tictactoe;
 
+import Client.Client;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -23,29 +24,26 @@ import javafx.stage.Stage;
  * @author aliaa
  */
 public class TicTacToe extends Application {
-    
+
     @Override
     public void start(Stage primaryStage) throws IOException {
-        try{
-                Parent root = FXMLLoader.load(getClass().getResource("/views/ChooseMode.fxml"));
-                Scene scene = new Scene(root,600,600);     
-                primaryStage.setTitle("Tic Tac Toe");
-                primaryStage.setScene(scene);
-                primaryStage.show();
-            }
-        catch(IOException e)
-        {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/views/ChooseMode.fxml"));
+            Scene scene = new Scene(root, 600, 600);
+            primaryStage.setTitle("Tic Tac Toe");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
         }
-                             
 
- 
     }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+
         launch(args);
     }
-    
+
 }

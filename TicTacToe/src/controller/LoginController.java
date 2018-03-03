@@ -5,6 +5,7 @@
  */
 package controller;
 
+import Client.Client;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -59,5 +60,15 @@ public class LoginController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
-    
+    @FXML
+    private void login(){
+           String userName = this.userName.getText();
+           String password = this.password.getText();
+           System.out.println(password);
+
+          
+           Client client = new Client();
+           client.login(userName,password);
+           
+    }
 }

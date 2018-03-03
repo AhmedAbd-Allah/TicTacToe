@@ -5,6 +5,7 @@
  */
 package controller;
 
+import Client.Client;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -65,6 +66,7 @@ public class GameBoardController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         p1= new OnePlayer();
         p2 = new TwoPlayer();
+
         imagex = new Image(getClass().getResource("/img/x.png").toExternalForm());
         imageo = new Image(getClass().getResource("/img/o.jpeg").toExternalForm());
         for(int i=0 ;i<gridboard.length;i++)
@@ -103,6 +105,7 @@ public class GameBoardController implements Initializable {
         else if(two_player_mode)
         {
             p2.play(rowIndex,colIndex);
+            //Client.Client.sendRequest(message, th);
 
         }
                 //getNodeByRowColumnIndex(1, 1, gridborder);
