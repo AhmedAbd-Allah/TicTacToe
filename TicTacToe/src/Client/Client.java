@@ -166,9 +166,7 @@ public class Client implements Runnable{
         move.setPosition("xpos", xpos);
         move.setPosition("ypos", ypos);
         move.setData("destination", player2.getUsername());
-        
-        
-        
+        sendRequest(move,this);
     }
     
     private void recieveMove(Request move)
