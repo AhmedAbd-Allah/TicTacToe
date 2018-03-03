@@ -156,19 +156,21 @@ public boolean insertUser(String userName,String password,int score)
 		con = connection.Connect_to();
 		stmt = con.createStatement() ;
 		queryString = new String("insert into user values(null,'"+userName+"','"+password+"',"+score+")");
-		System.out.println(queryString);
                 int exec = stmt.executeUpdate(queryString);
-                if(exec != 0)
-                {
-                    return true;
-                }
-                else return false;
+                		System.out.println("exec "+exec);
+
+//                if(exec == 1)
+//                {
+//                    return true;
+//                }
+//                else return false;
+                return true;
 	}
 	catch(SQLException ex)
 	{
             ex.printStackTrace();
+            return false;
 	}
-	return false;
 }
 
 

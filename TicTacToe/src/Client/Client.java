@@ -52,19 +52,19 @@ public class Client implements Runnable{
     @Override
     public void run() {
         //only for receive
-         try{
-            System.out.println("running thread");
-            while(true)
-            {
-                Request req =(Request) inpObj.readObject();
-                System.out.println(req.getRequestType());
-                getResponse(req);
-            }
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
+//         try{
+//            System.out.println("running thread");
+//            while(true)
+//            {
+//                Request req =(Request) inpObj.readObject();
+//                System.out.println(req.getRequestType());
+//                getResponse(req);
+//            }
+//        }
+//        catch(Exception e)
+//        {
+//            e.printStackTrace();
+//        }
     }
     
     public void signUp(String userName,String password){
@@ -72,6 +72,22 @@ public class Client implements Runnable{
            request.setData("userName", userName);
            request.setData("password", password);
            sendRequest(request, this);
+           while(true)
+            {
+                Request req;
+             try {
+                req = (Request) inpObj.readObject();
+                System.out.println(req.getRequestType());
+                getResponse(req);
+                break;
+                
+             } catch (IOException ex) {
+                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+             } catch (ClassNotFoundException ex) {
+                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+             }
+                
+            }
     }
     
     public void login(String userName,String password){
@@ -79,6 +95,22 @@ public class Client implements Runnable{
            request.setData("userName", userName);
            request.setData("password", password);
            sendRequest(request, this);
+            while(true)
+            {
+                Request req;
+             try {
+                req = (Request) inpObj.readObject();
+                System.out.println(req.getRequestType());
+                getResponse(req);
+                break;
+                
+             } catch (IOException ex) {
+                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+             } catch (ClassNotFoundException ex) {
+                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+             }
+                
+            }
     }
     
     private Request gameTurn()
@@ -110,9 +142,19 @@ public class Client implements Runnable{
     }
 
     private void getResponse(Request req) {
-        if("Successful login".equals(req.getRequestType())){
+        System.out.println("response :"+req.getRequestType());
+        if("Successful login".equals(req.getRequestType())
+                || "playersList".equals(req.getRequestType())){
             auth = true;
+        }else if("failed login".equals(req.getRequestType())
+                ||"failed signup".equals(req.getRequestType())){
+            auth = false;
+            //
         }
+    }
+
+    public boolean isAuth() {
+        return auth;
     }
     
 }
