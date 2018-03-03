@@ -20,7 +20,7 @@ import client.Request;
  *
  * @author rania
  */
-public class Client {
+public class Client implements Runnable {
 
     Socket mySocket;
     Thread th;
@@ -41,35 +41,41 @@ public class Client {
             outObj = new ObjectOutputStream(mySocket.getOutputStream());
             inpObj = new ObjectInputStream(mySocket.getInputStream());
             System.out.println(mySocket);
-            startListening();
-//            th = new Thread(this);
-//            th.start();
+//            startListening();
+            th = new Thread(this);
+            th.start();
 
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
-
-    private void startListening() {
-        new Thread(() -> {
-            while (true) {
-                try {
-                    Request message = (Request) inpObj.readObject();
-                    requestRedirection(message);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    break;
-                }
-            }
-            try {
-                mySocket.close();
-                outObj.close();
-                inpObj.close();
-            } catch (IOException ex) {
-            }
-        }).start();
+    
+    @Override
+    public void run()
+    {
+        
     }
+
+//    private void startListening() {
+//        new Thread(() -> {
+//            while (true) {
+//                try {
+//                    Request message = (Request) inpObj.readObject();
+//                    requestRedirection(message);
+//                } catch (Exception ex) {
+//                    ex.printStackTrace();
+//                    break;
+//                }
+//            }
+//            try {
+//                mySocket.close();
+//                outObj.close();
+//                inpObj.close();
+//            } catch (IOException ex) {
+//            }
+//        }).start();
+//    }
 
     private void requestRedirection(Request req) {
         String reqType = req.getRequestType();
@@ -206,5 +212,5 @@ public class Client {
         myTurn = true;
         ///draw on GUI the move
     }
-
+    
 }
