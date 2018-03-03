@@ -24,6 +24,14 @@ hs_err_pid*
 
 
 # NetBeans specific #
+TicTacToe/nbproject/private/
+TicTacToe/build/
+TicTacToe/nbbuild/
+TicTacToe/dist/
+TicTacToe/nbdist/
+TicTacToe/nbactions.xml
+TicTacToe/nb-configuration.xml
+
 nbproject/private/
 build/
 nbbuild/
@@ -31,6 +39,14 @@ dist/
 nbdist/
 nbactions.xml
 nb-configuration.xml
+
+Server/nbproject/private/
+Server/build/
+Server/nbbuild/
+Server/dist/
+Server/nbdist/
+Server/nbactions.xml
+Server/nb-configuration.xml
 
 # Class Files #
 *.class

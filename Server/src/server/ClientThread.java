@@ -167,11 +167,21 @@ public class ClientThread implements Runnable
         player = new Player(userName,score,password);
         System.out.println(player);
         boolean check = db.insertUser(userName, password, score);
+        System.out.println("checked is "+check);
         if(check)
         {
-            System.out.println("checked");
             onlinePlayers.put(userName, this);
             syncPlayersList();
+//            Request signupSuccess = new Request("Successful signup");
+//            sendRequest(signupSuccess, this);
+//            Request AddedPlayer = new Request("addPlayer");
+//            AddedPlayer.setplayer(userName, player);
+//            this.sendToAll(AddedPlayer);
+
+        }else{
+             Request signupFailed = new Request("failed signup");
+             sendRequest(signupFailed, this);
+
         }
     }
     

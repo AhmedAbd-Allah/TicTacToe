@@ -9,6 +9,9 @@ import Client.Client;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -47,10 +50,10 @@ public class LoginController implements Initializable {
 
     @FXML
     private void loginHandler(ActionEvent event) throws IOException {
-        stage = (Stage) login.getScene().getWindow();
-        root = (Pane) FXMLLoader.load(getClass().getResource("/views/OnlinePlayer.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
+          stage = (Stage) login.getScene().getWindow();
+//        root = (Pane) FXMLLoader.load(getClass().getResource("/views/OnlinePlayer.fxml"));
+//        Scene scene = new Scene(root);
+//        stage.setScene(scene);
     }
 
     @FXML
@@ -69,6 +72,24 @@ public class LoginController implements Initializable {
           
            Client client = new Client();
            client.login(userName,password);
-           
+           //String resource="/views/login.fxml";
+          
+
+        if(client.isAuth()){
+                 //resource = "/views/OnlinePlayer.fxml";
+             
+            stage = (Stage) login.getScene().getWindow();
+            try {
+                root = (Pane) FXMLLoader.load(getClass().getResource("/views/OnlinePlayer.fxml"));
+            } catch (IOException ex) {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+        }else{
+            //@TODO
+            //display alert with Wrong username or password
+        }
+                  
     }
 }

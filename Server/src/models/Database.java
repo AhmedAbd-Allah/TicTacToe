@@ -55,7 +55,7 @@ public ResultSet getAllUsers()
         try {
             con = connection.Connect_to();
             stmt = con.createStatement();
-            queryString = new String("select * from user where user_name = '" + username + "'");
+            queryString = new String("select * from user where user_name = '"+username+"'");
             System.out.println(queryString);
             rs = stmt.executeQuery(queryString);
                         System.out.println(rs);
@@ -101,7 +101,7 @@ String moves="";
 	{
 		con = connection.Connect_to();
 		stmt = con.createStatement() ;
-		queryString = new String("select moves from game where user1_id = user1ID and user2_id = user2ID and game_id = gameID ");
+		queryString = new String("select moves from game where user1_id = '"+user1ID+"' and user2_id = '"+user2ID+"' and game_id = '"+gameID+"'");
 		rs = stmt.executeQuery(queryString) ;
 		moves = rs.getString(5);
 	}
@@ -120,7 +120,7 @@ public String getWinner(int user1ID, int user2ID, int gameID)
 	{
 		con = connection.Connect_to();
 		stmt = con.createStatement() ;
-		queryString = new String("select winner_id from game where user1_id = user1ID and user2_id = user2ID and game_id = gameID ");
+		queryString = new String("select winner_id from game where user1_id = '"+user1ID+"' and user2_id = '"+user2ID+"' and game_id = '"+gameID+"'");
 		rs = stmt.executeQuery(queryString) ;
 		winner = rs.getString(6);
 	}
@@ -138,7 +138,7 @@ public String getUserGames(int userID)
 	{
 		con = connection.Connect_to();
 		stmt = con.createStatement() ;
-		queryString = new String("select * from game where user1_id = 'userID'");
+		queryString = new String("select * from game where user1_id = '"+userID+"'");
 		rs = stmt.executeQuery(queryString) ;
 		games = rs.getString(2);
 	}
@@ -155,20 +155,26 @@ public boolean insertUser(String userName,String password,int score)
 	{   
 		con = connection.Connect_to();
 		stmt = con.createStatement() ;
+
 		queryString = new String("insert into user values(null,'"+userName+"','"+password+"',"+score+")");
+
 		System.out.println(queryString);
+
                 int exec = stmt.executeUpdate(queryString);
-                if(exec != 0)
-                {
-                    return true;
-                }
-                else return false;
+                		System.out.println("exec "+exec);
+
+//                if(exec == 1)
+//                {
+//                    return true;
+//                }
+//                else return false;
+                return true;
 	}
 	catch(SQLException ex)
 	{
             ex.printStackTrace();
+            return false;
 	}
-	return false;
 }
 
 
