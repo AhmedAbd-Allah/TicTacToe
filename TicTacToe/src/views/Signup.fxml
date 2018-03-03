@@ -15,7 +15,7 @@
             <Image url="@../img/bg1.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="signup" layoutX="182.0" layoutY="340.0" mnemonicParsing="false" onAction="#signupHandler" prefHeight="52.0" prefWidth="216.0" style="-fx-background-color: #A52A2A; -fx-border-color: #000000;" text="SignUp">
+      <Button fx:id="signup" layoutX="182.0" layoutY="340.0" mnemonicParsing="false" onAction="#signupHandler" onMousePressed="#signUp" prefHeight="52.0" prefWidth="216.0" style="-fx-background-color: #A52A2A; -fx-border-color: #000000;" text="SignUp">
          <font>
             <Font size="18.0" />
          </font>

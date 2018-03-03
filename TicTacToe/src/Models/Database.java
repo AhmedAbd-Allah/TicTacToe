@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package models;
+package Models;
 
 /**
  *
@@ -50,22 +50,23 @@ public ResultSet getAllUsers()
 				
 	}
 
-    public ResultSet getOneUser(String username) {
+public ResultSet getOneUser(String username)
+	{ 
 //		String user="";
-        try {
-            con = connection.Connect_to();
-            stmt = con.createStatement();
-            queryString = new String("select * from user where user_name = '" + username + "'");
-            System.out.println(queryString);
-            rs = stmt.executeQuery(queryString);
-                        System.out.println(rs);
-
+		try
+		{
+		con = connection.Connect_to();
+		stmt = con.createStatement() ;
+		queryString = new String("select * from user where user_name = 'username'");
+		rs = stmt.executeQuery(queryString) ;
 //		user = rs.getString(1)+" " +rs.getString(2)+" " +rs.getString(3)+" " +rs.getString(4);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return rs;
-    }
+		}
+		catch(SQLException ex)
+				{
+					ex.printStackTrace();
+				}
+		return rs;
+	}
 
 public boolean authUser(String username, String userpassword)
 	{ boolean check=false;
@@ -73,7 +74,7 @@ public boolean authUser(String username, String userpassword)
 		{
 		con = connection.Connect_to();
 		stmt = con.createStatement() ;
-		queryString = new String("select * from user where user_name = '"+username+"' and password = '"+userpassword+"'");
+		queryString = new String("select * from user where user_name = 'username' and password = 'userpassword'");
 		rs = stmt.executeQuery(queryString);
 		if(rs.next())
 		{
@@ -155,9 +156,8 @@ public boolean insertUser(String userName,String password,int score)
 	{   
 		con = connection.Connect_to();
 		stmt = con.createStatement() ;
-		queryString = new String("insert into user values(null,'"+userName+"','"+password+"',"+score+")");
-		System.out.println(queryString);
-                int exec = stmt.executeUpdate(queryString);
+		queryString = new String("insert into user values(null,'password','score')");
+		int exec = stmt.executeUpdate(queryString);
                 if(exec != 0)
                 {
                     return true;

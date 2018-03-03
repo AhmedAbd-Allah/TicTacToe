@@ -111,6 +111,9 @@ class ClientThread implements Runnable
     {
         String userName = req.getData("userName");
         String password = req.getData("password");
+        System.out.println(userName);
+        System.out.println(password);
+        
         if(db.authUser(userName,password))
         {
            try
@@ -131,7 +134,7 @@ class ClientThread implements Runnable
            }
            catch(Exception e)
            {
-               System.out.println("ff");
+               e.printStackTrace();
            }
         }
         else
@@ -160,9 +163,11 @@ class ClientThread implements Runnable
         Integer score = 0;
 
         player = new Player(userName,score,password);
+        System.out.println(player);
         boolean check = db.insertUser(userName, password, score);
         if(check)
         {
+            System.out.println("checked");
             onlinePlayers.put(userName, this);
             syncPlayersList();
 //            Request AddedPlayer = new Request("addPlayer");

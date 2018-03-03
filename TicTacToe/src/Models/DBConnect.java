@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package models;
+package Models;
 
 /**
  *
@@ -25,12 +25,9 @@ public class DBConnect
 		try
 		{
                     System.out.println("DBConnect trying");
-//                    String url = "jdbc:mysql://localhost:3306/xoo";
-//                    String username = "mhassan";
-//                    String password = "iti38";
                     String url = "jdbc:mysql://localhost:3306/xoo";
-                    String username = "rania";
-                    String password = "rania2017";
+                    String username = "mhassan";
+                    String password = "iti38";
                     con = DriverManager.getConnection(url, username, password);
 		}
 

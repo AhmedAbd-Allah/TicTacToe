@@ -5,6 +5,8 @@
  */
 package controller;
 
+import Client.Client;
+import client.Request;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -47,6 +49,18 @@ public class SignupController implements Initializable {
         root = (Pane) FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
+    }
+    
+    @FXML
+    private void signUp(){
+           String userName = this.userName.getText();
+           String password = this.password.getText();
+           System.out.println(password);
+
+          
+           Client client = new Client();
+           client.signUp(userName,password);
+           
     }
     
 }
