@@ -25,7 +25,7 @@ import client.Request;
  *
  * @author MHassan
  */
-class ClientThread implements Runnable
+public class ClientThread implements Runnable
 {
     private ObjectInputStream inpObj;
     private ObjectOutputStream outObj;
@@ -33,17 +33,19 @@ class ClientThread implements Runnable
     private Player player1;
     private Player player2;
     private Request req;
-    private Player player;
+    public Player player;
     private Game game;
     public static HashMap<String,ClientThread> onlinePlayers = new HashMap<String,ClientThread>();
     public Thread th;
     
     public ClientThread(Socket s)
     {
+        player = new Player("mohamed",211,"jkknjk");
+        onlinePlayers.put("mohamed",this);
+        System.out.println(player);
         System.out.println("before starting 1");
         try
         {
-//            input = new DataInputStream(s.getInputStream());
             inpObj = new ObjectInputStream(s.getInputStream());
             outObj = new ObjectOutputStream(s.getOutputStream());
             th = new Thread(this);
@@ -165,10 +167,6 @@ class ClientThread implements Runnable
         {
             onlinePlayers.put(userName, this);
             syncPlayersList();
-//            Request AddedPlayer = new Request("addPlayer");
-//            AddedPlayer.setplayer(userName, player);
-//            this.sendToAll(AddedPlayer);
-
         }
     }
     
@@ -280,9 +278,8 @@ class ClientThread implements Runnable
         Request playersList = new Request("playersList");
         onlinePlayers.entrySet().forEach((set) -> {
             Player p = set.getValue().player;
-//            playersList.setPlayer(p.getUsername(), p);
+            playersList.setPlayer(p.getUsername(), p);
         });
-        
         sendToAll(playersList);
     }
 }

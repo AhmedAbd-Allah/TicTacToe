@@ -72,8 +72,8 @@ public class Server {
         if(running)
         {
             running = false;
-            try{server.close(); System.out.println("closed");}
-            catch(Exception e){e.printStackTrace();}
+            try{server.close(); System.out.println("closed");System.out.println("after closed");}
+            catch(Exception e){System.out.println("in exception"); e.printStackTrace();}
             
         }
     }

@@ -25,15 +25,15 @@
             <Image url="@../splash.png" />
          </image>
       </ImageView>
-      <TableView prefHeight="200.0" prefWidth="405.0" GridPane.rowIndex="1">
+      <TableView prefHeight="200.0" prefWidth="405.0" GridPane.rowIndex="1" fx:id="table">
         <columns>
-          <TableColumn id="userName" fx:id="userName" prefWidth="142.0" text="User Name" />
-          <TableColumn id="score" fx:id="score" prefWidth="183.0" text="Score" />
-            <TableColumn id="status" fx:id="status" prefWidth="171.0" text="Status" />
+          <TableColumn fx:id="userName" prefWidth="142.0" text="User Name" />
+          <TableColumn fx:id="score" prefWidth="183.0" text="Score" />
+          <TableColumn fx:id="status" prefWidth="171.0" text="Status" />
         </columns>
       </TableView>
-      <ToggleButton fx:id="toggleServer" mnemonicParsing="false" prefHeight="110.0" prefWidth="97.0" text="Start/Close Server" textAlignment="CENTER" GridPane.columnIndex="1" />
-      <Button mnemonicParsing="false" onAction="#endServer" text="close" />
-      <Button mnemonicParsing="false" onAction="#startServer" text="open" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ToggleButton fx:id="toggleServer" onAction="#startEndServer" mnemonicParsing="false" prefHeight="110.0" prefWidth="97.0" text="Start/Close Server" textAlignment="CENTER" GridPane.columnIndex="1" />
+<!--      <Button mnemonicParsing="false" onAction="#endServer" text="close" />
+      <Button mnemonicParsing="false" onAction="#startServer" text="open" GridPane.columnIndex="1" GridPane.rowIndex="1" />-->
    </children>
 </GridPane>
