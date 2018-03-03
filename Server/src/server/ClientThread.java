@@ -170,10 +170,10 @@ public class ClientThread implements Runnable
         System.out.println("checked is "+check);
         if(check)
         {
-            onlinePlayers.put(userName, this);
-            syncPlayersList();
-//            Request signupSuccess = new Request("Successful signup");
-//            sendRequest(signupSuccess, this);
+           onlinePlayers.put(userName, this);
+         //  syncPlayersList();
+           Request signupSuccess = new Request("Successful signup");
+           sendRequest(signupSuccess, this);
 //            Request AddedPlayer = new Request("addPlayer");
 //            AddedPlayer.setplayer(userName, player);
 //            this.sendToAll(AddedPlayer);

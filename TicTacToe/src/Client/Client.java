@@ -73,8 +73,11 @@ public class Client implements Runnable{
     public void signUp(String userName,String password){
          Request request = new Request("SignUp");
            request.setData("userName", userName);
-           request.setData("password", password);
+           request.setData("password", password);           
+           System.out.println(1);
+
            sendRequest(request, this);
+           System.out.println(2);
            while(true)
             {
                 Request req;
@@ -82,7 +85,7 @@ public class Client implements Runnable{
                 req = (Request) inpObj.readObject();
                 System.out.println(req.getRequestType());
                 getResponse(req);
-                break;
+               break;
                 
              } catch (IOException ex) {
                  Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
@@ -147,7 +150,8 @@ public class Client implements Runnable{
     private void getResponse(Request req) {
         System.out.println("response :"+req.getRequestType());
         if("Successful login".equals(req.getRequestType())
-                || "playersList".equals(req.getRequestType())){
+                || "playersList".equals(req.getRequestType())
+                ||"Successful signup".equals(req.getRequestType())){
             auth = true;
         }else if("failed login".equals(req.getRequestType())
                 ||"failed signup".equals(req.getRequestType())){

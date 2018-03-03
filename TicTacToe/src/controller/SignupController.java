@@ -48,7 +48,8 @@ public class SignupController implements Initializable {
 
     @FXML
     private void signupHandler(ActionEvent event) throws IOException {
-        stage = (Stage) signup.getScene().getWindow();
+        System.out.println("Handeler");
+        //  stage = (Stage) signup.getScene().getWindow();
 //        root = (Pane) FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
 //        Scene scene = new Scene(root);
 //        stage.setScene(scene);
@@ -56,29 +57,36 @@ public class SignupController implements Initializable {
     
     @FXML
     private void signUp(){
+           System.out.println("Signup");
+
            String userName = this.userName.getText();
            String password = this.password.getText();
 
           
            Client client = new Client();
            client.signUp(userName,password);
-                      System.out.println("Auth :"+client.isAuth());
+                                            //System.out.println("Auth :"+client.isAuth());
+System.out.println("username:"+userName);
+                      System.out.println("password"+password);
+
 
            if(client.isAuth()){
-                 //resource = "/views/OnlinePlayer.fxml";
-             
+               //  resource = "/views/OnlinePlayer.fxml";
+
             stage = (Stage) signup.getScene().getWindow();
+             
             try {
                 root = (Pane) FXMLLoader.load(getClass().getResource("/views/OnlinePlayer.fxml"));
                 System.out.println("change scene");
             } catch (IOException ex) {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
+             Scene scene = new Scene(root);
+             stage.setScene(scene);
+              
         }else{
-            //@TODO
-            //display alert with already exists username
+           // @TODO
+           // display alert with already exists username
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information Dialog");
             alert.setHeaderText(null);
