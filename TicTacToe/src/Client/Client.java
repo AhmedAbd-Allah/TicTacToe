@@ -27,6 +27,9 @@ public class Client implements Runnable{
     ObjectOutputStream outObj;
     Request req;
     Player player;
+    Player player1;
+    Player player2;
+    Game game;
     boolean auth = false;
     
     
@@ -115,4 +118,20 @@ public class Client implements Runnable{
         }
     }
     
+    private void sendMove(int xpos, int ypos)
+    {
+        Request move = new Request("Move");
+        move.setPosition("xpos", xpos);
+        move.setPosition("ypos", ypos);
+        move.setData("destination", player2.getUsername());
+        
+        
+        
+    }
+    
+    private void recieveMove(Request move)
+    {
+        
+    }
+
 }

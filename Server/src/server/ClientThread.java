@@ -210,8 +210,8 @@ public class ClientThread implements Runnable
         String dest = turn.getData("destination");
         String src = this.player.getUsername();
         ClientThread player2th = onlinePlayers.get(dest);
-        int xpos = Integer.parseInt(turn.getData("xpos"));
-        int ypos = Integer.parseInt(turn.getData("ypos"));
+        int xpos = turn.getPosition("xpos");
+        int ypos = turn.getPosition("ypos");
         Player result = game.play(xpos, ypos);
         Request reply = new Request("gameStatus");
         if(result == game.gameOn)

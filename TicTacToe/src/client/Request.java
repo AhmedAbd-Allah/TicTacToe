@@ -17,6 +17,7 @@ public class Request implements Serializable {
     private String requestType;
     private HashMap<String, String>data;
     private HashMap<String, Player>players;
+    private HashMap<String, Integer>positions;
 
     public Request(String reqType) {
         this.requestType = reqType;
@@ -59,5 +60,18 @@ public class Request implements Serializable {
     public void setPlayer(String name, Player player)
     {
         players.put(name, player);
+    }
+    public Integer getPosition(String axis)
+    {
+        if(positions.containsKey(axis))
+        {
+            return positions.get(axis);
+        }
+        return null;
+    }
+    
+    public void setPosition(String axis, Integer pos)
+    {
+        positions.put(axis, pos);
     }
 }
