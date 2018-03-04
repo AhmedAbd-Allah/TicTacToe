@@ -33,6 +33,7 @@ public class Client implements Runnable {
     boolean myTurn = true;
 //    Game game = new Game(player1, player2);
     boolean auth = false;
+    private static Client client = new Client();
 
     public Client() {
         try {
@@ -50,9 +51,9 @@ public class Client implements Runnable {
         }
 
     }
-//   public static Client getInstance(){
-//       
-//   }
+   public static Client getInstance(){
+       return client;
+   }
     
     @Override
     public void run()
@@ -183,11 +184,7 @@ public class Client implements Runnable {
         return req;
     }
 
-    public void prepareRequest() {
-        //check which button clicked to set request type and send it to server
-        //sendRequest(Request message,this);
 
-    }
 
     public void sendRequest(Request message, Client th) {
         try {
@@ -220,40 +217,40 @@ public class Client implements Runnable {
         return auth;
     }
    
-    private String winner(Request reply)
-    {
-        String status;
-        Request reply = new Request("gameStatus");
-        
-        String gameStatus = req.getData("status");
-        if(gameStatus == "gameOn")
-        {
-            gameturn();
-        }
-        else if (gameStatus == "End")
-        {
-            if(req.containsKey("draw"))
-            {
-                status = draw;
-            }
-            else
-            {   
-                String myStatus = req.getData("winner");
-                if(myStatus == "player1")
-                {
-                    status = player1;
-                }
-                
-                else if(myStatus == "player2")
-                {
-                    status = player2;
-                }
-                
-            }
-
-        }
-        return status;
-    }   
+//    private String winner(Request reply)
+//    {
+//        String status;
+//        Request reply = new Request("gameStatus");
+//        
+//        String gameStatus = req.getData("status");
+//        if(gameStatus == "gameOn")
+//        {
+//            gameturn();
+//        }
+//        else if (gameStatus == "End")
+//        {
+//            if(req.containsKey("draw"))
+//            {
+//                status = draw;
+//            }
+//            else
+//            {   
+//                String myStatus = req.getData("winner");
+//                if(myStatus == "player1")
+//                {
+//                    status = player1;
+//                }
+//                
+//                else if(myStatus == "player2")
+//                {
+//                    status = player2;
+//                }
+//                
+//            }
+//
+//        }
+//        return status;
+//    }   
          
     private Request requestgame(String opponent)
     {
@@ -262,6 +259,7 @@ public class Client implements Runnable {
         
         sendRequest(request, this);
         //return request;
+        return null;
     }
     
     private Request respondgame(String opponent, String answer)
@@ -272,6 +270,7 @@ public class Client implements Runnable {
         
         
          sendRequest(request, this);
+        return null;
     }
     
     public void prepareRequest()
@@ -307,4 +306,9 @@ public class Client implements Runnable {
 //        ///draw on GUI the move
 //    }
 //    
+}
+
+    private void gameturn() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

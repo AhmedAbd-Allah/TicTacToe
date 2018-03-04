@@ -5,12 +5,11 @@
  */
 package controller;
 
-<<<<<<< HEAD
+
 import Client.Client;
-import client.Request;
-=======
+
 import java.io.IOException;
->>>>>>> e0f5cb6ce00361cf89868f149c025157d8f1291e
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -50,7 +49,7 @@ public class OnlinePlayerController implements Initializable {
 
     private void intiateHandler(ActionEvent event) throws IOException {
          //send initateGame request to server
-        Client client = new Client();
+        Client client  = Client.getInstance();
         client.initateGame();
         
         //move to the next scene

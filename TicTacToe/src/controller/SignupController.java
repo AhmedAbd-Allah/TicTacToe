@@ -29,6 +29,7 @@ import javafx.stage.Stage;
  * @author aliaa
  */
 public class SignupController implements Initializable {
+
     Stage stage;
     Pane root;
     @FXML
@@ -44,7 +45,7 @@ public class SignupController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
 
     @FXML
     private void signupHandler(ActionEvent event) throws IOException {
@@ -54,46 +55,42 @@ public class SignupController implements Initializable {
 //        Scene scene = new Scene(root);
 //        stage.setScene(scene);
     }
-    
+
     @FXML
-    private void signUp(){
-           System.out.println("Signup");
+    private void signUp() {
+        System.out.println("Signup");
 
-           String userName = this.userName.getText();
-           String password = this.password.getText();
+        String userName = this.userName.getText();
+        String password = this.password.getText();
 
-          
-           Client client = new Client();
-           client.signUp(userName,password);
-                                            //System.out.println("Auth :"+client.isAuth());
-System.out.println("username:"+userName);
-                      System.out.println("password"+password);
+        Client client = Client.getInstance();
+        client.signUp(userName, password);
+        //System.out.println("Auth :"+client.isAuth());
 
-
-           if(client.isAuth()){
-               //  resource = "/views/OnlinePlayer.fxml";
+        if (client.isAuth()) {
+            //  resource = "/views/OnlinePlayer.fxml";
 
             stage = (Stage) signup.getScene().getWindow();
-             
+
             try {
                 root = (Pane) FXMLLoader.load(getClass().getResource("/views/OnlinePlayer.fxml"));
                 System.out.println("change scene");
             } catch (IOException ex) {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
-             Scene scene = new Scene(root);
-             stage.setScene(scene);
-              
-        }else{
-           // @TODO
-           // display alert with already exists username
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+
+        } else {
+            // @TODO
+            // display alert with already exists username
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information Dialog");
             alert.setHeaderText(null);
             alert.setContentText("User Name Is Already Exist");
-            alert.showAndWait(); 
+            alert.showAndWait();
         }
-           
+
     }
-    
+
 }
