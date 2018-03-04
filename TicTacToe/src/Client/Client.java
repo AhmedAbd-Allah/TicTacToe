@@ -31,7 +31,7 @@ public class Client implements Runnable {
     Player player1;
     Player player2;
     boolean myTurn = true;
-    Game game = new Game(player1, player2);
+//    Game game = new Game(player1, player2);
     boolean auth = false;
 
     public Client() {
@@ -77,6 +77,7 @@ public class Client implements Runnable {
 //        }).start();
 //    }
 
+
     private void requestRedirection(Request req) {
         String reqType = req.getRequestType();
 
@@ -107,6 +108,7 @@ public class Client implements Runnable {
             {
                 Request req;
              try {
+
                 req = (Request) inpObj.readObject();
                 System.out.println(req.getRequestType());
                 getResponse(req);
@@ -127,6 +129,7 @@ public class Client implements Runnable {
         Request request = new Request("Login");
         request.setData("userName", userName);
         request.setData("password", password);
+        System.out.println("before request");
         sendRequest(request, this);
         while (true) {
             Request req;
@@ -188,36 +191,36 @@ public class Client implements Runnable {
     public boolean isAuth() {
         return auth;
     }
-    
+   
     //game is created in the accept method
-    private void sendMove(int xpos, int ypos) {
+//    private void sendMove(int xpos, int ypos) {
+//
+//        if (myTurn) {
+//            if (game.validateMove(xpos, ypos)) {
+//                game.play(xpos, ypos);
+//                Request move = new Request("Move");
+//                move.setPosition("xpos", xpos);
+//                move.setPosition("ypos", ypos);
+//                move.setData("destination", player2.getUsername());
+//                sendRequest(move, this);
+//                myTurn = false;
+//            } else {
+//                // not a valid move
+//                //alert choose another cell
+//            }
+//
+//        } else {
+//            //Not my turn
+//            //alert wait for your opponent
+//        }
+//    }
 
-        if (myTurn) {
-            if (game.validateMove(xpos, ypos)) {
-                game.play(xpos, ypos);
-                Request move = new Request("Move");
-                move.setPosition("xpos", xpos);
-                move.setPosition("ypos", ypos);
-                move.setData("destination", player2.getUsername());
-                sendRequest(move, this);
-                myTurn = false;
-            } else {
-                // not a valid move
-                //alert choose another cell
-            }
-
-        } else {
-            //Not my turn
-            //alert wait for your opponent
-        }
-    }
-
-    private void recieveMove(Request move) {
-        int xpos = move.getPosition("xpos");
-        int ypos = move.getPosition("ypos");
-        game.play(xpos, ypos);
-        myTurn = true;
-        ///draw on GUI the move
-    }
-    
+//    private void recieveMove(Request move) {
+//        int xpos = move.getPosition("xpos");
+//        int ypos = move.getPosition("ypos");
+//        game.play(xpos, ypos);
+//        myTurn = true;
+//        ///draw on GUI the move
+//    }
+//    
 }

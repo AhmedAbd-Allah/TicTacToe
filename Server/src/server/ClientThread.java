@@ -36,13 +36,16 @@ public class ClientThread implements Runnable
     public Player player;
     private Game game;
     public static HashMap<String,ClientThread> onlinePlayers = new HashMap<String,ClientThread>();
+    public static HashMap<String,Player> PlayersMap = new HashMap<String,Player>();
     public Thread th;
     
     public ClientThread(Socket s)
     {
-        player = new Player("mohamed",211,"jkknjk");
-        onlinePlayers.put("mohamed",this);
-        System.out.println(player);
+//        player = new Player("mohamed",211,"jkknjk");
+//        onlinePlayers.put("mohamed",this);
+//        PlayersMap.put("mohamed",player);
+//        syncPlayersList();
+//        System.out.println(player);
         System.out.println("before starting 1");
         try
         {
@@ -127,8 +130,10 @@ public class ClientThread implements Runnable
                     password = rs.getString(3);
                     player = new Player(userName,score,password);
                     onlinePlayers.put(userName, this);
+                    PlayersMap.put(userName, player);
                     Request loginSuccess = new Request("Successful login");
                     sendRequest(loginSuccess, this);
+                    sendToAll(loginSuccess);
                     syncPlayersList();
                     
                };
@@ -154,7 +159,8 @@ public class ClientThread implements Runnable
             Request removedPlayer = new Request("removePlayer");
             removedPlayer.setData(userName,userName);
             onlinePlayers.remove(userName);
-            syncPlayersList();
+            PlayersMap.remove(userName);
+//            syncPlayersList();
         }
     }
     
@@ -162,6 +168,9 @@ public class ClientThread implements Runnable
     {
         String userName = req.getData("userName");
         String password = req.getData("password");
+        System.out.println(userName);
+        System.out.println(password);
+        
         Integer score = 0;
 
         player = new Player(userName,score,password);
@@ -170,10 +179,12 @@ public class ClientThread implements Runnable
         System.out.println("checked is "+check);
         if(check)
         {
-           onlinePlayers.put(userName, this);
-         //  syncPlayersList();
-           Request signupSuccess = new Request("Successful signup");
-           sendRequest(signupSuccess, this);
+
+            onlinePlayers.put(userName, this);
+            PlayersMap.put(userName,player);
+            syncPlayersList();
+//            Request signupSuccess = new Request("Successful signup");
+//            sendRequest(signupSuccess, this);
 //            Request AddedPlayer = new Request("addPlayer");
 //            AddedPlayer.setplayer(userName, player);
 //            this.sendToAll(AddedPlayer);
@@ -291,10 +302,19 @@ public class ClientThread implements Runnable
     public static void syncPlayersList()
     {
         Request playersList = new Request("playersList");
-        onlinePlayers.entrySet().forEach((set) -> {
-            Player p = set.getValue().player;
-            playersList.setPlayer(p.getUsername(), p);
+        System.out.println("before for each");
+        PlayersMap.entrySet().forEach((playerSet) -> {
+            System.out.println("started");
+            Player p = playerSet.getValue();
+            String name = playerSet.getKey();
+            System.out.println("player value: "+p);
+            System.out.println("player name: "+name);
+            playersList.setData("name",name);
+            System.out.println("finished");
+
+//            playersList.setPlayer(playerSet.getKey(), playerSet.getValue());
         });
+        System.out.println("finished iteration");
         sendToAll(playersList);
     }
 }

@@ -31,19 +31,19 @@ public class Server {
     
     public Server(int portNum){
         this.port_num = portNum;
-//        Database db = new Database();
-//        ResultSet rs = db.getAllUsers();
-//        try{
-//            if(rs.next())    
-//            {
-//               System.out.println(rs.getString(2));
-//
-//            }
-//
-//        }catch(Exception e)
-//        {
-//            
-//        }
+        Database db = new Database();
+        ResultSet rs = db.getAllUsers();
+        try{
+            if(rs.next())    
+            {
+               System.out.println(rs.getString(2));
+
+            }
+
+        }catch(Exception e)
+        {
+            
+        }
         
     };
     
