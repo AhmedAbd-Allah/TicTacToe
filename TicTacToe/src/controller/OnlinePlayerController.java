@@ -5,6 +5,8 @@
  */
 package controller;
 
+import Client.Client;
+import client.Request;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -34,6 +36,10 @@ public class OnlinePlayerController implements Initializable {
 
     @FXML
     private void intiateHandler(ActionEvent event) {
+        //send initateGame request to server
+        Client client = new Client();
+        client.initateGame();
+        //move to the next scene
     }
 
     @FXML

@@ -50,6 +50,9 @@ public class Client implements Runnable {
         }
 
     }
+//   public static Client getInstance(){
+//       
+//   }
     
     @Override
     public void run()
@@ -147,6 +150,28 @@ public class Client implements Runnable {
 
         }
     }
+    
+    public void initateGame(){
+        Request request = new Request("initiateGame");
+      
+        sendRequest(request, this);
+        //wait for response
+        while (true) {
+            Request req;
+            try {
+                req = (Request) inpObj.readObject();
+                System.out.println(req.getRequestType());
+                getResponse(req);
+                break;
+
+            } catch (IOException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+    }
 
     private Request gameTurn() {
         Request req = new Request("GameTurn");
@@ -177,7 +202,6 @@ public class Client implements Runnable {
     private void getResponse(Request req) {
         System.out.println("response :"+req.getRequestType());
         if("Successful login".equals(req.getRequestType())
-                || "playersList".equals(req.getRequestType())
                 ||"Successful signup".equals(req.getRequestType())){
 
             auth = true;
@@ -185,6 +209,10 @@ public class Client implements Runnable {
                 || "failed signup".equals(req.getRequestType())) {
             auth = false;
             //
+        }
+        if("playersList".equals(req.getRequestType())){
+            //
+            System.out.println(req);
         }
     }
 
