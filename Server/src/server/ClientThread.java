@@ -110,6 +110,11 @@ public class ClientThread implements Runnable
         {
             respondGame(req);
         }
+        else if("initiateGame".equals(reqType))
+        {
+            initGame(req);
+        }
+        
     }
     
     private void login(Request req)
@@ -273,6 +278,26 @@ public class ClientThread implements Runnable
         
     }
     
+    private void initGame(Request req)
+    {
+        Request playersList = new Request("playersList");
+        PlayersMap.entrySet().forEach((playerSet) -> {
+            System.out.println("started");
+            Player p = playerSet.getValue();
+            String name = playerSet.getKey();
+            int scoreInt = playerSet.getValue().getScore();
+            String score = Integer.toString(scoreInt);
+            System.out.println("player value: "+p);
+            System.out.println("player name: "+name);
+            playersList.setData(name,score);
+            System.out.println("finished");
+
+//            playersList.setPlayer(playerSet.getKey(), playerSet.getValue());
+        });
+        sendRequest(playersList, this);
+        
+    }
+    
     public static void sendRequest(Request message,ClientThread th){
         try
         {
@@ -306,15 +331,17 @@ public class ClientThread implements Runnable
             System.out.println("started");
             Player p = playerSet.getValue();
             String name = playerSet.getKey();
+            int scoreInt = playerSet.getValue().getScore();
+            String score = Integer.toString(scoreInt);
             System.out.println("player value: "+p);
             System.out.println("player name: "+name);
-            playersList.setData("name",name);
+            playersList.setData(name,score);
             System.out.println("finished");
 
 //            playersList.setPlayer(playerSet.getKey(), playerSet.getValue());
         });
         System.out.println("finished iteration");
-        sendToAll(playersList);
+        sendToAll(playersList); 
     }
 }
 
