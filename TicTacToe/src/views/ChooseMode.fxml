@@ -18,12 +18,12 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="two_player" layoutX="200.0" layoutY="233.0" mnemonicParsing="false" onAction="#twoPlayerHandler" prefHeight="58.0" prefWidth="216.0" styleClass="big-yellow" stylesheets="@choosemode.css" text="2Players" textFill="WHITE">
+      <Button fx:id="two_player" layoutX="185.0" layoutY="233.0" mnemonicParsing="false" onAction="#twoPlayerHandler" prefHeight="58.0" prefWidth="231.0" styleClass="big-yellow" stylesheets="@choosemode.css" text="2Players" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="online" layoutX="200.0" layoutY="340.0" mnemonicParsing="false" onAction="#onlinePlayerHandler" prefHeight="52.0" prefWidth="216.0" styleClass="big-yellow" stylesheets="@choosemode.css" text="Online" textFill="#d7c9c9">
+      <Button fx:id="online" layoutX="197.0" layoutY="340.0" mnemonicParsing="false" onAction="#onlinePlayerHandler" prefHeight="52.0" prefWidth="219.0" styleClass="big-yellow" stylesheets="@choosemode.css" text="Online" textFill="#d7c9c9">
          <font>
             <Font size="18.0" />
          </font>

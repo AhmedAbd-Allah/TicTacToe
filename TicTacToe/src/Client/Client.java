@@ -269,26 +269,26 @@ public class Client implements Runnable {
 //        return status;
 //    }   
          
-    private void requestgame(String opponent)
-    {
-        Request request = new Request("RequestOpponent");
-        request.setData("destination", opponent);
-        
-        sendRequest(request, this);
-        //return request;
-        return null;
-    }
-    
-    private void respondgame(String opponent, String answer)
-    {
-        Request request = new Request("ReplyOpponent");
-        request.setData("destination", opponent);
-        request.setData("reply", answer);
-        
-        
-         sendRequest(request, this);
-        return null;
-    }
+//    private void requestgame(String opponent)
+//    {
+//        Request request = new Request("RequestOpponent");
+//        request.setData("destination", opponent);
+//        
+//        sendRequest(request, this);
+//        //return request;
+//        return null;
+//    }
+//    
+//    private void respondgame(String opponent, String answer)
+//    {
+//        Request request = new Request("ReplyOpponent");
+//        request.setData("destination", opponent);
+//        request.setData("reply", answer);
+//        
+//        
+//         sendRequest(request, this);
+//        return null;
+//    }
     
     public void prepareRequest()
     {
@@ -323,7 +323,7 @@ public class Client implements Runnable {
 //        ///draw on GUI the move
     }
 //    
-}
+
 
     private void gameturn() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

@@ -36,8 +36,8 @@ import tictactoe.TwoPlayer;
 import static controller.OnePlayerController.one_player_mode;
 ////import static tictactoe.OnePlayerController.one_player;
 import static controller.OnePlayerController.player;
-import static controller.TwoPlayerController.player1;
-import static controller.TwoPlayerController.player2;
+import static controller.TwoPlayerController.player1Name;
+import static controller.TwoPlayerController.player2Name;
 import static controller.TwoPlayerController.two_player_mode;
 //import static tictactoe.TwoPlayerController.two_player;
 
@@ -58,6 +58,10 @@ public class GameBoardController implements Initializable {
     @FXML
     private GridPane gridborder;
     public static GridPane grid;
+    @FXML
+    private Label player2;
+    @FXML
+    private Label player1;
     //GridPane s;
     /**
      * Initializes the controller class.
@@ -67,8 +71,8 @@ public class GameBoardController implements Initializable {
         p1= new OnePlayer();
         p2 = new TwoPlayer();
 
-        imagex = new Image(getClass().getResource("/img/x.png").toExternalForm());
-        imageo = new Image(getClass().getResource("/img/o.jpeg").toExternalForm());
+        imagex = new Image(getClass().getResource("/img/x.jpg").toExternalForm());
+        imageo = new Image(getClass().getResource("/img/o.png").toExternalForm());
         for(int i=0 ;i<gridboard.length;i++)
         {
             for(int j=0;j<gridboard.length;j++)
@@ -76,17 +80,24 @@ public class GameBoardController implements Initializable {
                 gridboard[i][j]=-1;
             }
         }
+        if(one_player_mode==true){
+             player1.setText(player);
+             player2.setText("Computer");
+              
+        }
+        else if(two_player_mode==true)
+        {
+             player1.setText(player1Name);
+             player2.setText(player2Name);
+
+        }
     }
     
     @FXML
     private void BorderMouseEvent(MouseEvent event) {
         grid=gridborder;
         source = (Node)event.getTarget();
-        System.out.println(source);
-        //ImageView i = (ImageView)source;
-                //System.out.println(i);
-                
-
+        
         Integer colIndex = GridPane.getColumnIndex(source);
         Integer rowIndex = GridPane.getRowIndex(source);
         if(rowIndex==null)
