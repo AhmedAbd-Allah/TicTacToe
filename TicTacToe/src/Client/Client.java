@@ -192,6 +192,62 @@ public class Client implements Runnable {
         return auth;
     }
    
+    private String winner(Request reply)
+    {
+        String status;
+        Request reply = new Request("gameStatus");
+        
+        String gameStatus = req.getData("status");
+        if(gameStatus == "gameOn")
+        {
+            gameturn();
+        }
+        else if (gameStatus == "End")
+        {
+            if(req.containsKey("draw"))
+            {
+                status = draw;
+            }
+            else
+            {   
+                String myStatus = req.getData("winner");
+                if(myStatus == "player1")
+                {
+                    status = player1;
+                }
+                
+                else if(myStatus == "player2")
+                {
+                    status = player2;
+                }
+                
+            }
+
+        }
+        return status;
+    }   
+         
+    private Request requestgame(String opponent)
+    {
+        Request request = new Request("RequestOpponent");
+        request.setData("destination", opponent);
+        
+        sendRequest(request, this);
+        //return request;
+    }
+    
+    private Request respondgame(String opponent, String answer)
+    {
+        Request request = new Request("ReplyOpponent");
+        request.setData("destination", opponent);
+        request.setData("reply", answer);
+        
+        
+         sendRequest(request, this);
+    }
+    
+    public void prepareRequest()
+    {
     //game is created in the accept method
 //    private void sendMove(int xpos, int ypos) {
 //
