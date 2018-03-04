@@ -184,6 +184,7 @@ public class ClientThread implements Runnable
         System.out.println("checked is "+check);
         if(check)
         {
+
             onlinePlayers.put(userName, this);
             PlayersMap.put(userName,player);
             syncPlayersList();
