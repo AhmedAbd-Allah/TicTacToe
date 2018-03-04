@@ -60,11 +60,12 @@ public class PlayersListController implements Initializable {
                 players.add(p);
             });
             table.setItems(players);
-            table.getSelectionModel().selectedItemProperty().addListener((e,x,player) -> {
-                Player p = (Player)player;
+            table.getSelectionModel().selectedItemProperty().addListener((e, x, player) -> {
+                Player p = (Player) player;
                 String name = p.getUsername();
+                System.out.println(name);
                 Request opponent = new Request("RequestOpponent");
-                opponent.setData("opponent", name);
+                opponent.setData("destination", name);
                 client.sendRequest(opponent, client);
                 System.out.println(p.getUsername());
             });

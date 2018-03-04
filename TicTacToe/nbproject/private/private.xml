@@ -3,8 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/Client/Client.java</file>
-            <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/client/Request.java</file>
+            <file>file:/home/MHassan/TicTacToe/TicTacToe/src/controller/OnlinePlayerController.java</file>
+            <file>file:/home/MHassan/TicTacToe/TicTacToe/src/controller/PlayersListController.java</file>
+            <file>file:/home/MHassan/TicTacToe/TicTacToe/src/views/PlayersList.fxml</file>
+            <file>file:/home/MHassan/TicTacToe/TicTacToe/src/tictactoe/TicTacToe.java</file>
+            <file>file:/home/MHassan/TicTacToe/TicTacToe/src/Client/Client.java</file>
+            <file>file:/home/MHassan/TicTacToe/TicTacToe/src/client/Request.java</file>
         </group>
     </open-files>
 </project-private>
