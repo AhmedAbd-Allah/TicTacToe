@@ -15,22 +15,17 @@
             <Image url="@../img/bg1.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="208.0" layoutY="104.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="222.0" layoutY="133.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../img/o.jpeg" />
+            <Image url="@../img/o.png" />
          </image>
       </ImageView>
-      <Label layoutX="194.0" layoutY="63.0" style="-fx-background-color: black;" text="Player Image" textFill="#da1010">
-         <font>
-            <Font size="27.0" />
-         </font>
-      </Label>
-      <Label layoutX="214.0" layoutY="340.0" style="-fx-background-color: black;" text="Player Name" textFill="#dd2222">
+      <Label layoutX="214.0" layoutY="340.0" stylesheets="@twoplayer.css" text="Player Name" textFill="#dd2222">
          <font>
             <Font size="27.0" />
          </font>
       </Label>
       <TextField fx:id="player_name" layoutX="215.0" layoutY="390.0" />
-      <Button fx:id="start_button" layoutX="269.0" layoutY="464.0" mnemonicParsing="false" onAction="#StartHandler" text="Start" />
+      <Button fx:id="start_button" layoutX="203.0" layoutY="464.0" mnemonicParsing="false" onAction="#StartHandler" prefHeight="51.0" prefWidth="170.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="Start" />
    </children>
 </Pane>
