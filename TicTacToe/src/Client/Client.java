@@ -199,6 +199,7 @@ public class Client implements Runnable {
     private void getResponse(Request req) {
         System.out.println("response :"+req.getRequestType());
         if("Successful login".equals(req.getRequestType())
+                || "playersList".equals(req.getRequestType())
                 ||"Successful signup".equals(req.getRequestType())){
 
             auth = true;
@@ -207,7 +208,7 @@ public class Client implements Runnable {
             auth = false;
             //
         }
-        if("playersList".equals(req.getRequestType())){
+        else if("playersList".equals(req.getRequestType())){
             //
             System.out.println(req);
         }

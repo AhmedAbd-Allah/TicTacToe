@@ -65,7 +65,7 @@ public class SignupController implements Initializable {
 
         Client client = Client.getInstance();
         client.signUp(userName, password);
-        //System.out.println("Auth :"+client.isAuth());
+        System.out.println("Auth :"+client.isAuth());
 
         if (client.isAuth()) {
             //  resource = "/views/OnlinePlayer.fxml";
