@@ -185,6 +185,22 @@ public class Client implements Runnable {
     }
 
 
+//    private Request gameTurn() {
+//        Request req = new Request("GameTurn");
+//
+//        req.setData("destination", "");
+//        req.setData("xpos", "0");
+//        req.setData("ypos", "0");
+//
+//        return req;
+//    }
+
+//    public void prepareRequest() {
+//        //check which button clicked to set request type and send it to server
+//        //sendRequest(Request message,this);
+//
+//    }
+
 
     public void sendRequest(Request message, Client th) {
         try {
