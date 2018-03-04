@@ -5,12 +5,21 @@
  */
 package controller;
 
+import Client.Client;
+import Models.Player;
+import client.Request;
+//import static com.sun.xml.internal.fastinfoset.alphabet.BuiltInRestrictedAlphabets.table;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * FXML Controller class
@@ -21,17 +30,51 @@ public class PlayersListController implements Initializable {
 
     @FXML
     private Button back;
+    @FXML
+    private TableView table;
+    @FXML
+    private TableColumn name;
+    @FXML
+    private TableColumn score;
+    ObservableList<Player> players = FXCollections.observableArrayList();
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+        name.setCellValueFactory(
+                new PropertyValueFactory<>("username"));
+        score.setCellValueFactory(
+                new PropertyValueFactory<>("score")
+        );
+
+        Client client = new Client();
+        Request list = client.initateGame();
+        System.out.println(list.getMap());
+        if ("playersList".equals(list.getRequestType())) {
+            players.clear();
+            list.getMap().entrySet().forEach(set -> {
+                int score = Integer.getInteger(set.getValue()) == null ? 0 : 1;
+                Player p = new Player(set.getKey(), score, "x");
+                players.add(p);
+            });
+            table.setItems(players);
+            table.getSelectionModel().selectedItemProperty().addListener((e,x,player) -> {
+                Player p = (Player)player;
+                String name = p.getUsername();
+                Request opponent = new Request("RequestOpponent");
+                opponent.setData("opponent", name);
+                client.sendRequest(opponent, client);
+                System.out.println(p.getUsername());
+            });
+        }
+
+    }
 
     @FXML
     private void backAction(ActionEvent event) {
+
     }
-    
+
 }

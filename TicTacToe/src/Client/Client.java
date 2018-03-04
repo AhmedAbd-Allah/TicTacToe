@@ -151,7 +151,7 @@ public class Client implements Runnable {
         }
     }
     
-    public void initateGame(){
+    public Request initateGame(){
         Request request = new Request("initiateGame");
       
         sendRequest(request, this);
@@ -162,7 +162,7 @@ public class Client implements Runnable {
                 req = (Request) inpObj.readObject();
                 System.out.println(req.getRequestType());
                 getResponse(req);
-                break;
+                return req;
 
             } catch (IOException ex) {
                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
@@ -220,42 +220,42 @@ public class Client implements Runnable {
         return auth;
     }
    
-    private String winner(Request reply)
-    {
-        String status;
-        Request reply = new Request("gameStatus");
-        
-        String gameStatus = req.getData("status");
-        if(gameStatus == "gameOn")
-        {
-            gameturn();
-        }
-        else if (gameStatus == "End")
-        {
-            if(req.containsKey("draw"))
-            {
-                status = draw;
-            }
-            else
-            {   
-                String myStatus = req.getData("winner");
-                if(myStatus == "player1")
-                {
-                    status = player1;
-                }
-                
-                else if(myStatus == "player2")
-                {
-                    status = player2;
-                }
-                
-            }
-
-        }
-        return status;
-    }   
+//    private String winner(Request reply)
+//    {
+//        String status;
+//        Request reply = new Request("gameStatus");
+//        
+//        String gameStatus = req.getData("status");
+//        if(gameStatus == "gameOn")
+//        {
+//            gameturn();
+//        }
+//        else if (gameStatus == "End")
+//        {
+//            if(req.containsKey("draw"))
+//            {
+//                status = draw;
+//            }
+//            else
+//            {   
+//                String myStatus = req.getData("winner");
+//                if(myStatus == "player1")
+//                {
+//                    status = player1;
+//                }
+//                
+//                else if(myStatus == "player2")
+//                {
+//                    status = player2;
+//                }
+//                
+//            }
+//
+//        }
+//        return status;
+//    }   
          
-    private Request requestgame(String opponent)
+    private void requestgame(String opponent)
     {
         Request request = new Request("RequestOpponent");
         request.setData("destination", opponent);
@@ -264,7 +264,7 @@ public class Client implements Runnable {
         //return request;
     }
     
-    private Request respondgame(String opponent, String answer)
+    private void respondgame(String opponent, String answer)
     {
         Request request = new Request("ReplyOpponent");
         request.setData("destination", opponent);
@@ -305,6 +305,6 @@ public class Client implements Runnable {
 //        game.play(xpos, ypos);
 //        myTurn = true;
 //        ///draw on GUI the move
-//    }
+    }
 //    
 }

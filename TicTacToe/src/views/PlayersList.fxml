@@ -16,10 +16,10 @@
             <Image url="@../img/bg1.jpg" />
          </image>
       </ImageView>
-      <TableView layoutX="285.0" layoutY="22.0" prefHeight="547.0" prefWidth="314.0">
+      <TableView fx:id="table" layoutX="285.0" layoutY="22.0" prefHeight="547.0" prefWidth="314.0">
         <columns>
-          <TableColumn prefWidth="160.0" text="User Name" />
-          <TableColumn prefWidth="193.0" text="High Score         " />
+          <TableColumn fx:id="name" prefWidth="160.0" text="User Name" />
+          <TableColumn fx:id="score" prefWidth="193.0" text="High Score         " />
         </columns>
       </TableView>
       <Label layoutX="13.0" layoutY="446.0" style="-fx-background-color: black;" text="Player Name">
