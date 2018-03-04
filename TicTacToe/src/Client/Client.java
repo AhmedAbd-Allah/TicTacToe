@@ -18,7 +18,7 @@ import client.Request;
 
 /**
  *
- * @author rania
+ * @author rania, Ahmed Abdallah
  */
 public class Client implements Runnable {
 

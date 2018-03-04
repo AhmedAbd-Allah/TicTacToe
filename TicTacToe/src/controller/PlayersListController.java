@@ -7,14 +7,20 @@ package controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 
 /**
  * FXML Controller class
  *
  * @author aliaa
  */
-public class OnlineHomeController implements Initializable {
+public class PlayersListController implements Initializable {
+
+    @FXML
+    private Button back;
 
     /**
      * Initializes the controller class.
@@ -23,5 +29,9 @@ public class OnlineHomeController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+
+    @FXML
+    private void backAction(ActionEvent event) {
+    }
     
 }
