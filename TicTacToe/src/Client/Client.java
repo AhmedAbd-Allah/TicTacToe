@@ -33,6 +33,7 @@ public class Client implements Runnable {
     boolean myTurn = true;
 //    Game game = new Game(player1, player2);
     boolean auth = false;
+    private static Client client = new Client();
 
     public Client() {
         try {
@@ -50,9 +51,9 @@ public class Client implements Runnable {
         }
 
     }
-//   public static Client getInstance(){
-//       
-//   }
+   public static Client getInstance(){
+       return client;
+   }
     
     @Override
     public void run()
@@ -173,6 +174,17 @@ public class Client implements Runnable {
         }
     }
 
+    private Request gameTurn() {
+        Request req = new Request("GameTurn");
+
+        req.setData("destination", "");
+        req.setData("xpos", "0");
+        req.setData("ypos", "0");
+
+        return req;
+    }
+
+
 //    private Request gameTurn() {
 //        Request req = new Request("GameTurn");
 //
@@ -189,6 +201,7 @@ public class Client implements Runnable {
 //
 //    }
 
+
     public void sendRequest(Request message, Client th) {
         try {
 
@@ -202,6 +215,7 @@ public class Client implements Runnable {
     private void getResponse(Request req) {
         System.out.println("response :"+req.getRequestType());
         if("Successful login".equals(req.getRequestType())
+                || "playersList".equals(req.getRequestType())
                 ||"Successful signup".equals(req.getRequestType())){
 
             auth = true;
@@ -210,7 +224,7 @@ public class Client implements Runnable {
             auth = false;
             //
         }
-        if("playersList".equals(req.getRequestType())){
+        else if("playersList".equals(req.getRequestType())){
             //
             System.out.println(req);
         }
@@ -262,6 +276,7 @@ public class Client implements Runnable {
         
         sendRequest(request, this);
         //return request;
+        return null;
     }
     
     private void respondgame(String opponent, String answer)
@@ -272,6 +287,7 @@ public class Client implements Runnable {
         
         
          sendRequest(request, this);
+        return null;
     }
     
     public void prepareRequest()
@@ -307,4 +323,9 @@ public class Client implements Runnable {
 //        ///draw on GUI the move
     }
 //    
+}
+
+    private void gameturn() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

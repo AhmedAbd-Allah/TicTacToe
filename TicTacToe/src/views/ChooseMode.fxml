@@ -13,17 +13,17 @@
             <Image url="@../img/bg1.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="one_player" layoutX="200.0" layoutY="128.0" mnemonicParsing="false" onAction="#onePlayerHandler" prefHeight="52.0" prefWidth="216.0" style="-fx-background-color: #A52A2A; -fx-border-color: #000000;" text="Play VS Computer">
+      <Button fx:id="one_player" layoutX="185.0" layoutY="128.0" mnemonicParsing="false" onAction="#onePlayerHandler" prefHeight="52.0" prefWidth="231.0" styleClass="big-yellow" stylesheets="@choosemode.css" text="Play Vs Computer" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="two_player" layoutX="200.0" layoutY="233.0" mnemonicParsing="false" onAction="#twoPlayerHandler" prefHeight="58.0" prefWidth="216.0" style="-fx-background-color: #A52A2A; -fx-border-color: #000000;" text="2Players">
+      <Button fx:id="two_player" layoutX="200.0" layoutY="233.0" mnemonicParsing="false" onAction="#twoPlayerHandler" prefHeight="58.0" prefWidth="216.0" styleClass="big-yellow" stylesheets="@choosemode.css" text="2Players" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="online" layoutX="200.0" layoutY="340.0" mnemonicParsing="false" onAction="#onlinePlayerHandler" prefHeight="52.0" prefWidth="216.0" style="-fx-background-color: #A52A2A; -fx-border-color: #000000;" text="Online">
+      <Button fx:id="online" layoutX="200.0" layoutY="340.0" mnemonicParsing="false" onAction="#onlinePlayerHandler" prefHeight="52.0" prefWidth="216.0" styleClass="big-yellow" stylesheets="@choosemode.css" text="Online" textFill="#d7c9c9">
          <font>
             <Font size="18.0" />
          </font>

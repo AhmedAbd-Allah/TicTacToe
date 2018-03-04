@@ -71,9 +71,10 @@ public class LoginController implements Initializable {
            System.out.println(password);
 
           
-           Client client = new Client();
-           client.login(userName,password);
+           
+           Client client  = Client.getInstance();
            //String resource="/views/login.fxml";
+           client.login(userName,password);
           
 
         if(client.isAuth()){

@@ -15,38 +15,31 @@
             <Image url="@../img/bg1.jpg" />
          </image>
       </ImageView>
-      <Label layoutX="28.0" layoutY="79.0" style="-fx-background-color: black;" text="Player1 Image" textFill="#ab1717">
+      <Label layoutX="66.0" layoutY="329.0" prefHeight="44.0" prefWidth="205.0" stylesheets="@twoplayer.css" text="Player1 Name" textFill="#391207">
          <font>
-            <Font size="27.0" />
+            <Font name="Ubuntu Mono Bold" size="31.0" />
          </font>
       </Label>
-      <Label layoutX="293.0" layoutY="79.0" style="-fx-background-color: black;" text="Player2 Image" textFill="#d02222">
+      <Label layoutX="320.0" layoutY="336.0" stylesheets="@twoplayer.css" text="Player2 Name" textFill="#1e0101">
          <font>
-            <Font size="27.0" />
-         </font>
-      </Label>
-      <Label layoutX="62.0" layoutY="336.0" text="Player1 Name">
-         <font>
-            <Font size="27.0" />
-         </font>
-      </Label>
-      <Label layoutX="320.0" layoutY="336.0" text="Player2 Name">
-         <font>
-            <Font size="27.0" />
+            <Font name="Ubuntu Mono Bold" size="31.0" />
          </font>
       </Label>
       <TextField layoutX="62.0" layoutY="392.0" prefHeight="44.0" prefWidth="205.0" />
       <TextField layoutX="315.0" layoutY="392.0" prefHeight="44.0" prefWidth="194.0" />
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="50.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="129.0" fitWidth="143.0" layoutX="80.0" layoutY="103.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="/img/o.jpeg" />
+            <Image url="@../img/o.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="315.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="136.0" fitWidth="149.0" layoutX="313.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../img/x.png" />
+            <Image url="@../img/x.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="start_button" layoutX="252.0" layoutY="492.0" mnemonicParsing="false" onAction="#startHandler" text="Start" />
+      <Button fx:id="start_button" layoutX="193.0" layoutY="492.0" mnemonicParsing="false" onAction="#startHandler" prefHeight="46.0" prefWidth="194.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="Start" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font></Button>
    </children>
 </Pane>

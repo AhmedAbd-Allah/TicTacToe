@@ -16,26 +16,26 @@
             <Image url="@../img/bg1.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="login" layoutX="182.0" layoutY="340.0" mnemonicParsing="false" onAction="#loginHandler"  onMousePressed="#login" prefHeight="52.0" prefWidth="216.0" style="-fx-background-color: #A52A2A; -fx-border-color: #000000;" text="Login">
+      <Button fx:id="login" layoutX="182.0" layoutY="340.0" mnemonicParsing="false" onAction="#loginHandler" onMousePressed="#login" prefHeight="52.0" prefWidth="216.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="Login">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
       <TextField fx:id="userName" layoutX="184.0" layoutY="155.0" prefHeight="34.0" prefWidth="216.0" />
       <TextField fx:id="password" layoutX="182.0" layoutY="260.0" prefHeight="34.0" prefWidth="222.0" />
-      <Label layoutX="205.0" layoutY="100.0" text="User Name">
+      <Label layoutX="205.0" layoutY="100.0" stylesheets="@twoplayer.css" text="User Name">
          <font>
             <Font size="27.0" />
          </font>
       </Label>
-      <Label layoutX="224.0" layoutY="207.0" text="Password">
+      <Label layoutX="224.0" layoutY="207.0" stylesheets="@twoplayer.css" text="Password">
          <font>
             <Font size="27.0" />
          </font>
       </Label>
-      <Hyperlink fx:id="signup" layoutX="182.0" layoutY="400.0" onAction="#signupHandler" prefHeight="24.0" prefWidth="216.0" text="Don't Have Account" textFill="#a81717">
+      <Hyperlink fx:id="signup" layoutX="186.0" layoutY="399.0" onAction="#signupHandler" prefHeight="42.0" prefWidth="251.0" styleClass="label" stylesheets="@login.css" text="Don't Have Account" textFill="#570404">
          <font>
-            <Font size="20.0" />
+            <Font size="25.0" />
          </font>
       </Hyperlink>
    </children>
