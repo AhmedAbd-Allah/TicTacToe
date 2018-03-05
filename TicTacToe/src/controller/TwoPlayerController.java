@@ -20,6 +20,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import static controller.OnePlayerController.one_player_mode;
+import static controller.OnlinePlayerController.online_mode;
+
 
 /**
  * FXML Controller class
@@ -27,16 +29,19 @@ import static controller.OnePlayerController.one_player_mode;
  * @author aliaa
  */
 public class TwoPlayerController implements Initializable {
-    static String player1="";
-    static String player2="";
+    static String player1Name="";
+    static String player2Name="";
     static boolean two_player_mode=false;
     private Stage stage;
     private Pane root;
-
-    public TextField player1_name;
+    @FXML
+    private TextField player1_name;
+    @FXML
     private TextField player2_name;
     @FXML
     private Button start_button;
+    @FXML
+    private Button back;
 
     /**
      * Initializes the controller class.
@@ -48,25 +53,33 @@ public class TwoPlayerController implements Initializable {
 
     @FXML
     private void startHandler(ActionEvent event) throws IOException {
-//        player1=player1_name.getText();
-//        player2=player2_name.getText();
-//        if((player1.equals(""))||(player2.equals("")))
-//        {
-//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//            alert.setTitle("Information Dialog");
-//            alert.setHeaderText(null);
-//            alert.setContentText("Plaese Fill The Two Name :)");
-//            alert.showAndWait(); 
-//        } 
-//        else 
-//        {
+        player1Name=player1_name.getText();
+        player2Name=player2_name.getText();
+        if((player1Name.equals(""))||(player2Name.equals("")))
+        {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("Plaese Fill The Two Name :)");
+            alert.showAndWait(); 
+        } 
+        else 
+        {
+            two_player_mode=true;
+            one_player_mode=false;
+            online_mode=false;
             stage = (Stage) start_button.getScene().getWindow();
             root = (Pane) FXMLLoader.load(getClass().getResource("/views/GameBoard.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            two_player_mode=true;
-            one_player_mode=false;
-            //online_mode=false;
-     //   }
+       }
+    }
+
+    @FXML
+    private void backHandler(ActionEvent event) throws IOException {
+            stage = (Stage) start_button.getScene().getWindow();
+            root = (Pane) FXMLLoader.load(getClass().getResource("/views/ChooseModeController.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
     }
 }

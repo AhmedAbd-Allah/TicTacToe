@@ -15,17 +15,18 @@
             <Image url="@../img/bg1.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="222.0" layoutY="133.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../img/o.png" />
-         </image>
-      </ImageView>
       <Label layoutX="214.0" layoutY="340.0" stylesheets="@twoplayer.css" text="Player Name" textFill="#dd2222">
          <font>
             <Font size="27.0" />
          </font>
       </Label>
-      <TextField fx:id="player_name" layoutX="215.0" layoutY="390.0" />
-      <Button fx:id="start_button" layoutX="203.0" layoutY="464.0" mnemonicParsing="false" onAction="#StartHandler" prefHeight="51.0" prefWidth="170.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="Start" />
+      <TextField fx:id="player_name" layoutX="196.0" layoutY="380.0" prefHeight="36.0" prefWidth="216.0" />
+      <Button fx:id="start_button" layoutX="320.0" layoutY="481.0" mnemonicParsing="false" onAction="#StartHandler" prefHeight="51.0" prefWidth="170.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="Start" />
+      <Label layoutX="225.0" layoutY="75.0" text="o" textFill="#570404">
+         <font>
+            <Font size="220.0" />
+         </font>
+      </Label>
+      <Button fx:id="back" layoutX="120.0" layoutY="481.0" mnemonicParsing="false" onAction="#backHandler" prefHeight="51.0" prefWidth="170.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="Back" />
    </children>
 </Pane>

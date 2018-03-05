@@ -36,6 +36,8 @@ public class OnePlayerController implements Initializable {
     private TextField player_name;
     @FXML
     private Button start_button;
+    @FXML
+    private Button back;
 
     /**
      * Initializes the controller class.
@@ -47,25 +49,34 @@ public class OnePlayerController implements Initializable {
     @FXML
     private void StartHandler(ActionEvent event) throws IOException{
         
-//        player=player_name.getText();
-//        if(player.equals(""))
-//        {
-//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//            alert.setTitle("Information Dialog");
-//            alert.setHeaderText(null);
-//            alert.setContentText("Plaese Fill Your Name :)");
-//            alert.showAndWait(); 
-//        } 
-//        else 
-//        {
+        player=player_name.getText();
+        if(player.equals(""))
+        {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("Plaese Fill Your Name :)");
+            alert.showAndWait(); 
+        } 
+        else 
+        {
+            one_player_mode=true;
+            two_player_mode=false;
+            online_mode=false;
             stage = (Stage) start_button.getScene().getWindow();
             root = (Pane) FXMLLoader.load(getClass().getResource("/views/GameBoard.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            one_player_mode=true;
-            two_player_mode=false;
-            online_mode=false;
-        //}
+
+        }
+    }
+
+    @FXML
+    private void backHandler(ActionEvent event) throws IOException {
+            stage = (Stage) start_button.getScene().getWindow();
+            root = (Pane) FXMLLoader.load(getClass().getResource("/views/ChooseModeController.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
     }
     
 }

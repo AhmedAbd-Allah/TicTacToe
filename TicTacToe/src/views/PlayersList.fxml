@@ -22,16 +22,16 @@
           <TableColumn fx:id="score" prefWidth="193.0" text="High Score         " />
         </columns>
       </TableView>
-      <Label layoutX="13.0" layoutY="446.0" style="-fx-background-color: black;" text="Player Name">
+      <Label layoutX="13.0" layoutY="446.0" prefHeight="30.0" prefWidth="273.0" stylesheets="@twoplayer.css" text="Player Name :">
          <font>
             <Font size="22.0" />
          </font>
       </Label>
-      <Label layoutX="13.0" layoutY="485.0" prefHeight="16.0" prefWidth="90.0" style="-fx-background-color: black;" text="Score: ">
+      <Label layoutX="13.0" layoutY="485.0" prefHeight="30.0" prefWidth="179.0" stylesheets="@twoplayer.css" text="Score: ">
          <font>
             <Font size="19.0" />
          </font>
       </Label>
-      <Button fx:id="back" layoutX="-3.0" mnemonicParsing="false" onAction="#backAction" prefHeight="24.0" prefWidth="99.0" style="-fx-background-color: #A52A2A; -fx-border-color: #000000;" text="Back" />
+      <Button fx:id="back" layoutX="4.0" layoutY="22.0" mnemonicParsing="false" onAction="#backAction" prefHeight="51.0" prefWidth="119.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="Back" />
    </children>
 </Pane>

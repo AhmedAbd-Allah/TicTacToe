@@ -325,6 +325,7 @@ public class Client implements Runnable {
     public boolean isAuth() {
         return auth;
     }
+}
 
 //    private String winner(Request reply)
 //    {
@@ -368,6 +369,29 @@ public class Client implements Runnable {
 //        sendRequest(request, this);
 //    }
 //    public void prepareRequest() {
+         
+//    private void requestgame(String opponent)
+//    {
+//        Request request = new Request("RequestOpponent");
+//        request.setData("destination", opponent);
+//        
+//        sendRequest(request, this);
+//        //return request;
+//        return null;
+//    }
+//    
+//    private void respondgame(String opponent, String answer)
+//    {
+//        Request request = new Request("ReplyOpponent");
+//        request.setData("destination", opponent);
+//        request.setData("reply", answer);
+//        
+//        
+//         sendRequest(request, this);
+//        return null;
+//    }
+    
+
     //game is created in the accept method
 //    private void sendMove(int xpos, int ypos) {
 //
@@ -398,7 +422,7 @@ public class Client implements Runnable {
 //        ///draw on GUI the move
 //    }
 //    
-}
+
 
 //    private void gameturn() {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

@@ -65,10 +65,11 @@ public class OnePlayer {
         //freeCells = IntStream.of(board).filter((x -> x == -1)).toArray();
         for (int i = 0; i < board.length; i++) {
             if( board[i] == -1){
+                System.out.println("free cell : "+i);
                 freeCells[ind++] = i;
             }
         }
-
+        
         int perfectCell = getResult(freeCells);
         return perfectCell;
     }
@@ -80,24 +81,21 @@ public class OnePlayer {
      */
     public int getResult(int[] freeCells){
         //when computer plays in given cell
-
+        
         int cellIndex = freeCells[index++];
-                
-        System.out.println("cell index = "+cellIndex);
-
         dummyBoard[cellIndex] = 1;
         
-        int defenseIndex = defense();
-                System.out.println("defense() = "+defense()+"\n\n");
-
-        if(defenseIndex !=-1 && getWinner(dummyBoard) != 1){
-            return defenseIndex;
-        }
 
         if( getWinner(dummyBoard) == 1 || gameEnded(dummyBoard) || cellIndex == 8 || index == 8) {
-            System.out.println("cell index = "+cellIndex);
             initDummyBoard();
             return cellIndex;
+        }
+        
+        //here i reversed order of getWinner with defense to enable user to win
+        //in some cases
+        int defenseIndex = defense();
+        if(defenseIndex !=-1 && getWinner(dummyBoard) != 1){
+            return defenseIndex;
         }
         
         return getResult(freeCells);
@@ -268,14 +266,21 @@ public class OnePlayer {
             cellIndex=8;
         }
         int perfectCell=-1;
+        
+        System.out.println("cellindex = == "+cellIndex+ " "+board[cellIndex]);
         if(board[cellIndex]==-1)
         {
+            //player turn
             board[cellIndex] = 0;
             seti(board[cellIndex],cellIndex);
-            perfectCell = getBestMove();
-            board[perfectCell] = 1;
-            seti(board[perfectCell],perfectCell);
-            initDummyBoard();
+            
+            //computer turn
+            if(!gameEnded(board)){
+                perfectCell = getBestMove();
+                board[perfectCell] = 1;
+                seti(board[perfectCell],perfectCell);
+                initDummyBoard();
+            }
         }
         
         
@@ -294,7 +299,7 @@ public class OnePlayer {
             alert.setContentText("Looooooooser :(");
             alert.showAndWait(); 
             System.exit(1);
-       }else if(getWinner(board) ==0){
+       }else if(getWinner(board) == 0){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information Dialog");
             alert.setHeaderText(null);
@@ -302,8 +307,14 @@ public class OnePlayer {
             alert.showAndWait(); 
             System.exit(1);
        }
-       else {
+       else if (gameEnded(board)){
             System.out.println("Tie");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("Tie");
+            alert.showAndWait(); 
+            System.exit(1);
        }
     }
     public void seti(int player,int cell)
