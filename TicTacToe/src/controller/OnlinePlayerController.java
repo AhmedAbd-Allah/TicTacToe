@@ -28,8 +28,8 @@ import javafx.stage.Stage;
  */
 public class OnlinePlayerController implements Initializable {
     static boolean online_mode=false ;
-    Stage stage;
-    Pane root;
+    public static Stage homeStage;
+    public static Pane homeRoot;
     @FXML
     private Button initiate;
     @FXML
@@ -41,20 +41,23 @@ public class OnlinePlayerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+//        Client client  = Client.getInstance();
+//        client.handleInvitation();
     }    
 
     @FXML
     private void intiateHandler(ActionEvent event) throws IOException {
          //send initateGame request to server
-
+                homeStage = (Stage) initiate.getScene().getWindow();
         Client client  = Client.getInstance();
-        client.initateGame();
+        client.initiateHome();
+        
+        
         
         //move to the next scene
-        stage = (Stage) initiate.getScene().getWindow();
-        root = (Pane) FXMLLoader.load(getClass().getResource("/views/PlayersList.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
+//        homeRoot = (Pane) FXMLLoader.load(getClass().getResource("/views/PlayersList.fxml"));
+//        Scene scene = new Scene(homeRoot);
+//        homeStage.setScene(scene);
 
     }
 

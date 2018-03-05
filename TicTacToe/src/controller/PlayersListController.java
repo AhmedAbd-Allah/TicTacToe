@@ -36,40 +36,44 @@ public class PlayersListController implements Initializable {
     private TableColumn name;
     @FXML
     private TableColumn score;
-    ObservableList<Player> players = FXCollections.observableArrayList();
-
+    public static ObservableList<Player> players = FXCollections.observableArrayList();
+    public static TableView tableView;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        tableView = table;
         name.setCellValueFactory(
                 new PropertyValueFactory<>("username"));
         score.setCellValueFactory(
                 new PropertyValueFactory<>("score")
         );
 
-        Client client = new Client();
-        Request list = client.initateGame();
-        System.out.println(list.getMap());
-        if ("playersList".equals(list.getRequestType())) {
-            players.clear();
-            list.getMap().entrySet().forEach(set -> {
-                int score = Integer.getInteger(set.getValue()) == null ? 0 : 1;
-                Player p = new Player(set.getKey(), score, "x");
-                players.add(p);
-            });
-            table.setItems(players);
-            table.getSelectionModel().selectedItemProperty().addListener((e, x, player) -> {
-                Player p = (Player) player;
-                String name = p.getUsername();
-                System.out.println(name);
-                Request opponent = new Request("RequestOpponent");
-                opponent.setData("destination", name);
-                client.sendRequest(opponent, client);
-                System.out.println(p.getUsername());
-            });
-        }
+//        Client client = Client.getInstance();
+//        Request list = client.initiateHomeResponse();
+//        System.out.println(list.getMap());
+//        if ("playersList".equals(list.getRequestType())) {
+//            players.clear();
+//            list.getMap().entrySet().forEach(set -> {
+//                if (!set.getKey().equals(client.player.getUsername())) {
+//                    int score = Integer.getInteger(set.getValue()) == null ? 0 : 1;
+//                    Player p = new Player(set.getKey(), score, "x");
+//                    players.add(p);
+//                }
+//                });
+//            table.setItems(players);
+//            table.getSelectionModel().selectedItemProperty().addListener((e, x, player) -> {
+//                Player p = (Player) player;
+//                String name = p.getUsername();
+//                System.out.println(name);
+//                Request opponent = new Request("RequestOpponent");
+//                opponent.setData("destination", name);
+//                client.sendRequest(opponent, client);
+////                client.handleInvitation();
+//                System.out.println(p.getUsername());
+//            });
+//        }
 
     }
 
