@@ -38,12 +38,6 @@ public class ClientThread implements Runnable {
     public Thread th;
 
     public ClientThread(Socket s) {
-//        player = new Player("mohamed",211,"jkknjk");
-//        onlinePlayers.put("mohamed",this);
-//        PlayersMap.put("mohamed",player);
-//        syncPlayersList();
-//        System.out.println(player);
-        System.out.println("before starting 1");
         try {
             inpObj = new ObjectInputStream(s.getInputStream());
             outObj = new ObjectOutputStream(s.getOutputStream());
@@ -58,11 +52,8 @@ public class ClientThread implements Runnable {
     @Override
     public void run() {
         try {
-            System.out.println("running thread");
             while (true) {
-                System.out.print("run method");
                 Request req = (Request) inpObj.readObject();
-                System.out.println(req.getRequestType());
                 requestRedirection(req);
             }
         } catch (Exception e) {

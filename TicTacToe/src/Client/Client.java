@@ -122,8 +122,9 @@ public class Client implements Runnable {
         } else if ("playersList".equals(reqType)) {
             System.out.println("initiate home redirection fnc");
             initiateHomeResponse(req);
-//        } else if ("RequestOpponent".equals(reqType)) {
-//            requestGame(req);
+        } else if ("RequestGame".equals(reqType)) {
+            System.out.println(reqType);
+            requestGame(req);
 //        } else if ("ReplyOpponent".equals(reqType)) {
 //            respondGame(req);
 //        }
@@ -228,7 +229,6 @@ public class Client implements Runnable {
                         opponent.setData("destination", name);
                         sendRequest(opponent, this);
                         System.out.println(opponent.getRequestType());
-//                client.handleInvitation();
                         System.out.println(p.getUsername());
                     });
                 } catch (Exception e) {
@@ -238,70 +238,61 @@ public class Client implements Runnable {
                 System.out.println(OnlinePlayerController.homeRoot);
             });
         }
-    } //    public void handleInvitation() {
-    //        while (true) {
-    //            Request invt;
-    //            try {
-    //                invt = (Request) inpObj.readObject();
-    //                if (invt.getRequestType().equals("RequestGame")) {
-    //                    System.out.println(invt.getRequestType());
-    //                    getResponse(invt);
-    //                    String src = invt.getData("source");
-    //                    Platform.runLater(() -> {
-    //                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, src + " wants to play with you", ButtonType.NO, ButtonType.YES);
-    //                        if (alert.showAndWait().get() == ButtonType.YES) {
-    //                            System.out.println("accepted");
-    //                        } else {
-    //                            System.out.println("rejected");
-    //                        }
-    //                    });
-    //                }
-    //                break;
-    //
-    //            } catch (IOException ex) {
-    //                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-    //            } catch (ClassNotFoundException ex) {
-    //                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-    //            }
-    //        }
-    //
-    //    }
-    //
-    //    private Request gameTurn() {
-    //        Request req = new Request("GameTurn");
-    //
-    //        req.setData("destination", "");
-    //        req.setData("xpos", "0");
-    //        req.setData("ypos", "0");
-    //
-    //        return req;
-    //    }
-    //    private Request gameTurn() {
-    //        Request req = new Request("GameTurn");
-    //
-    //        req.setData("destination", "");
-    //        req.setData("xpos", "0");
-    //        req.setData("ypos", "0");
-    //
-    //        return req;
-    //    }
-    //    public void prepareRequest() {
-    //        //check which button clicked to set request type and send it to server
-    //        //sendRequest(Request message,this);
-    //
-    //    }
+    }
 
+    public void requestGame(Request req) {
+        if (req.getRequestType().equals("RequestGame")) {
+            System.out.println(req.getRequestType());
+            String src = req.getData("source");
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, src + " wants to play with you", ButtonType.NO, ButtonType.YES);
+                if (alert.showAndWait().get() == ButtonType.YES) {
+                    System.out.println("accepted");
+                    Request invitationReply = new Request("InvitationAccepted");
+                } else {
+                    System.out.println("rejected");
+                    Request invitationReply = new Request("InvitationRejected");
 
+                }
+            });
 
+//        } catch (Exception ex) {
+//            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+//    }
+        }
+    }
+
+//    private Request gameTurn() {
+//        Request req = new Request("GameTurn");
+//
+//        req.setData("destination", "");
+//        req.setData("xpos", "0");
+//        req.setData("ypos", "0");
+//
+//        return req;
+//    }
+//    private Request gameTurn() {
+//        Request req = new Request("GameTurn");
+//
+//        req.setData("destination", "");
+//        req.setData("xpos", "0");
+//        req.setData("ypos", "0");
+//
+//        return req;
+//    }
+//    public void prepareRequest() {
+//        //check which button clicked to set request type and send it to server
+//        //sendRequest(Request message,this);
+//
+//    }
     public void sendRequest(Request message, Client th) {
         try {
 
             th.outObj.writeObject(message);
-        
 
-} catch (IOException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(Client.class
-.getName()).log(Level.SEVERE, null, ex);
+                    .getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -369,7 +360,6 @@ public class Client implements Runnable {
 //        sendRequest(request, this);
 //    }
 //    public void prepareRequest() {
-         
 //    private void requestgame(String opponent)
 //    {
 //        Request request = new Request("RequestOpponent");
@@ -390,9 +380,7 @@ public class Client implements Runnable {
 //         sendRequest(request, this);
 //        return null;
 //    }
-    
-
-    //game is created in the accept method
+//game is created in the accept method
 //    private void sendMove(int xpos, int ypos) {
 //
 //        if (myTurn) {
@@ -422,8 +410,6 @@ public class Client implements Runnable {
 //        ///draw on GUI the move
 //    }
 //    
-
-
 //    private void gameturn() {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 //    }
