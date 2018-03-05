@@ -30,8 +30,8 @@ import javafx.stage.Stage;
  * @author aliaa
  */
 public class LoginController implements Initializable {
-    Stage stage;
-    Pane root;
+    public static Stage stage;
+    public static Pane root;
     @FXML
     private Button login;
     @FXML
@@ -77,26 +77,26 @@ public class LoginController implements Initializable {
            client.login(userName,password);
           
 
-        if(client.isAuth()){
-                 //resource = "/views/OnlinePlayer.fxml";
-             
-            stage = (Stage) login.getScene().getWindow();
-            try {
-                root = (Pane) FXMLLoader.load(getClass().getResource("/views/OnlinePlayer.fxml"));
-            } catch (IOException ex) {
-                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-        }else{
-            //@TODO
-            //display alert with Wrong username or password
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Information Dialog");
-            alert.setHeaderText(null);
-            alert.setContentText("Invalid User Name Or Password");
-            alert.showAndWait(); 
-        }
+//        if(client.isAuth()){
+//                 //resource = "/views/OnlinePlayer.fxml";
+//             
+//            stage = (Stage) login.getScene().getWindow();
+//            try {
+//                root = (Pane) FXMLLoader.load(getClass().getResource("/views/OnlinePlayer.fxml"));
+//            } catch (IOException ex) {
+//                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//                Scene scene = new Scene(root);
+//                stage.setScene(scene);
+//        }else{    
+//            //@TODO
+//            //display alert with Wrong username or password
+//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//            alert.setTitle("Information Dialog");
+//            alert.setHeaderText("Invalid Data");
+//            alert.setContentText("Invalid User Name Or Password");
+//            alert.showAndWait(); 
+//        }
                   
     }
 }

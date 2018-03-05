@@ -39,6 +39,8 @@ public class ChooseModeController implements Initializable {
     private Button two_player;
     @FXML
     private Button online;
+    @FXML
+    private Button exit;
 
 
     /**
@@ -72,6 +74,11 @@ public class ChooseModeController implements Initializable {
         root = (Pane) FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
+    }
+
+    @FXML
+    private void exitHandler(ActionEvent event) {
+        System.exit(1);
     }
 
 

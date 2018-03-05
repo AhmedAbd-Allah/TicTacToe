@@ -31,19 +31,13 @@ public class ClientThread implements Runnable {
     private Player player1;
     private Player player2;
     private Request req;
-    public Player player = new Player("mohamed",266,"sdfsd");
+    public Player player = new Player("mohamed", 266, "sdfsd");
     private Game game;
     public static HashMap<String, ClientThread> onlinePlayers = new HashMap<String, ClientThread>();
     public static HashMap<String, Player> PlayersMap = new HashMap<String, Player>();
     public Thread th;
 
     public ClientThread(Socket s) {
-//        player = new Player("mohamed",211,"jkknjk");
-//        onlinePlayers.put("mohamed",this);
-//        PlayersMap.put("mohamed",player);
-//        syncPlayersList();
-//        System.out.println(player);
-        System.out.println("before starting 1");
         try {
             inpObj = new ObjectInputStream(s.getInputStream());
             outObj = new ObjectOutputStream(s.getOutputStream());
@@ -58,10 +52,8 @@ public class ClientThread implements Runnable {
     @Override
     public void run() {
         try {
-            System.out.println("running thread");
             while (true) {
                 Request req = (Request) inpObj.readObject();
-                System.out.println(req.getRequestType());
                 requestRedirection(req);
             }
         } catch (Exception e) {
@@ -86,8 +78,12 @@ public class ClientThread implements Runnable {
             requestGame(req);
         } else if ("ReplyOpponent".equals(reqType)) {
             respondGame(req);
-        } else if ("initiateGame".equals(reqType)) {
+        } else if ("initiateHome".equals(reqType)) {
             initGame(req);
+        } else if ("InvitationAccepted".equals(reqType)) {
+//            startGame(req);
+        } else if ("InvitationRejected".equals(reqType)) {
+//            stopGame(req);
         }
 
     }
@@ -110,7 +106,7 @@ public class ClientThread implements Runnable {
                     Request loginSuccess = new Request("Successful login");
                     sendRequest(loginSuccess, this);
                     sendToAll(loginSuccess);
-                    syncPlayersList();
+//                    syncPlayersList();
 
                 };
 
@@ -150,9 +146,9 @@ public class ClientThread implements Runnable {
 
             onlinePlayers.put(userName, this);
             PlayersMap.put(userName, player);
-            syncPlayersList();
-//            Request signupSuccess = new Request("Successful signup");
-//            sendRequest(signupSuccess, this);
+//            syncPlayersList();
+            Request signupSuccess = new Request("Successful signup");
+            sendRequest(signupSuccess, this);
 //            Request AddedPlayer = new Request("addPlayer");
 //            AddedPlayer.setplayer(userName, player);
 //            this.sendToAll(AddedPlayer);
@@ -166,14 +162,12 @@ public class ClientThread implements Runnable {
 
     private void requestGame(Request recieved) {
         String dest = recieved.getData("destination");
-        System.out.println(dest);
-        System.out.println(player);
-//        String src = onlinePlayers.get(dest).
-//        ClientThread opponent = onlinePlayers.get(dest);
-
-//        Request sendReq = new Request("RequestGame");
-//        sendReq.setData("source", src);
-//        sendRequest(sendReq, opponent);
+        String src = player.getUsername();
+        System.out.println("Source: "+src+" Destination: "+dest);
+        ClientThread opponent = onlinePlayers.get(dest);
+        Request sendReq = new Request("RequestGame");
+        sendReq.setData("source", src);
+        sendRequest(sendReq, opponent);
     }
 
     private Request respondGame(Request response) {
@@ -238,20 +232,22 @@ public class ClientThread implements Runnable {
     }
 
     private void initGame(Request req) {
+        System.out.println("hello from init");
         Request playersList = new Request("playersList");
         PlayersMap.entrySet().forEach((playerSet) -> {
-           
-                System.out.println("started");
+            String name1= playerSet.getKey();
+            String name2= this.player.getUsername();
+            if(!name1.equals(name2))
+            {
+                System.out.println(name1+" not equals "+name2);
                 Player p = playerSet.getValue();
                 String name = playerSet.getKey();
                 int scoreInt = playerSet.getValue().getScore();
                 String score = Integer.toString(scoreInt);
-                System.out.println("player value: " + p);
-                System.out.println("player name: " + name);
                 playersList.setData(name, score);
-                System.out.println("finished");
-
-//            playersList.setPlayer(playerSet.getKey(), playerSet.getValue());
+            }else{
+                System.out.println(name1+" equals "+name2);
+            }
         });
         sendRequest(playersList, this);
 
@@ -279,21 +275,21 @@ public class ClientThread implements Runnable {
 
     public static void syncPlayersList() {
         Request playersList = new Request("playersList");
-        System.out.println("before for each");
+//        System.out.println("before for each");
         PlayersMap.entrySet().forEach((playerSet) -> {
-            System.out.println("started");
+//            System.out.println("started");
             Player p = playerSet.getValue();
             String name = playerSet.getKey();
             int scoreInt = playerSet.getValue().getScore();
             String score = Integer.toString(scoreInt);
-            System.out.println("player value: " + p);
-            System.out.println("player name: " + name);
+//            System.out.println("player value: " + p);
+//            System.out.println("player name: " + name);
             playersList.setData(name, score);
-            System.out.println("finished");
+//            System.out.println("finished");
 
 //            playersList.setPlayer(playerSet.getKey(), playerSet.getValue());
         });
-        System.out.println("finished iteration");
+//        System.out.println("finished iteration");
         sendToAll(playersList);
     }
 }

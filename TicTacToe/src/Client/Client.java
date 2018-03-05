@@ -6,20 +6,32 @@
 package Client;
 
 import Models.Player;
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintStream;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import client.Request;
-import static controller.GameBoardController.*;
+import static controller.GameBoardController.grid;
+import static controller.GameBoardController.imagex;
+import controller.LoginController;
+import static controller.LoginController.root;
+import controller.OnlinePlayerController;
+import controller.PlayersListController;
+import controller.SignupController;
+import static controller.SignupController.signupRoot;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+
 /**
  *
  * @author rania, Ahmed Abdallah
@@ -31,7 +43,7 @@ public class Client implements Runnable {
     ObjectInputStream inpObj;
     ObjectOutputStream outObj;
     Request req;
-    Player player;
+    public Player player;
     Player player1;
     Player player2;
     boolean myTurn = true;
@@ -54,14 +66,21 @@ public class Client implements Runnable {
         }
 
     }
-   public static Client getInstance(){
-       return client;
-   }
-    
+
+    public static Client getInstance() {
+        return client;
+    }
+
     @Override
-    public void run()
-    {
-        
+    public void run() {
+        while (true) {
+            try {
+                Request message = (Request) inpObj.readObject();
+                requestRedirection(message);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
 //    private void startListening() {
@@ -83,110 +102,165 @@ public class Client implements Runnable {
 //            }
 //        }).start();
 //    }
-
-
     private void requestRedirection(Request req) {
         String reqType = req.getRequestType();
-
-//        if ("Login".equals(reqType)) {
-//            System.out.println("login");
-//            login(req);
-//        } else if (req.getRequestType().equals("SignUp")) {
+        System.out.println("before condition: " + reqType);
+        System.out.println("hello " + reqType);
+        if ("Successful login".equals(reqType)) {
+            System.out.println("after condition: " + reqType);
+            loginResponse(req);
+        } else if (req.getRequestType().equals("failed login")) {
+            loginResponse(req);
 //            signUp(req);
-//        } else if ("LogOut".equals(reqType)) {
-//            logOut(req);
-//        } else if ("GameTurn".equals(reqType)) {
-//            gameTurn(req);
-//        } else if ("RequestOpponent".equals(reqType)) {
-//            requestGame(req);
+        } else if ("Successful signup".equals(req.getRequestType())) {
+            System.out.println("in condition: " + reqType);
+            signUpResponse(req);
+        } else if ("failed signup".equals(req.getRequestType())) {
+            System.out.println("in condition: " + reqType);
+            signUpResponse(req);
+        } else if ("playersList".equals(reqType)) {
+            System.out.println("initiate home redirection fnc");
+            initiateHomeResponse(req);
+        } else if ("RequestGame".equals(reqType)) {
+            System.out.println(reqType);
+            requestGame(req);
 //        } else if ("ReplyOpponent".equals(reqType)) {
 //            respondGame(req);
 //        }
-    }
-    
-    public void signUp(String userName,String password){
-         Request request = new Request("SignUp");
-           request.setData("userName", userName);
-           request.setData("password", password);           
-
-           sendRequest(request, this);
-           System.out.println(2);
-           while(true)
-            {
-                Request req;
-             try {
-
-                req = (Request) inpObj.readObject();
-                System.out.println(req.getRequestType());
-                getResponse(req);
-               break;
-                
-             } catch (IOException ex) {
-                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-             } catch (ClassNotFoundException ex) {
-                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-             }
-                
-
-            }
-
         }
-    
+    }
+
     public void login(String userName, String password) {
         Request request = new Request("Login");
         request.setData("userName", userName);
         request.setData("password", password);
+        player = new Player(userName, 0, password);
         System.out.println("before request");
         sendRequest(request, this);
-        while (true) {
-            Request req;
-            try {
-                req = (Request) inpObj.readObject();
-                System.out.println(req.getRequestType());
-                getResponse(req);
-                break;
+    }
 
-            } catch (IOException ex) {
-                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
+    private void loginResponse(Request req) {
+        if ("Successful login".equals(req.getRequestType())) {
+            Platform.runLater(() -> {
+                try {
+                    LoginController.root = (Pane) FXMLLoader.load(getClass().getResource("/views/OnlinePlayer.fxml"));
+                    System.out.println("loaded: " + root);
+                    Scene scene = new Scene(root);
+                    LoginController.stage.setScene(scene);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        } else {
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText("Invalid Data");
+                alert.setContentText("Invalid User Name Or Password");
+                alert.showAndWait();
+            });
         }
     }
-    
-    public Request initateGame(){
-        Request request = new Request("initiateGame");
-      
+
+    public void signUp(String userName, String password) {
+        Request request = new Request("SignUp");
+        request.setData("userName", userName);
+        request.setData("password", password);
+        player = new Player(userName, 0, password);
         sendRequest(request, this);
-        //wait for response
-        while (true) {
-            Request req;
-            try {
-                req = (Request) inpObj.readObject();
-                System.out.println(req.getRequestType());
-                getResponse(req);
-                return req;
+    }
 
-            } catch (IOException ex) {
-                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
+    private void signUpResponse(Request req) {
+        System.out.println("sign up");
+        if ("Successful signup".equals(req.getRequestType())) {
+            Platform.runLater(() -> {
+                try {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Dialog");
+                    alert.setHeaderText("Congratualtions");
+                    alert.setContentText("Sign up was completed succefully, please login now");
+                    alert.showAndWait();
+                    SignupController.signupRoot = (Pane) FXMLLoader.load(getClass().getResource("/views/OnlinePlayer.fxml"));
+                    Scene signup = new Scene(signupRoot);
+                    SignupController.signupStage.setScene(signup);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        } else {
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Sorry");
+                alert.setHeaderText("Sign up failed");
+                alert.setContentText("Username already exists");
+                alert.showAndWait();
+            });
         }
     }
 
-    private Request gameTurn() {
-        Request req = new Request("GameTurn");
-
-        req.setData("destination", "");
-        req.setData("xpos", "0");
-        req.setData("ypos", "0");
-
-        return req;
+    public void initiateHome() {
+        Request request = new Request("initiateHome");
+        System.out.println("initiate home fnc");
+        sendRequest(request, this);
     }
 
+    public void initiateHomeResponse(Request req) {
+        if ("playersList".equals(req.getRequestType())) {
+            Platform.runLater(() -> {
+                PlayersListController.players.clear();
+                req.getMap().entrySet().forEach(set -> {
+                    if (!set.getKey().equals(this.player.getUsername())) {
+                        int score = Integer.getInteger(set.getValue()) == null ? 0 : 1;
+                        Player p = new Player(set.getKey(), score, "x");
+                        PlayersListController.players.add(p);
+                    }
+                });
+                try {
+                    OnlinePlayerController.homeRoot = (Pane) FXMLLoader.load(getClass().getResource("/views/PlayersList.fxml"));
+                    Scene homescene = new Scene(OnlinePlayerController.homeRoot);
+                    OnlinePlayerController.homeStage.setScene(homescene);
+                    PlayersListController.tableView.setItems(PlayersListController.players);
+                    PlayersListController.tableView.getSelectionModel().selectedItemProperty().addListener((e, x, player) -> {
+                        Player p = (Player) player;
+                        String name = p.getUsername();
+                        System.out.println(name);
+                        Request opponent = new Request("RequestOpponent");
+                        opponent.setData("destination", name);
+                        sendRequest(opponent, this);
+                        System.out.println(opponent.getRequestType());
+                        System.out.println(p.getUsername());
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                System.out.println(OnlinePlayerController.homeRoot);
+            });
+        }
+    }
+
+    public void requestGame(Request req) {
+        if (req.getRequestType().equals("RequestGame")) {
+            System.out.println(req.getRequestType());
+            String src = req.getData("source");
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, src + " wants to play with you", ButtonType.NO, ButtonType.YES);
+                if (alert.showAndWait().get() == ButtonType.YES) {
+                    System.out.println("accepted");
+                    Request invitationReply = new Request("InvitationAccepted");
+                    invitationReply.setData("destination", src);
+                } else {
+                    System.out.println("rejected");
+                    Request invitationReply = new Request("InvitationRejected");
+                    invitationReply.setData("destination", src);
+                }
+            });
+
+//        } catch (Exception ex) {
+//            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+//    }
+        }
+    }
 
 //    private Request gameTurn() {
 //        Request req = new Request("GameTurn");
@@ -197,46 +271,53 @@ public class Client implements Runnable {
 //
 //        return req;
 //    }
-
+//    private Request gameTurn() {
+//        Request req = new Request("GameTurn");
+//
+//        req.setData("destination", "");
+//        req.setData("xpos", "0");
+//        req.setData("ypos", "0");
+//
+//        return req;
+//    }
 //    public void prepareRequest() {
 //        //check which button clicked to set request type and send it to server
 //        //sendRequest(Request message,this);
 //
 //    }
-
-
     public void sendRequest(Request message, Client th) {
         try {
 
             th.outObj.writeObject(message);
+
         } catch (IOException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Client.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
-    private void getResponse(Request req) {
-        System.out.println("response :"+req.getRequestType());
-        if("Successful login".equals(req.getRequestType())
-                || "playersList".equals(req.getRequestType())
-                ||"Successful signup".equals(req.getRequestType())){
-
-            auth = true;
-        } else if ("failed login".equals(req.getRequestType())
-                || "failed signup".equals(req.getRequestType())) {
-            auth = false;
-            //
-        }
-        else if("playersList".equals(req.getRequestType())){
-            //
-            System.out.println(req);
-        }
-    }
-
+//    private void getResponse(Request req) {
+//        System.out.println("response :" + req.getRequestType());
+//        if ("Successful login".equals(req.getRequestType())
+//                || "playersList".equals(req.getRequestType())
+//                || "Successful signup".equals(req.getRequestType())) {
+//
+//            auth = true;
+//        } else if ("failed login".equals(req.getRequestType())
+//                || "failed signup".equals(req.getRequestType())) {
+//            auth = false;
+//            //
+//        } else if ("playersList".equals(req.getRequestType())) {
+//            //
+//            System.out.println(req);
+//        }
+//    }
     public boolean isAuth() {
         return auth;
     }
-   
+
+
 //    private String winner(Request reply)
 //    {
 //        String status;
@@ -271,7 +352,14 @@ public class Client implements Runnable {
 //        }
 //        return status;
 //    }   
-         
+//    private void respondgame(String opponent, String answer) {
+//        Request request = new Request("ReplyOpponent");
+//        request.setData("destination", opponent);
+//        request.setData("reply", answer);
+//
+//        sendRequest(request, this);
+//    }
+//    public void prepareRequest() {
 //    private void requestgame(String opponent)
 //    {
 //        Request request = new Request("RequestOpponent");
@@ -292,10 +380,7 @@ public class Client implements Runnable {
 //         sendRequest(request, this);
 //        return null;
 //    }
-    
-    public void prepareRequest()
-    {
-    //game is created in the accept method
+//game is created in the accept method
 //    private void sendMove(int xpos, int ypos) {
 //
 //        if (myTurn) {
@@ -317,7 +402,7 @@ public class Client implements Runnable {
 //            //alert wait for your opponent
 //        }
 //    }
-    }
+    
 
     private void recieveMove(Request move) {
         int xpos = new Integer(move.getPosition("xpos"));
@@ -370,3 +455,4 @@ public class Client implements Runnable {
     }
 
 }
+

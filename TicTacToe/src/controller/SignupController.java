@@ -30,8 +30,8 @@ import javafx.stage.Stage;
  */
 public class SignupController implements Initializable {
 
-    Stage stage;
-    Pane root;
+    public static Stage signupStage;
+    public static Pane signupRoot;
     @FXML
     private Button signup;
     @FXML
@@ -50,10 +50,10 @@ public class SignupController implements Initializable {
     @FXML
     private void signupHandler(ActionEvent event) throws IOException {
         System.out.println("Handeler");
-        //  stage = (Stage) signup.getScene().getWindow();
-//        root = (Pane) FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
-//        Scene scene = new Scene(root);
-//        stage.setScene(scene);
+        signupStage = (Stage) signup.getScene().getWindow();
+//        signupRoot = (Pane) FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
+//        Scene scene = new Scene(signupRoot);
+//        signupStage.setScene(scene);
     }
 
     @FXML
@@ -65,32 +65,6 @@ public class SignupController implements Initializable {
 
         Client client = Client.getInstance();
         client.signUp(userName, password);
-        System.out.println("Auth :"+client.isAuth());
-
-        if (client.isAuth()) {
-            //  resource = "/views/OnlinePlayer.fxml";
-
-            stage = (Stage) signup.getScene().getWindow();
-
-            try {
-                root = (Pane) FXMLLoader.load(getClass().getResource("/views/OnlinePlayer.fxml"));
-                System.out.println("change scene");
-            } catch (IOException ex) {
-                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-
-        } else {
-            // @TODO
-            // display alert with already exists username
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Information Dialog");
-            alert.setHeaderText(null);
-            alert.setContentText("User Name Is Already Exist");
-            alert.showAndWait();
-        }
-
     }
 
 }

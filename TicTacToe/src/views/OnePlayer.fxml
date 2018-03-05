@@ -28,5 +28,10 @@
          </font>
       </Label>
       <Button fx:id="back" layoutX="120.0" layoutY="481.0" mnemonicParsing="false" onAction="#backHandler" prefHeight="51.0" prefWidth="170.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="Back" />
+      <ImageView fitHeight="142.0" fitWidth="440.0" layoutX="80.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/logo.gif" />
+         </image>
+      </ImageView>
    </children>
 </Pane>
