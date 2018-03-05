@@ -13,20 +13,26 @@
             <Image url="@../img/bg1.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="one_player" layoutX="185.0" layoutY="128.0" mnemonicParsing="false" onAction="#onePlayerHandler" prefHeight="52.0" prefWidth="231.0" styleClass="big-yellow" stylesheets="@choosemode.css" text="Play Vs Computer" textFill="WHITE">
+      <Button fx:id="one_player" layoutX="185.0" layoutY="156.0" mnemonicParsing="false" onAction="#onePlayerHandler" prefHeight="52.0" prefWidth="231.0" styleClass="big-yellow" stylesheets="@choosemode.css" text="Play Vs Computer" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="two_player" layoutX="185.0" layoutY="233.0" mnemonicParsing="false" onAction="#twoPlayerHandler" prefHeight="58.0" prefWidth="231.0" styleClass="big-yellow" stylesheets="@choosemode.css" text="2Players" textFill="WHITE">
+      <Button fx:id="two_player" layoutX="185.0" layoutY="229.0" mnemonicParsing="false" onAction="#twoPlayerHandler" prefHeight="58.0" prefWidth="231.0" styleClass="big-yellow" stylesheets="@choosemode.css" text="2Players" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="online" layoutX="197.0" layoutY="340.0" mnemonicParsing="false" onAction="#onlinePlayerHandler" prefHeight="52.0" prefWidth="219.0" styleClass="big-yellow" stylesheets="@choosemode.css" text="Online" textFill="#d7c9c9">
+      <Button fx:id="online" layoutX="179.0" layoutY="312.0" mnemonicParsing="false" onAction="#onlinePlayerHandler" prefHeight="52.0" prefWidth="231.0" styleClass="big-yellow" stylesheets="@choosemode.css" text="Online" textFill="#d7c9c9">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
+      <Button fx:id="exit" layoutX="185.0" layoutY="392.0" mnemonicParsing="false" onAction="#exitHandler" prefHeight="51.0" prefWidth="231.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="Exit" />
+      <ImageView fitHeight="142.0" fitWidth="440.0" layoutX="76.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/logo.gif" />
+         </image>
+      </ImageView>
    </children>
 </Pane>
