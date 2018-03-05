@@ -58,7 +58,6 @@ public class Client implements Runnable {
             outObj = new ObjectOutputStream(mySocket.getOutputStream());
             inpObj = new ObjectInputStream(mySocket.getInputStream());
             System.out.println(mySocket);
-//            startListening();
             th = new Thread(this);
             th.start();
 
@@ -84,25 +83,6 @@ public class Client implements Runnable {
         }
     }
 
-//    private void startListening() {
-//        new Thread(() -> {
-//            while (true) {
-//                try {
-//                    Request message = (Request) inpObj.readObject();
-//                    requestRedirection(message);
-//                } catch (Exception ex) {
-//                    ex.printStackTrace();
-//                    break;
-//                }
-//            }
-//            try {
-//                mySocket.close();
-//                outObj.close();
-//                inpObj.close();
-//            } catch (IOException ex) {
-//            }
-//        }).start();
-//    }
     private void requestRedirection(Request req) {
         String reqType = req.getRequestType();
         System.out.println("before condition: " + reqType);
@@ -129,6 +109,9 @@ public class Client implements Runnable {
             startGame(req);
         } else if ("stopGame".equals(reqType)) {
             stopGame(req);
+        } else if ("UpdatePlayersList".equals(reqType)) {
+            System.out.println("updateList");
+            updatePlayersList(req);
         }
     }
 
@@ -218,20 +201,23 @@ public class Client implements Runnable {
                     }
                 });
                 try {
-                    OnlinePlayerController.homeRoot = (Pane) FXMLLoader.load(getClass().getResource("/views/PlayersList.fxml"));
-                    Scene homescene = new Scene(OnlinePlayerController.homeRoot);
-                    OnlinePlayerController.homeStage.setScene(homescene);
-                    PlayersListController.tableView.setItems(PlayersListController.players);
-                    PlayersListController.tableView.getSelectionModel().selectedItemProperty().addListener((e, x, player) -> {
-                        Player p = (Player) player;
-                        String name = p.getUsername();
-                        System.out.println(name);
-                        Request opponent = new Request("RequestOpponent");
-                        opponent.setData("destination", name);
-                        sendRequest(opponent, this);
-                        System.out.println(opponent.getRequestType());
-                        System.out.println(p.getUsername());
-                    });
+                    if (OnlinePlayerController.homeStage != null) {
+                        OnlinePlayerController.homeRoot = (Pane) FXMLLoader.load(getClass().getResource("/views/PlayersList.fxml"));
+                        Scene homescene = new Scene(OnlinePlayerController.homeRoot);
+                        OnlinePlayerController.homeStage.setScene(homescene);
+                        PlayersListController.tableView.setItems(PlayersListController.players);
+                        PlayersListController.tableView.getSelectionModel().selectedItemProperty().addListener((e, x, player) -> {
+                            Player p = (Player) player;
+                            String name = p.getUsername();
+                            System.out.println(name);
+                            Request opponent = new Request("RequestOpponent");
+                            opponent.setData("destination", name);
+                            sendRequest(opponent, this);
+                            System.out.println(opponent.getRequestType());
+                            System.out.println(p.getUsername());
+                        });
+                    }
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -273,7 +259,11 @@ public class Client implements Runnable {
                 System.out.println("start Game new fnc");
                 OnlinePlayerController.homeRoot = (Pane) FXMLLoader.load(getClass().getResource("/views/GameBoard.fxml"));
                 Scene homescene = new Scene(OnlinePlayerController.homeRoot);
-                OnlinePlayerController.homeStage.setScene(homescene);
+                if (OnlinePlayerController.homeStage != null) {
+                    OnlinePlayerController.homeStage.setScene(homescene);
+                } else {
+                    LoginController.stage.setScene(homescene);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -288,7 +278,7 @@ public class Client implements Runnable {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Reply to Game Invitation");
                 alert.setHeaderText("Sorry");
-                alert.setContentText(opponent+" is Busy now, try with someone else");
+                alert.setContentText(opponent + " is Busy now, try with someone else");
                 alert.showAndWait();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -297,6 +287,10 @@ public class Client implements Runnable {
         });
     }
 
+    public void updatePlayersList(Request req) {
+        System.out.println("updateList2");
+        initiateHome();
+    }
 //    private Request gameTurn() {
 //        Request req = new Request("GameTurn");
 //
@@ -320,6 +314,7 @@ public class Client implements Runnable {
 //        //sendRequest(Request message,this);
 //
 //    }
+
     public void sendRequest(Request message, Client th) {
         try {
 
@@ -332,22 +327,6 @@ public class Client implements Runnable {
 
     }
 
-//    private void getResponse(Request req) {
-//        System.out.println("response :" + req.getRequestType());
-//        if ("Successful login".equals(req.getRequestType())
-//                || "playersList".equals(req.getRequestType())
-//                || "Successful signup".equals(req.getRequestType())) {
-//
-//            auth = true;
-//        } else if ("failed login".equals(req.getRequestType())
-//                || "failed signup".equals(req.getRequestType())) {
-//            auth = false;
-//            //
-//        } else if ("playersList".equals(req.getRequestType())) {
-//            //
-//            System.out.println(req);
-//        }
-//    }
     public boolean isAuth() {
         return auth;
     }

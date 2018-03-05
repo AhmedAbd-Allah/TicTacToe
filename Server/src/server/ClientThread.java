@@ -105,7 +105,8 @@ public class ClientThread implements Runnable {
                     PlayersMap.put(userName, player);
                     Request loginSuccess = new Request("Successful login");
                     sendRequest(loginSuccess, this);
-                    sendToAll(loginSuccess);
+                    Request updatePlayersList = new Request("UpdatePlayersList");
+                    sendToAll(updatePlayersList);
 //                    syncPlayersList();
 
                 };
