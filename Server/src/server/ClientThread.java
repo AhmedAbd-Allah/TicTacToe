@@ -80,6 +80,7 @@ public class ClientThread implements Runnable {
         } else if ("LogOut".equals(reqType)) {
             logOut(req);
         } else if ("GameTurn".equals(reqType)) {
+     //  } else if ("gameStatus".equals(reqType)) {
             gameTurn(req);
         } else if ("RequestOpponent".equals(reqType)) {
             requestGame(req);
@@ -199,35 +200,40 @@ public class ClientThread implements Runnable {
         ClientThread player2th = onlinePlayers.get(dest);
         int xpos = turn.getPosition("xpos");
         int ypos = turn.getPosition("ypos");
-        Player result = game.play(xpos, ypos);
+        String winnerName = game.play(xpos, ypos);
         Request reply = new Request("gameStatus");
-        if (result == game.gameOn) {
+        if (winnerName == null) {
             reply.setData("status", "gameOn");
-            sendRequest(reply, this);
-            sendRequest(reply, player2th);
-        } else if (result == player1) {
+//            sendRequest(reply, this);
+//            sendRequest(reply, player2th);
+        } else if (winnerName.equals(player1.getUsername())) {
             reply.setData("status", "End");
             reply.setPlayer("winner", player1);
             reply.setPlayer("loser", player2);
             game = null;
-            sendRequest(reply, this);
-            sendRequest(reply, player2th);
-        } else if (result == game.player2) {
+//            sendRequest(reply, this);
+//            sendRequest(reply, player2th);
+        } else if (winnerName.equals(player2.getUsername()))  {
             reply.setData("status", "End");
             reply.setPlayer("winner", player2);
             reply.setPlayer("loser", player1);
             game = null;
-            sendRequest(reply, this);
-            sendRequest(reply, player2th);
-        } else if (result == game.draw) {
+//            sendRequest(reply, this);
+//            sendRequest(reply, player2th);
+        } else if (winnerName.equals("draw")) {
             reply.setData("status", "End");
             reply.setData("draw", "draw");
             game = null;
-            sendRequest(reply, this);
-            sendRequest(reply, player2th);
+//            sendRequest(reply, this);
+//            sendRequest(reply, player2th);
         } else {
             reply.setData("status", "invalidMove");
         }
+        reply.setData("xpos", String.valueOf(xpos).toString());        
+        reply.setData("ypos", String.valueOf(ypos).toString());
+
+         sendRequest(reply, this);
+         sendRequest(reply, player2th);
 
     }
 

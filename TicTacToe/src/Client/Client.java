@@ -15,7 +15,11 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import client.Request;
-
+import static controller.GameBoardController.*;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 /**
  *
  * @author rania, Ahmed Abdallah
@@ -37,7 +41,6 @@ public class Client implements Runnable {
 
     public Client() {
         try {
-            System.out.println(new Request("Hnan"));
             mySocket = new Socket("127.0.0.1", 5000);
             outObj = new ObjectOutputStream(mySocket.getOutputStream());
             inpObj = new ObjectInputStream(mySocket.getInputStream());
@@ -314,18 +317,56 @@ public class Client implements Runnable {
 //            //alert wait for your opponent
 //        }
 //    }
+    }
 
-//    private void recieveMove(Request move) {
-//        int xpos = move.getPosition("xpos");
-//        int ypos = move.getPosition("ypos");
-//        game.play(xpos, ypos);
-//        myTurn = true;
-//        ///draw on GUI the move
+    private void recieveMove(Request move) {
+        int xpos = new Integer(move.getPosition("xpos"));
+        int ypos = new Integer(move.getPosition("ypos"));
+        myTurn = true;
+        
+//     //draw on GUI the move
+        Node s = getNodeByRowColumnIndex(xpos, ypos, grid);
+        ImageView img ;
+        img=(ImageView)s;
+        img.setImage(imagex);
+        
+        //send request of type GameTurn to client
+        
     }
 //    
 
 
     private void gameturn() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //recieve request of type gameStatus
+       //update board with client move
+       
+       //send request of type GameTurn to client
     }
+    
+    private Node getNodeByRowColumnIndex(final int row,  final int column, GridPane gridPane) {
+        Node result =null;
+        ObservableList<Node> childrens = gridPane.getChildren();
+        
+        for (Node node : childrens) {
+            
+            Integer colIndex = GridPane.getColumnIndex(node);
+            Integer rowIndex = GridPane.getRowIndex(node);
+
+            if(rowIndex==null)
+            {
+                rowIndex=0;
+            }
+            if(colIndex==null)
+            {
+                colIndex=0;
+            }
+                if (rowIndex == row && colIndex == column) {
+                    result = node;
+                    break;
+                }
+        }
+
+        return result;
+    }
+
 }
