@@ -77,8 +77,8 @@ public class TwoPlayerController implements Initializable {
 
     @FXML
     private void backHandler(ActionEvent event) throws IOException {
-            stage = (Stage) start_button.getScene().getWindow();
-            root = (Pane) FXMLLoader.load(getClass().getResource("/views/ChooseModeController.fxml"));
+            stage = (Stage) back.getScene().getWindow();
+            root = (Pane) FXMLLoader.load(getClass().getResource("/views/ChooseMode.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
     }

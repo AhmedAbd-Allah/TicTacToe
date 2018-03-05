@@ -39,6 +39,7 @@ import static controller.OnePlayerController.player;
 import static controller.TwoPlayerController.player1Name;
 import static controller.TwoPlayerController.player2Name;
 import static controller.TwoPlayerController.two_player_mode;
+import javafx.scene.layout.Pane;
 //import static tictactoe.TwoPlayerController.two_player;
 
 /**
@@ -62,6 +63,9 @@ public class GameBoardController implements Initializable {
     private Label player2;
     @FXML
     private Label player1;
+    @FXML
+    private Pane winnerpane;
+    public static Pane win;
     //GridPane s;
     /**
      * Initializes the controller class.
@@ -70,6 +74,7 @@ public class GameBoardController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         p1= new OnePlayer();
         p2 = new TwoPlayer();
+        win=winnerpane;
 
         imagex = new Image(getClass().getResource("/img/x.jpg").toExternalForm());
         imageo = new Image(getClass().getResource("/img/o.png").toExternalForm());
