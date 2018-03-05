@@ -83,14 +83,10 @@ public class OnePlayer {
         //when computer plays in given cell
         
         int cellIndex = freeCells[index++];
-                
-       // System.out.println("cell index = "+cellIndex);
-
         dummyBoard[cellIndex] = 1;
         
 
         if( getWinner(dummyBoard) == 1 || gameEnded(dummyBoard) || cellIndex == 8 || index == 8) {
-   //         System.out.println("cell index = "+cellIndex);
             initDummyBoard();
             return cellIndex;
         }
@@ -98,8 +94,6 @@ public class OnePlayer {
         //here i reversed order of getWinner with defense to enable user to win
         //in some cases
         int defenseIndex = defense();
-           //     System.out.println("defense() = "+defense()+"\n\n");
-
         if(defenseIndex !=-1 && getWinner(dummyBoard) != 1){
             return defenseIndex;
         }

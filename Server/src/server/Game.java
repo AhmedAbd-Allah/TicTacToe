@@ -15,7 +15,7 @@ import Models.Player;
 public class Game {
     public Player player1;
     public Player player2;
-    public Player gameOn;
+    public static Player gameOn;
     public Player draw;
     private static int move = 0;
     private int [][] gridboard= new int [3][3];
@@ -77,7 +77,7 @@ public class Game {
             System.out.println("player x win");
             return player2;
         }
-        
+        //player1 , player2 , gameOn is null references !!
         return gameOn;
     }
 
