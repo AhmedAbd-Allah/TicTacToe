@@ -79,6 +79,10 @@ public class ClientThread implements Runnable {
             respondGame(req);
         } else if ("initiateHome".equals(reqType)) {
             initGame(req);
+        } else if ("InvitationAccepted".equals(reqType)) {
+//            startGame(req);
+        } else if ("InvitationRejected".equals(reqType)) {
+//            stopGame(req);
         }
 
     }

@@ -249,10 +249,11 @@ public class Client implements Runnable {
                 if (alert.showAndWait().get() == ButtonType.YES) {
                     System.out.println("accepted");
                     Request invitationReply = new Request("InvitationAccepted");
+                    invitationReply.setData("destination", src);
                 } else {
                     System.out.println("rejected");
                     Request invitationReply = new Request("InvitationRejected");
-
+                    invitationReply.setData("destination", src);
                 }
             });
 
