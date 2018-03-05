@@ -18,7 +18,7 @@ import java.util.HashMap;
 import Models.Player;
 import static server.Server.db;
 import client.Request;
-
+import server.Game;
 /**
  *
  * @author MHassan
@@ -31,7 +31,7 @@ public class ClientThread implements Runnable {
     private Player player1;
     private Player player2;
     private Request req;
-    public Player player = new Player("mohamed", 266, "sdfsd");
+    public Player player;
     private Game game;
     public static HashMap<String, ClientThread> onlinePlayers = new HashMap<String, ClientThread>();
     public static HashMap<String, Player> PlayersMap = new HashMap<String, Player>();
@@ -81,9 +81,10 @@ public class ClientThread implements Runnable {
         } else if ("initiateHome".equals(reqType)) {
             initGame(req);
         } else if ("InvitationAccepted".equals(reqType)) {
-//            startGame(req);
+            System.out.println("InvitationAccepted");
+            startGame(req);
         } else if ("InvitationRejected".equals(reqType)) {
-//            stopGame(req);
+            stopGame(req);
         }
 
     }
@@ -163,7 +164,7 @@ public class ClientThread implements Runnable {
     private void requestGame(Request recieved) {
         String dest = recieved.getData("destination");
         String src = player.getUsername();
-        System.out.println("Source: "+src+" Destination: "+dest);
+        System.out.println("Source: " + src + " Destination: " + dest);
         ClientThread opponent = onlinePlayers.get(dest);
         Request sendReq = new Request("RequestGame");
         sendReq.setData("source", src);
@@ -235,22 +236,53 @@ public class ClientThread implements Runnable {
         System.out.println("hello from init");
         Request playersList = new Request("playersList");
         PlayersMap.entrySet().forEach((playerSet) -> {
-            String name1= playerSet.getKey();
-            String name2= this.player.getUsername();
-            if(!name1.equals(name2))
-            {
-                System.out.println(name1+" not equals "+name2);
+            String name1 = playerSet.getKey();
+            String name2 = this.player.getUsername();
+            if (!name1.equals(name2)) {
+                System.out.println(name1 + " not equals " + name2);
                 Player p = playerSet.getValue();
                 String name = playerSet.getKey();
                 int scoreInt = playerSet.getValue().getScore();
                 String score = Integer.toString(scoreInt);
                 playersList.setData(name, score);
-            }else{
-                System.out.println(name1+" equals "+name2);
+            } else {
+                System.out.println(name1 + " equals " + name2);
             }
         });
         sendRequest(playersList, this);
 
+    }
+
+    private void startGame(Request req) {
+        System.out.println("hello from start game");
+        String dest = req.getData("destination");
+        String src = this.player.getUsername();
+        Request startGame = new Request("startGame");
+        startGame.setData("player1", dest);
+        startGame.setData("player2", src);
+        ClientThread player1Th = onlinePlayers.get(dest);
+        player1 = onlinePlayers.get(dest).player;
+        player2 = this.player;
+        game = new Game(player1, player2);
+        onlinePlayers.get(dest).game = game;
+        sendRequest(startGame, this);
+        sendRequest(startGame, player1Th);
+    }
+    
+    private void stopGame(Request req) {
+        System.out.println("hello from stop game");
+        String dest = req.getData("destination");
+        String src = this.player.getUsername();
+        Request startGame = new Request("stopGame");
+        startGame.setData("player1", src);
+//        startGame.setData("player2", src);
+        ClientThread player1Th = onlinePlayers.get(dest);
+//        player1 = onlinePlayers.get(dest).player;
+//        player2 = this.player;
+//        game = new Game(player1, player2);
+//        onlinePlayers.get(dest).game = game;
+//        sendRequest(startGame, this);
+        sendRequest(startGame, player1Th);
     }
 
     public static void sendRequest(Request message, ClientThread th) {

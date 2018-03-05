@@ -124,9 +124,10 @@ public class Client implements Runnable {
         } else if ("RequestGame".equals(reqType)) {
             System.out.println(reqType);
             requestGame(req);
-//        } else if ("ReplyOpponent".equals(reqType)) {
-//            respondGame(req);
-//        }
+        } else if ("startGame".equals(reqType)) {
+            startGame(req);
+        } else if ("stopGame".equals(reqType)) {
+            stopGame(req);
         }
     }
 
@@ -245,14 +246,17 @@ public class Client implements Runnable {
             String src = req.getData("source");
             Platform.runLater(() -> {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, src + " wants to play with you", ButtonType.NO, ButtonType.YES);
+                Request invitationReply;
                 if (alert.showAndWait().get() == ButtonType.YES) {
                     System.out.println("accepted");
-                    Request invitationReply = new Request("InvitationAccepted");
+                    invitationReply = new Request("InvitationAccepted");
                     invitationReply.setData("destination", src);
+                    sendRequest(invitationReply, this);
                 } else {
                     System.out.println("rejected");
-                    Request invitationReply = new Request("InvitationRejected");
+                    invitationReply = new Request("InvitationRejected");
                     invitationReply.setData("destination", src);
+                    sendRequest(invitationReply, this);
                 }
             });
 
@@ -260,6 +264,36 @@ public class Client implements Runnable {
 //            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
 //    }
         }
+    }
+
+    public void startGame(Request req) {
+        Platform.runLater(() -> {
+            try {
+                System.out.println("start Game new fnc");
+                OnlinePlayerController.homeRoot = (Pane) FXMLLoader.load(getClass().getResource("/views/GameBoard.fxml"));
+                Scene homescene = new Scene(OnlinePlayerController.homeRoot);
+                OnlinePlayerController.homeStage.setScene(homescene);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        });
+    }
+
+    public void stopGame(Request req) {
+        Platform.runLater(() -> {
+            try {
+                String opponent = req.getData("player1");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Reply to Game Invitation");
+                alert.setHeaderText("Sorry");
+                alert.setContentText(opponent+" is Busy now, try with someone else");
+                alert.showAndWait();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        });
     }
 
 //    private Request gameTurn() {
