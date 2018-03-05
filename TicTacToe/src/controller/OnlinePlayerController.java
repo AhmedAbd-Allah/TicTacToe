@@ -7,7 +7,7 @@ package controller;
 
 
 import Client.Client;
-
+import client.Request;
 import java.io.IOException;
 
 import java.net.URL;
@@ -44,11 +44,9 @@ public class OnlinePlayerController implements Initializable {
     }    
 
     @FXML
-
-       
-
     private void intiateHandler(ActionEvent event) throws IOException {
          //send initateGame request to server
+
         Client client  = Client.getInstance();
         client.initateGame();
         

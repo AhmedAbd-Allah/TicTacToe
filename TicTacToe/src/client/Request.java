@@ -74,4 +74,10 @@ public class Request implements Serializable {
     {
         positions.put(axis, pos);
     }
+    
+    public HashMap<String,String> getMap()
+    {
+        
+        return this.data;
+    }
 }

@@ -3,7 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/home/rania/data/ITI/Courses/24.Java%20Programming/project/Project%20/TicTacToe/TicTacToe/src/Client/Client.java</file>
+=======
+            <file>file:/home/aliaa/Desktop/TicTacToe/TicTacToe/src/controller/OnlinePlayerController.java</file>
+            <file>file:/home/aliaa/Desktop/TicTacToe/TicTacToe/src/controller/OnePlayerController.java</file>
+            <file>file:/home/aliaa/Desktop/TicTacToe/TicTacToe/src/views/twoplayer.css</file>
+            <file>file:/home/aliaa/Desktop/TicTacToe/TicTacToe/src/controller/TwoPlayerController.java</file>
+            <file>file:/home/aliaa/Desktop/TicTacToe/TicTacToe/src/controller/ChooseModeController.java</file>
+            <file>file:/home/aliaa/Desktop/TicTacToe/TicTacToe/src/controller/GameBoardController.java</file>
+>>>>>>> 9caf3856a7581b6c967779a153a96336a9384a6e
         </group>
     </open-files>
 </project-private>

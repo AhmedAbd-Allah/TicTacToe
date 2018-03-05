@@ -25,19 +25,23 @@ import javafx.stage.Stage;
  */
 public class ClientDemo extends Application {
     
+    public int x;
     @Override
     public void start(Stage primaryStage) {
         Button btn = new Button();
         btn.setText("Say 'Hello World'");
+        x = 1;
         btn.setOnAction(new EventHandler<ActionEvent>() {
             
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("Hello World!");
-                new DemoThread();
+//                new DemoThread();
             }
         });
-        
+        x();
+        y();
+        System.out.println(x);
         StackPane root = new StackPane();
         root.getChildren().add(btn);
         
@@ -48,6 +52,13 @@ public class ClientDemo extends Application {
         primaryStage.show();
     }
     
+    public void x(){
+        System.out.println(x);
+    }
+    public void y(){
+        x=2;
+        System.out.println(x);
+    }
 
     /**
      * @param args the command line arguments
@@ -58,30 +69,30 @@ public class ClientDemo extends Application {
     
 }
 
-class DemoThread implements Runnable
-{
-    Thread th;
-    public DemoThread() {
-        try{
-            Socket s = new Socket(InetAddress.getLocalHost(),5000);
-            ObjectOutputStream dos = new ObjectOutputStream(s.getOutputStream());
-            ObjectInputStream dis = new ObjectInputStream(s.getInputStream());
-            
-            System.out.println("DemoThread");
-            th = new Thread(this);
-            th.start();
-
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-    
-    @Override
-    public void run()
-    {
-        System.out.println("runThread");
-
-    }
-}
+//class DemoThread implements Runnable
+//{
+//    Thread th;
+//    public DemoThread() {
+//        try{
+//            Socket s = new Socket(InetAddress.getLocalHost(),5000);
+//            ObjectOutputStream dos = new ObjectOutputStream(s.getOutputStream());
+//            ObjectInputStream dis = new ObjectInputStream(s.getInputStream());
+//            
+//            System.out.println("DemoThread");
+//            th = new Thread(this);
+//            th.start();
+//
+//        }
+//        catch(Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//    }
+//    
+//    @Override
+//    public void run()
+//    {
+//        System.out.println("runThread");
+//
+//    }
+//}

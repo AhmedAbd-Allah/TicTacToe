@@ -152,7 +152,7 @@ public class Client implements Runnable {
         }
     }
     
-    public void initateGame(){
+    public Request initateGame(){
         Request request = new Request("initiateGame");
       
         sendRequest(request, this);
@@ -163,7 +163,7 @@ public class Client implements Runnable {
                 req = (Request) inpObj.readObject();
                 System.out.println(req.getRequestType());
                 getResponse(req);
-                break;
+                return req;
 
             } catch (IOException ex) {
                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
@@ -269,26 +269,26 @@ public class Client implements Runnable {
 //        return status;
 //    }   
          
-    private Request requestgame(String opponent)
-    {
-        Request request = new Request("RequestOpponent");
-        request.setData("destination", opponent);
-        
-        sendRequest(request, this);
-        //return request;
-        return null;
-    }
-    
-    private Request respondgame(String opponent, String answer)
-    {
-        Request request = new Request("ReplyOpponent");
-        request.setData("destination", opponent);
-        request.setData("reply", answer);
-        
-        
-         sendRequest(request, this);
-        return null;
-    }
+//    private void requestgame(String opponent)
+//    {
+//        Request request = new Request("RequestOpponent");
+//        request.setData("destination", opponent);
+//        
+//        sendRequest(request, this);
+//        //return request;
+//        return null;
+//    }
+//    
+//    private void respondgame(String opponent, String answer)
+//    {
+//        Request request = new Request("ReplyOpponent");
+//        request.setData("destination", opponent);
+//        request.setData("reply", answer);
+//        
+//        
+//         sendRequest(request, this);
+//        return null;
+//    }
     
     public void prepareRequest()
     {
@@ -321,9 +321,9 @@ public class Client implements Runnable {
 //        game.play(xpos, ypos);
 //        myTurn = true;
 //        ///draw on GUI the move
-//    }
+    }
 //    
-}
+
 
     private void gameturn() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
