@@ -3,9 +3,23 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/home/rania/data/ITI/Courses/24.Java%20Programming/project/Project%20/TicTacToe/TicTacToe/src/Client/Client.java</file>
             <file>file:/home/rania/data/ITI/Courses/24.Java%20Programming/project/Project%20/TicTacToe/TicTacToe/src/Client/Game.java</file>
             <file>file:/home/rania/data/ITI/Courses/24.Java%20Programming/project/Project%20/TicTacToe/TicTacToe/src/tictactoe/TicTacToe.java</file>
+=======
+            <file>file:/home/aliaa/Desktop/TicTacToe/TicTacToe/src/controller/OnePlayerController.java</file>
+            <file>file:/home/aliaa/Desktop/TicTacToe/TicTacToe/src/tictactoe/TicTacToe.java</file>
+            <file>file:/home/aliaa/Desktop/TicTacToe/TicTacToe/src/tictactoe/TwoPlayer.java</file>
+            <file>file:/home/aliaa/Desktop/TicTacToe/TicTacToe/src/controller/TwoPlayerController.java</file>
+            <file>file:/home/aliaa/Desktop/TicTacToe/TicTacToe/src/controller/ChooseModeController.java</file>
+            <file>file:/home/aliaa/Desktop/TicTacToe/TicTacToe/src/controller/GameBoardController.java</file>
+            <file>file:/home/aliaa/TicTacToe/TicTacToe/src/controller/OnlinePlayerController.java</file>
+            <file>file:/home/aliaa/TicTacToe/TicTacToe/src/controller/LoginController.java</file>
+            <file>file:/home/aliaa/TicTacToe/TicTacToe/src/tictactoe/TicTacToe.java</file>
+            <file>file:/home/aliaa/TicTacToe/TicTacToe/src/Client/Client.java</file>
+            <file>file:/home/aliaa/TicTacToe/TicTacToe/src/controller/ChooseModeController.java</file>
+>>>>>>> e2e247b9f92e94c37f34fb369700e3ec01fe0de3
         </group>
     </open-files>
 </project-private>

@@ -39,7 +39,9 @@ import static controller.OnePlayerController.player;
 import static controller.TwoPlayerController.player1Name;
 import static controller.TwoPlayerController.player2Name;
 import static controller.TwoPlayerController.two_player_mode;
+import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 //import static tictactoe.TwoPlayerController.two_player;
 
 /**
@@ -48,7 +50,8 @@ import javafx.scene.layout.Pane;
  * @author aliaa
  */
 public class GameBoardController implements Initializable {
-    BorderPane root;
+    Pane root;
+    Stage stage;
     public static Image imagex;
     public static Image imageo;
     public static Node source;
@@ -66,6 +69,23 @@ public class GameBoardController implements Initializable {
     @FXML
     private Pane winnerpane;
     public static Pane win;
+    @FXML
+    private Button close;
+    @FXML
+    private Label winnerName;
+    public static Label winName;
+    @FXML
+    private Button newGame;
+    @FXML
+    private Pane loserpane;
+    public static Pane lose;
+    @FXML
+    private Button close1;
+    @FXML
+    private Label loserName;
+    public static Label loseName;
+    @FXML
+    private Button newGame1;
     //GridPane s;
     /**
      * Initializes the controller class.
@@ -75,6 +95,10 @@ public class GameBoardController implements Initializable {
         p1= new OnePlayer();
         p2 = new TwoPlayer();
         win=winnerpane;
+        lose=loserpane;
+        winName=winnerName;
+        System.out.println(winName);
+        loseName=loserName;
 
         imagex = new Image(getClass().getResource("/img/x.jpg").toExternalForm());
         imageo = new Image(getClass().getResource("/img/o.png").toExternalForm());
@@ -135,5 +159,21 @@ public class GameBoardController implements Initializable {
     //       }
                 //getNodeByRowColumnIndex(1, 1, gridborder);
 
+    }
+
+    @FXML
+    private void closeHandler(ActionEvent event) throws IOException {
+        stage = (Stage) close.getScene().getWindow();
+        root = (Pane) FXMLLoader.load(getClass().getResource("/views/ChooseMode.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+    }
+
+    @FXML
+    private void newGameHandler(ActionEvent event) throws IOException {
+        stage = (Stage) newGame.getScene().getWindow();
+        root = (Pane) FXMLLoader.load(getClass().getResource("/views/GameBoard.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
     }
         }
