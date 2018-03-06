@@ -5,7 +5,6 @@ package controllers;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import Models.Player;
 import java.net.ServerSocket;
 import java.net.URL;
@@ -25,29 +24,33 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import server.*;
+
 /**
  *
  * @author MHassan
  */
 public class ServerAppController implements Initializable {
-    
+
     Server serverSoc;
     private final int PORT_NUM = 5000;
-    @FXML private TableView<Player> table;
-    @FXML private TableColumn userName;
-    @FXML private TableColumn status;
-    @FXML private TableColumn score;
-    @FXML private ObservableList<Player> data;
+    @FXML
+    private TableView<Player> table;
+    @FXML
+    private TableColumn userName;
+    @FXML
+    private TableColumn status;
+    @FXML
+    private TableColumn score;
+    @FXML
+    private ObservableList<Player> data;
     private boolean running = false;
-    ObservableList<Player> players = FXCollections.observableArrayList();
+    public static ObservableList<Player> players = FXCollections.observableArrayList();
+    public static TableView tableView;
 
-    
     @FXML
     public void startEndServer(ActionEvent event) {
-        try
-        {
-            if(!running)
-            {
+        try {
+            if (!running) {
                 System.out.println(running);
                 serverSoc = new Server(PORT_NUM);
                 System.out.println(serverSoc);
@@ -55,45 +58,28 @@ public class ServerAppController implements Initializable {
                 System.out.println(running);
                 running = true;
                 System.out.println(running);
-                showPlayersList();
-//                System.out.println(server);
-
-            }
-            else
-            {
+            } else {
                 running = false;
                 System.out.println(running);
                 serverSoc.stopServer();
             }
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
 //            e.printStackTrace();
-        }       
+        }
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("You initialized me!");
-        
+        tableView = table;
         userName.setCellValueFactory(
-            new PropertyValueFactory<>("username"));
+                new PropertyValueFactory<>("username"));
         score.setCellValueFactory(
-            new PropertyValueFactory<>("score")
+                new PropertyValueFactory<>("score")
         );
 //        status.setCellValueFactory(
 //            new PropertyValueFactory<>("status")
 //        );
-        data=FXCollections.observableArrayList();
+        data = FXCollections.observableArrayList();
     }
-    
-    
-    public void showPlayersList(){
-        players.clear();
-        ClientThread.onlinePlayers.entrySet().forEach((player) -> {
-            players.add(player.getValue().player);
-        });
-        table.setItems(players);
-    }
-    
 }
