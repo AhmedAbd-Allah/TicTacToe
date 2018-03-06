@@ -62,7 +62,7 @@ public class Client implements Runnable {
     
 
     boolean auth = false;
-    private static Client client = new Client();
+    public static Client client = new Client();
 
     public Client() {
         try {

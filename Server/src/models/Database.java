@@ -177,10 +177,37 @@ public boolean insertUser(String userName,String password,int score)
 	}
 }
 
+public void insertMoves (String gameMoves, int gameID)
+        {
+            try
+	{
+		con = connection.Connect_to();
+		stmt = con.createStatement() ;
+		queryString = new String("update game set moves = '"+gameMoves+"' where game_id = '"+gameID+"'");
+		rs = stmt.executeQuery(queryString) ;
+		
+	}
+	catch(SQLException ex)
+				{
+					ex.printStackTrace();
+				}
+        }
 
-
-
-
+public void createGame (int user1ID, int user2ID)
+{
+     try
+	{
+		con = connection.Connect_to();
+		stmt = con.createStatement() ;
+		queryString = new String("insert into game (user1_id, user2_id) values ('"+user1ID+"', '"+user2ID+"')");
+		rs = stmt.executeQuery(queryString);
+		
+	}
+	catch(SQLException ex)
+				{
+					ex.printStackTrace();
+				}
+}
 
 //public static void main(String args[])
 //		{
