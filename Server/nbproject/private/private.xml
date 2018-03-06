@@ -3,8 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/home/rania/data/ITI/Courses/24.Java%20Programming/project/Project%20/TicTacToe/Server/src/server/Game.java</file>
             <file>file:/home/rania/data/ITI/Courses/24.Java%20Programming/project/Project%20/TicTacToe/Server/src/server/ClientThread.java</file>
+=======
+            <file>file:/home/MHassan/TicTacToe/Server/src/controllers/ServerAppController.java</file>
+            <file>file:/home/MHassan/TicTacToe/Server/src/server/ServerApplication.java</file>
+            <file>file:/home/MHassan/TicTacToe/Server/src/server/ClientThread.java</file>
+            <file>file:/home/MHassan/TicTacToe/Server/src/server/Server.java</file>
+>>>>>>> 65cc3f2ce4427921b673cdf8ff67292993b30176
         </group>
     </open-files>
 </project-private>

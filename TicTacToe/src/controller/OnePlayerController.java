@@ -29,7 +29,7 @@ import static controller.OnlinePlayerController.online_mode;
  */
 public class OnePlayerController implements Initializable {
     static String player="";
-    static boolean one_player_mode=false;
+    public static boolean one_player_mode=false;
     private Stage stage;
     private Pane root;
     @FXML

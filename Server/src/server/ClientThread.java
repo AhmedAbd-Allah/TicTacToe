@@ -20,6 +20,7 @@ import static server.Server.db;
 import client.Request;
 import java.util.Map;
 import server.Game;
+
 /**
  *
  * @author MHassan
@@ -109,7 +110,8 @@ public class ClientThread implements Runnable {
                     PlayersMap.put(userName, player);
                     Request loginSuccess = new Request("Successful login");
                     sendRequest(loginSuccess, this);
-                    sendToAll(loginSuccess);
+                    Request updatePlayersList = new Request("UpdatePlayersList");
+                    sendToAll(updatePlayersList);
 //                    syncPlayersList();
 
                 };
@@ -188,6 +190,7 @@ public class ClientThread implements Runnable {
             player2 = this.player;
             game = new Game(player1, player2);
             onlinePlayers.get(dest).game = game;
+
         }
         return replyReq;
     }
@@ -276,6 +279,10 @@ public class ClientThread implements Runnable {
         
         sendRequest(startGame, this);
         sendRequest(startGame, player1Th);
+        PlayersMap.remove(src);
+        PlayersMap.remove(dest);
+        Request newList = new Request("UpdatePlayersList");
+        sendToAll(newList);
     }
     
     private void showOnlinePlayers()
@@ -288,6 +295,7 @@ public class ClientThread implements Runnable {
         }
     }
     
+
     private void stopGame(Request req) {
         System.out.println("hello from stop game");
         String dest = req.getData("destination");
