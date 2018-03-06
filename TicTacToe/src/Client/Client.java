@@ -59,7 +59,7 @@ public class Client implements Runnable {
     Game game;//= new Game(player1, player2);
 
     boolean auth = false;
-    private static Client client = new Client();
+    public static Client client = new Client();
 
     public Client() {
         try {

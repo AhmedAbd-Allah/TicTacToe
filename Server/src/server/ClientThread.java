@@ -18,8 +18,12 @@ import java.util.HashMap;
 import Models.Player;
 import static server.Server.db;
 import client.Request;
+
+import models.Database;
+
 import java.util.Map;
 import server.Game;
+
 
 /**
  *
@@ -130,12 +134,20 @@ public class ClientThread implements Runnable {
         if (onlinePlayers.containsKey(userName)) {
             Request removedPlayer = new Request("removePlayer");
             removedPlayer.setData(userName, userName);
-            onlinePlayers.remove(userName);
+            
             PlayersMap.remove(userName);
+            ClientThread myth = onlinePlayers.get("userName");
+            onlinePlayers.remove(userName);
+            myth.killthread (this);
+            
 //            syncPlayersList();
         }
     }
 
+    private void killthread (ClientThread thread)
+    {
+        thread.th.stop();
+    }
     private void signUp(Request req) {
         String userName = req.getData("userName");
         String password = req.getData("password");
@@ -190,6 +202,13 @@ public class ClientThread implements Runnable {
             player2 = this.player;
             game = new Game(player1, player2);
             onlinePlayers.get(dest).game = game;
+
+            int player1_id = player1.getId();
+            int player2_id = player2.getId();
+            Database mydata = new Database();
+            mydata.createGame(player1_id, player2_id); 
+
+
 
         }
         return replyReq;
