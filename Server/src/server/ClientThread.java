@@ -66,13 +66,11 @@ public class ClientThread implements Runnable {
     private void requestRedirection(Request req) {
         
         String reqType = req.getRequestType();
-        System.out.println("reqType : "+reqType);
+//        System.out.println("reqType : "+reqType);
         if ("move".equals(reqType)) {
      //  } else if ("gameStatus".equals(reqType)) {
-            System.out.println("before gameTurn");
             gameTurn(req);
         }else if ("Login".equals(reqType)) {
-            System.out.println("login");
             login(req);
         } else if (req.getRequestType().equals("SignUp")) {
             signUp(req);
@@ -85,7 +83,7 @@ public class ClientThread implements Runnable {
         } else if ("initiateHome".equals(reqType)) {
             initGame(req);
         } else if ("InvitationAccepted".equals(reqType)) {
-            System.out.println("InvitationAccepted");
+           // System.out.println("InvitationAccepted");
             startGame(req);
         } else if ("InvitationRejected".equals(reqType)) {
             stopGame(req);
@@ -96,9 +94,7 @@ public class ClientThread implements Runnable {
     private void login(Request req) {
         String userName = req.getData("userName");
         String password = req.getData("password");
-        System.out.println(userName);
-        System.out.println(password);
-
+       
         if (db.authUser(userName, password)) {
             try {
                 ResultSet rs = db.getOneUser(userName);
@@ -139,15 +135,13 @@ public class ClientThread implements Runnable {
     private void signUp(Request req) {
         String userName = req.getData("userName");
         String password = req.getData("password");
-        System.out.println(userName);
-        System.out.println(password);
+       
 
         Integer score = 0;
 
         player = new Player(userName, score, password);
-        System.out.println(player);
+       // System.out.println(player);
         boolean check = db.insertUser(userName, password, score);
-        System.out.println("checked is " + check);
         if (check) {
 
             onlinePlayers.put(userName, this);
@@ -169,7 +163,7 @@ public class ClientThread implements Runnable {
     private void requestGame(Request recieved) {
         String dest = recieved.getData("destination");
         String src = player.getUsername();
-        System.out.println("Source: " + src + " Destination: " + dest);
+       // System.out.println("Source: " + src + " Destination: " + dest);
         ClientThread opponent = onlinePlayers.get(dest);
         Request sendReq = new Request("RequestGame");
         sendReq.setData("source", src);
@@ -196,7 +190,6 @@ public class ClientThread implements Runnable {
     }
 
     private void gameTurn(Request turn) {
-               System.out.println("gameTurn");
 
         String dest = turn.getData("destination");
         String src = this.player.getUsername();
@@ -231,6 +224,7 @@ public class ClientThread implements Runnable {
         }
         reply.setPosition("xpos", xpos);        
         reply.setPosition("ypos", ypos);
+        System.out.println("in game turn");
        
 
          //sendRequest(reply, this);
@@ -239,7 +233,7 @@ public class ClientThread implements Runnable {
     }
 
     private void initGame(Request req) {
-        System.out.println("hello from init");
+      //  System.out.println("hello from init");
         Request playersList = new Request("playersList");
         PlayersMap.entrySet().forEach((playerSet) -> {
             String name1 = playerSet.getKey();
@@ -260,7 +254,7 @@ public class ClientThread implements Runnable {
     }
 
     private void startGame(Request req) {
-        System.out.println("hello from start game");
+       // System.out.println("hello from start game");
         String dest = req.getData("destination");
         String src = this.player.getUsername();
         Request startGame = new Request("startGame");

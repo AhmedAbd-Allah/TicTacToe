@@ -99,7 +99,8 @@ public class GameBoardController implements Initializable {
         winName=winnerName;
         System.out.println(winName);
         loseName=loserName;
-
+        
+        grid=gridborder;
         imagex = new Image(getClass().getResource("/img/x.jpg").toExternalForm());
         imageo = new Image(getClass().getResource("/img/o.png").toExternalForm());
         for(int i=0 ;i<gridboard.length;i++)
@@ -148,15 +149,17 @@ public class GameBoardController implements Initializable {
             System.out.println("two players mode");
            
         }
-      //   if(gridboard[rowIndex][colIndex] == -1){
+         if(gridboard[rowIndex][colIndex] == -1){
                 
+                //mark cell as busy cell regardless has which image
+//                gridboard[rowIndex][colIndex] = 0;
                 Client client  = Client.getInstance();
                 
                 client.sendMove(rowIndex,colIndex);
                 
                //Client.Client.sendRequest(message, th);
 
-    //       }
+           }
                 //getNodeByRowColumnIndex(1, 1, gridborder);
 
     }
