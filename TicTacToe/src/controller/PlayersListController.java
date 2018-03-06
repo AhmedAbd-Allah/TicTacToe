@@ -79,7 +79,7 @@ public class PlayersListController implements Initializable {
 
     @FXML
     private void backAction(ActionEvent event) {
-
+        //opened =false;
     }
 
 }

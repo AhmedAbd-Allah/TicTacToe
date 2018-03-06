@@ -17,6 +17,7 @@ import static controller.GameBoardController.imageo;
 import static controller.GameBoardController.imagex;
 import static controller.GameBoardController.source;
 import static controller.GameBoardController.*;
+import static controller.OnePlayerController.player;
 
 /**
  *
@@ -93,10 +94,10 @@ public class OnePlayer {
         
         //here i reversed order of getWinner with defense to enable user to win
         //in some cases
-        int defenseIndex = defense();
-        if(defenseIndex !=-1 && getWinner(dummyBoard) != 1){
-            return defenseIndex;
-        }
+//        int defenseIndex = defense();
+//        if(defenseIndex !=-1 && getWinner(dummyBoard) != 1){
+//            return defenseIndex;
+//        }
         
         return getResult(freeCells);
     }
@@ -293,19 +294,19 @@ public class OnePlayer {
       // }
        
        if(getWinner(board) ==1){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Information Dialog");
-            alert.setHeaderText(null);
-            alert.setContentText("Looooooooser :(");
-            alert.showAndWait(); 
-            System.exit(1);
+//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//            alert.setTitle("Information Dialog");
+//            alert.setHeaderText(null);
+//            alert.setContentText("Looooooooser :(");
+//            alert.showAndWait(); 
+//            System.exit(1);
+           lose.setVisible(true);
+           loseName.setText("   Sorry "+player+" Is The Loser :( ");
+           
        }else if(getWinner(board) == 0){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Information Dialog");
-            alert.setHeaderText(null);
-            alert.setContentText("You Win :)");
-            alert.showAndWait(); 
-            System.exit(1);
+
+            win.setVisible(true);
+           winName.setText("        "+player+" Is The Winner :)");
        }
        else if (gameEnded(board)){
             System.out.println("Tie");
