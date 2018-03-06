@@ -456,7 +456,7 @@ public class Client implements Runnable {
         }
 
         //enable board //
-        myTurn = true;
+//        myTurn = true;
 
 //        //send request of type GameTurn to client
 //        Request gameTurn = new Request("GameTurn");
