@@ -410,13 +410,13 @@ public class Client implements Runnable {
     public void sendMove(Integer xpos, Integer ypos) {
 
         //draw on GUI the move if it's valid
-        if (game.validateMove(xpos, ypos,flip)) {
+        if (game.validateMove(xpos, ypos)) {
             gridboard[xpos][ypos] = flip;
             //game.myTurn = false;
-            String result = game.play(xpos, ypos);
+            String result = game.play(xpos, ypos,flip);
             System.out.println("play status "+result);
             Node s = getNodeByRowColumnIndex(xpos, ypos, grid);
-            System.out.println( "grid: "+grid);
+           
             ImageView img;
             img = (ImageView) s;
             if (isInitiator) {
@@ -428,8 +428,7 @@ public class Client implements Runnable {
             //set request
             Request move = new Request("move");
             //set move
-            System.out.println("xxxx = " + xpos.getClass());
-            System.out.println("yyyy = " + ypos.getClass());
+          
             move.setPosition("xpos", xpos);
             move.setPosition("ypos", ypos);
 
@@ -440,7 +439,7 @@ public class Client implements Runnable {
                 move.setData("destination", player2.getUsername());
             }
             //send request
-            System.out.println("sendMove");
+//            System.out.println("sendMove");
             //disable board//
             sendRequest(move, this);
         }
@@ -451,12 +450,11 @@ public class Client implements Runnable {
         //   if(!myTurn){
         Integer xpos = move.getPosition("xpos");
         Integer ypos = move.getPosition("ypos");
-        System.out.println("recieve mo0ove -x " + xpos + " : -y " + ypos+" grid: "+grid);
+        //System.out.println("recieve mo0ove -x " + xpos + " : -y " + ypos+" grid: "+grid);
 
 //     //draw on GUI the move
         Node s = getNodeByRowColumnIndex(xpos, ypos, grid);
 
-        System.out.println("Node :" + s + "init : " + isInitiator);
         ImageView img;
         img = (ImageView) s;
         if (isInitiator) {

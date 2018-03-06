@@ -30,10 +30,10 @@ public class Game {
         }
     }
 
-    public boolean validateMove(Integer xpos, Integer ypos ,int flip) {
+    public boolean validateMove(Integer xpos, Integer ypos) {
         if (gridboard[xpos][ypos] == -1 && myTurn) 
         {
-            gridboard[xpos][ypos] = flip;
+//            gridboard[xpos][ypos] = flip;
             myTurn = false;
             return true;
         }
@@ -43,17 +43,17 @@ public class Game {
         }
     }
 
- public String play(int xpos, int ypos)
+ public String play(int xpos, int ypos , int flip)
     {
         if(gridboard[xpos][ypos]== -1)
         {
-            gridboard[xpos][ypos] = move%2 == 0 ? 0:1;
+            gridboard[xpos][ypos] = flip;//move%2 == 0 ? 0:1;
             String p = checkWinner();
             if(move <= 8)
             {
                 move++;
                
-                return null;
+                return p;
             }
             else
             {
