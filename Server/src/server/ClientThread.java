@@ -233,7 +233,7 @@ public class ClientThread implements Runnable {
         reply.setPosition("ypos", ypos);
        
 
-         sendRequest(reply, this);
+         //sendRequest(reply, this);
          sendRequest(reply, player2th);
 
     }
