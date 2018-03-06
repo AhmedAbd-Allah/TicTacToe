@@ -5,7 +5,6 @@
  */
 package controller;
 
-
 import Client.Client;
 import client.Request;
 import java.io.IOException;
@@ -27,13 +26,14 @@ import javafx.stage.Stage;
  * @author aliaa
  */
 public class OnlinePlayerController implements Initializable {
-    static boolean online_mode=false ;
+
+    public static boolean online_mode = false;
     public static Stage homeStage;
     public static Pane homeRoot;
     @FXML
     private Button initiate;
     @FXML
-    private Button join;
+    private Button back;
 
     /**
      * Initializes the controller class.
@@ -43,26 +43,23 @@ public class OnlinePlayerController implements Initializable {
         // TODO
 //        Client client  = Client.getInstance();
 //        client.handleInvitation();
-    }    
+    }
 
     @FXML
     private void intiateHandler(ActionEvent event) throws IOException {
-         //send initateGame request to server
-                homeStage = (Stage) initiate.getScene().getWindow();
-        Client client  = Client.getInstance();
+        //send initateGame request to server
+        homeStage = (Stage) initiate.getScene().getWindow();
+        Client client = Client.getInstance();
         client.initiateHome();
-        
-        
-        
+
         //move to the next scene
 //        homeRoot = (Pane) FXMLLoader.load(getClass().getResource("/views/PlayersList.fxml"));
 //        Scene scene = new Scene(homeRoot);
 //        homeStage.setScene(scene);
-
     }
 
     @FXML
-    private void joinHandler(ActionEvent event) {
+    private void backHandler(ActionEvent event) {
     }
-    
+
 }

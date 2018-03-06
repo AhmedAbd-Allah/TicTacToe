@@ -20,7 +20,6 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 //import tictactoe.controller.*;
-
 /**
  *
  * @author aliaa

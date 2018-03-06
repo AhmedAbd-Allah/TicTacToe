@@ -6,31 +6,37 @@
 package Client;
 
 import Models.Player;
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintStream;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import client.Request;
+import static controller.GameBoardController.grid;
+import static controller.GameBoardController.imageo;
+import static controller.GameBoardController.imagex;
 import controller.LoginController;
 import static controller.LoginController.root;
-import static controller.LoginController.stage;
 import controller.OnlinePlayerController;
 import controller.PlayersListController;
 import controller.SignupController;
 import static controller.SignupController.signupRoot;
-import static controller.SignupController.signupStage;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import static controller.TwoPlayerController.two_player_mode;
+import static controller.OnlinePlayerController.online_mode;
+import static controller.OnePlayerController.one_player_mode;
+import static controller.PlayersListController.opened;
 
 /**
  *
@@ -38,32 +44,43 @@ import javafx.stage.Stage;
  */
 public class Client implements Runnable {
 
+    private boolean connected = false;
     Socket mySocket;
     Thread th;
     ObjectInputStream inpObj;
     ObjectOutputStream outObj;
     Request req;
     public Player player;
-    Player player1;
-    Player player2;
+    Player player2 = new Player();
+    Player player1 = new Player();
+    boolean isInitiator = true;
     boolean myTurn = true;
-//    Game game = new Game(player1, player2);
+
+    Game game;//= new Game(player1, player2);
+
     boolean auth = false;
     public static Client client = new Client();
 
     public Client() {
         try {
-            System.out.println(new Request("Hnan"));
+
+            System.out.println("new client");
             mySocket = new Socket("127.0.0.1", 5000);
             outObj = new ObjectOutputStream(mySocket.getOutputStream());
             inpObj = new ObjectInputStream(mySocket.getInputStream());
             System.out.println(mySocket);
-//            startListening();
             th = new Thread(this);
             th.start();
+            connected = true;
 
         } catch (IOException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                mySocket.close();
+                outObj.close();
+                inpObj.close();
+            } catch (Exception e) {
+//                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
     }
@@ -79,30 +96,11 @@ public class Client implements Runnable {
                 Request message = (Request) inpObj.readObject();
                 requestRedirection(message);
             } catch (Exception ex) {
-                ex.printStackTrace();
+//                ex.printStackTrace();
             }
         }
     }
 
-//    private void startListening() {
-//        new Thread(() -> {
-//            while (true) {
-//                try {
-//                    Request message = (Request) inpObj.readObject();
-//                    requestRedirection(message);
-//                } catch (Exception ex) {
-//                    ex.printStackTrace();
-//                    break;
-//                }
-//            }
-//            try {
-//                mySocket.close();
-//                outObj.close();
-//                inpObj.close();
-//            } catch (IOException ex) {
-//            }
-//        }).start();
-//    }
     private void requestRedirection(Request req) {
         String reqType = req.getRequestType();
         System.out.println("before condition: " + reqType);
@@ -125,19 +123,41 @@ public class Client implements Runnable {
         } else if ("RequestGame".equals(reqType)) {
             System.out.println(reqType);
             requestGame(req);
-//        } else if ("ReplyOpponent".equals(reqType)) {
-//            respondGame(req);
-//        }
+        } else if ("startGame".equals(reqType)) {
+            startGame(req);
+        } else if ("stopGame".equals(reqType)) {
+            stopGame(req);
+
+        } else if ("gameStatus".equals(reqType)) {
+            //receive move and detect winner
+            recieveMove(req);
+        } else if ("UpdatePlayersList".equals(reqType)) {
+            System.out.println("updateList");
+            updatePlayersList(req);
+        } else if ("ServerDown".equals(reqType)) {
+            System.out.println("ServerDown");
+            serverDown(req);
         }
     }
 
     public void login(String userName, String password) {
-        Request request = new Request("Login");
-        request.setData("userName", userName);
-        request.setData("password", password);
-        player = new Player(userName, 0, password);
-        System.out.println("before request");
-        sendRequest(request, this);
+        if (connected) {
+            Request request = new Request("Login");
+            request.setData("userName", userName);
+            request.setData("password", password);
+            player = new Player(userName, 0, password);
+            System.out.println("before request");
+            sendRequest(request, this);
+        } else {
+            client = new Client();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Server Down");
+            alert.setHeaderText("Sorry");
+            alert.setContentText("Server is Down now, Try to connect later");
+            alert.showAndWait();
+
+        }
+
     }
 
     private void loginResponse(Request req) {
@@ -164,11 +184,20 @@ public class Client implements Runnable {
     }
 
     public void signUp(String userName, String password) {
-        Request request = new Request("SignUp");
-        request.setData("userName", userName);
-        request.setData("password", password);
-        player = new Player(userName, 0, password);
-        sendRequest(request, this);
+        if (connected) {
+            Request request = new Request("SignUp");
+            request.setData("userName", userName);
+            request.setData("password", password);
+            player = new Player(userName, 0, password);
+            sendRequest(request, this);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Server Down");
+            alert.setHeaderText("Sorry");
+            alert.setContentText("Server is Down now, Try to connect later");
+            alert.showAndWait();
+            client = new Client();
+        }
     }
 
     private void signUpResponse(Request req) {
@@ -206,17 +235,18 @@ public class Client implements Runnable {
     }
 
     public void initiateHomeResponse(Request req) {
-        if ("playersList".equals(req.getRequestType())) {
-            Platform.runLater(() -> {
-                PlayersListController.players.clear();
-                req.getMap().entrySet().forEach(set -> {
-                    if (!set.getKey().equals(this.player.getUsername())) {
-                        int score = Integer.getInteger(set.getValue()) == null ? 0 : 1;
-                        Player p = new Player(set.getKey(), score, "x");
-                        PlayersListController.players.add(p);
-                    }
-                });
-                try {
+        //  if ("playersList".equals(req.getRequestType())) {
+        Platform.runLater(() -> {
+            PlayersListController.players.clear();
+            req.getMap().entrySet().forEach(set -> {
+                if (!set.getKey().equals(this.player.getUsername())) {
+                    int score = Integer.getInteger(set.getValue()) == null ? 0 : 1;
+                    Player p = new Player(set.getKey(), score, "x");
+                    PlayersListController.players.add(p);
+                }
+            });
+            try {
+                if (OnlinePlayerController.homeStage != null && !opened) {
                     OnlinePlayerController.homeRoot = (Pane) FXMLLoader.load(getClass().getResource("/views/PlayersList.fxml"));
                     Scene homescene = new Scene(OnlinePlayerController.homeRoot);
                     OnlinePlayerController.homeStage.setScene(homescene);
@@ -231,13 +261,15 @@ public class Client implements Runnable {
                         System.out.println(opponent.getRequestType());
                         System.out.println(p.getUsername());
                     });
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
 
-                System.out.println(OnlinePlayerController.homeRoot);
-            });
-        }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            System.out.println(OnlinePlayerController.homeRoot);
+        });
+        //   }
     }
 
     public void requestGame(Request req) {
@@ -246,14 +278,21 @@ public class Client implements Runnable {
             String src = req.getData("source");
             Platform.runLater(() -> {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, src + " wants to play with you", ButtonType.NO, ButtonType.YES);
+                Request invitationReply;
                 if (alert.showAndWait().get() == ButtonType.YES) {
                     System.out.println("accepted");
-                    Request invitationReply = new Request("InvitationAccepted");
+                    isInitiator = false;
+                    this.player = player2;
+
+                    myTurn = false;
+                    invitationReply = new Request("InvitationAccepted");
                     invitationReply.setData("destination", src);
+                    sendRequest(invitationReply, this);
                 } else {
                     System.out.println("rejected");
-                    Request invitationReply = new Request("InvitationRejected");
+                    invitationReply = new Request("InvitationRejected");
                     invitationReply.setData("destination", src);
+                    sendRequest(invitationReply, this);
                 }
             });
 
@@ -263,6 +302,76 @@ public class Client implements Runnable {
         }
     }
 
+    public void startGame(Request req) {
+        Platform.runLater(() -> {
+            try {
+                System.out.println("start Game new fnc");
+                //set the other player
+                player1.setUsername(req.getData("player1"));
+                player2.setUsername(req.getData("player2"));
+                game = new Game(player1, player2);
+
+                System.out.println("Remote player" + player1.getUsername());
+                OnlinePlayerController.homeRoot = (Pane) FXMLLoader.load(getClass().getResource("/views/GameBoard.fxml"));
+                Scene homescene = new Scene(OnlinePlayerController.homeRoot);
+                if (OnlinePlayerController.homeStage != null) {
+                    OnlinePlayerController.homeStage.setScene(homescene);
+                } else {
+                    LoginController.stage.setScene(homescene);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        });
+    }
+
+    public void stopGame(Request req) {
+        Platform.runLater(() -> {
+            try {
+                String opponent = req.getData("player1");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Reply to Game Invitation");
+                alert.setHeaderText("Sorry");
+                alert.setContentText(opponent + " is Busy now, try with someone else");
+                alert.showAndWait();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        });
+    }
+
+    public void updatePlayersList(Request req) {
+        System.out.println("updateList2");
+        initiateHome();
+    }
+
+    public void serverDown(Request req) {
+        Platform.runLater(() -> {
+            try {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Server Down");
+                alert.setHeaderText("Sorry");
+                alert.setContentText("Server is Down now, Try to connect later");
+                alert.showAndWait();
+                client = new Client();
+                OnlinePlayerController.homeRoot = (Pane) FXMLLoader.load(getClass().getResource("/views/ChooseMode.fxml"));
+                Scene homescene = new Scene(OnlinePlayerController.homeRoot);
+                if (OnlinePlayerController.homeStage != null) {
+                    OnlinePlayerController.homeStage.setScene(homescene);
+                } else {
+                    LoginController.stage.setScene(homescene);
+                }
+                outObj.close();
+                inpObj.close();
+                mySocket.close();
+            } catch (Exception e) {
+
+            }
+        });
+
+    }
 //    private Request gameTurn() {
 //        Request req = new Request("GameTurn");
 //
@@ -286,7 +395,100 @@ public class Client implements Runnable {
 //        //sendRequest(Request message,this);
 //
 //    }
+
+    public boolean isAuth() {
+        return auth;
+    }
+
+    public void sendMove(Integer xpos, Integer ypos) {
+
+        //draw on GUI the move if it's valid
+        if (game.validateMove(xpos, ypos)) {
+            String result = game.play(xpos, ypos);
+            System.out.println("play status "+result);
+            Node s = getNodeByRowColumnIndex(xpos, ypos, grid);
+            ImageView img;
+            img = (ImageView) s;
+            if (isInitiator) {
+                img.setImage(imageo);
+            } else {
+                img.setImage(imagex);
+            }
+
+            //set request
+            Request move = new Request("move");
+            //set move
+            System.out.println("xxxx = " + xpos.getClass());
+            System.out.println("yyyy = " + ypos.getClass());
+            move.setPosition("xpos", xpos);
+            move.setPosition("ypos", ypos);
+
+            //set destination player name
+            if (this.player.getUsername() == player2.getUsername()) {
+                move.setData("destination", player1.getUsername());
+            } else {
+                move.setData("destination", player2.getUsername());
+            }
+            //send request
+            System.out.println("sendMove");
+            //disable board//
+            sendRequest(move, this);
+        }
+
+    }
+
+    private void recieveMove(Request move) {
+        //   if(!myTurn){
+        Integer xpos = new Integer(move.getPosition("xpos"));
+        Integer ypos = new Integer(move.getPosition("ypos"));
+        System.out.println("recieve mo0ove -x " + xpos + " : -y " + ypos);
+
+//     //draw on GUI the move
+        Node s = getNodeByRowColumnIndex(xpos, ypos, grid);
+
+        System.out.println("Node :" + s + "init : " + isInitiator);
+        ImageView img;
+        img = (ImageView) s;
+        if (isInitiator) {
+            img.setImage(imagex);
+        } else {
+            img.setImage(imageo);
+        }
+
+        //enable board //
+//        myTurn = true;
+
+//        //send request of type GameTurn to client
+//        Request gameTurn = new Request("GameTurn");
+        //   }
+    }
+
+    private Node getNodeByRowColumnIndex(final int row, final int column, GridPane gridPane) {
+        Node result = null;
+        ObservableList<Node> childrens = gridPane.getChildren();
+
+        for (Node node : childrens) {
+
+            Integer colIndex = GridPane.getColumnIndex(node);
+            Integer rowIndex = GridPane.getRowIndex(node);
+
+            if (rowIndex == null) {
+                rowIndex = 0;
+            }
+            if (colIndex == null) {
+                colIndex = 0;
+            }
+            if (rowIndex == row && colIndex == column) {
+                result = node;
+                break;
+            }
+        }
+
+        return result;
+    }
+
     public void sendRequest(Request message, Client th) {
+
         try {
 
             th.outObj.writeObject(message);
@@ -298,120 +500,4 @@ public class Client implements Runnable {
 
     }
 
-//    private void getResponse(Request req) {
-//        System.out.println("response :" + req.getRequestType());
-//        if ("Successful login".equals(req.getRequestType())
-//                || "playersList".equals(req.getRequestType())
-//                || "Successful signup".equals(req.getRequestType())) {
-//
-//            auth = true;
-//        } else if ("failed login".equals(req.getRequestType())
-//                || "failed signup".equals(req.getRequestType())) {
-//            auth = false;
-//            //
-//        } else if ("playersList".equals(req.getRequestType())) {
-//            //
-//            System.out.println(req);
-//        }
-//    }
-    public boolean isAuth() {
-        return auth;
-    }
 }
-
-//    private String winner(Request reply)
-//    {
-//        String status;
-//        Request reply = new Request("gameStatus");
-//        
-//        String gameStatus = req.getData("status");
-//        if(gameStatus == "gameOn")
-//        {
-//            gameturn();
-//        }
-//        else if (gameStatus == "End")
-//        {
-//            if(req.containsKey("draw"))
-//            {
-//                status = draw;
-//            }
-//            else
-//            {   
-//                String myStatus = req.getData("winner");
-//                if(myStatus == "player1")
-//                {
-//                    status = player1;
-//                }
-//                
-//                else if(myStatus == "player2")
-//                {
-//                    status = player2;
-//                }
-//                
-//            }
-//
-//        }
-//        return status;
-//    }   
-//    private void respondgame(String opponent, String answer) {
-//        Request request = new Request("ReplyOpponent");
-//        request.setData("destination", opponent);
-//        request.setData("reply", answer);
-//
-//        sendRequest(request, this);
-//    }
-//    public void prepareRequest() {
-//    private void requestgame(String opponent)
-//    {
-//        Request request = new Request("RequestOpponent");
-//        request.setData("destination", opponent);
-//        
-//        sendRequest(request, this);
-//        //return request;
-//        return null;
-//    }
-//    
-//    private void respondgame(String opponent, String answer)
-//    {
-//        Request request = new Request("ReplyOpponent");
-//        request.setData("destination", opponent);
-//        request.setData("reply", answer);
-//        
-//        
-//         sendRequest(request, this);
-//        return null;
-//    }
-//game is created in the accept method
-//    private void sendMove(int xpos, int ypos) {
-//
-//        if (myTurn) {
-//            if (game.validateMove(xpos, ypos)) {
-//                game.play(xpos, ypos);
-//                Request move = new Request("Move");
-//                move.setPosition("xpos", xpos);
-//                move.setPosition("ypos", ypos);
-//                move.setData("destination", player2.getUsername());
-//                sendRequest(move, this);
-//                myTurn = false;
-//            } else {
-//                // not a valid move
-//                //alert choose another cell
-//            }
-//
-//        } else {
-//            //Not my turn
-//            //alert wait for your opponent
-//        }
-//    }
-//    private void recieveMove(Request move) {
-//        int xpos = move.getPosition("xpos");
-//        int ypos = move.getPosition("ypos");
-//        game.play(xpos, ypos);
-//        myTurn = true;
-//        ///draw on GUI the move
-//    }
-//    
-//    private void gameturn() {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
-//}

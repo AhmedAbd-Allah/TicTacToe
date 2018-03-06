@@ -8,6 +8,9 @@ package tictactoe;
 import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
 import static controller.GameBoardController.*;
+import static controller.OnePlayerController.player;
+import static controller.TwoPlayerController.player1Name;
+import static controller.TwoPlayerController.player2Name;
 //import static tictactoe.controller.GameBoardController;
 /**
  *
@@ -58,6 +61,8 @@ public class TwoPlayer {
 //            alert.showAndWait(); 
 //            System.exit(1);
             win.setVisible(true);
+            lose.setVisible(false);
+           winName.setText("        "+player1Name+" Is The Winner :)");
         }
         if((gridboard[0][0]==1&&gridboard[0][1]==1&&gridboard[0][2]==1)
           ||(gridboard[1][0]==1&&gridboard[1][1]==1&&gridboard[1][2]==1 )   
@@ -69,12 +74,15 @@ public class TwoPlayer {
           ||(gridboard[0][2]==1&&gridboard[1][1]==1&&gridboard[2][0]==1 )   
             )
         {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Information Dialog");
-            alert.setHeaderText(null);
-            alert.setContentText("Player x Win :)");
-            alert.showAndWait(); 
-            System.exit(1);
+//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//            alert.setTitle("Information Dialog");
+//            alert.setHeaderText(null);
+//            alert.setContentText("Player x Win :)");
+//            alert.showAndWait(); 
+//            System.exit(1);
+            win.setVisible(true);
+            lose.setVisible(false);
+            winName.setText("       "+player2Name+" Is The Winner :)");
         }
         
     }

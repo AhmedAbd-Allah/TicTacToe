@@ -21,6 +21,11 @@ public class Player {
     {
 
     }
+    
+     public Player(String username) 
+    {
+        this.username = username;
+    }
     public Player(String username, int score, String password) 
     {
         this.username = username;

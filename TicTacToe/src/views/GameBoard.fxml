@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -60,13 +61,57 @@
             <Image url="@../img/logo.gif" />
          </image>
       </ImageView>
-      <Pane fx:id="winnerpane" layoutX="2.0" layoutY="151.0" prefHeight="228.0" prefWidth="600.0" visible="false">
+      <Button fx:id="back" layoutX="4.0" layoutY="6.0" mnemonicParsing="false" onAction="#backHandler" prefHeight="51.0" prefWidth="118.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="Back" />
+      <Pane fx:id="winnerpane" layoutX="-3.0" layoutY="-2.0" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: #fff0b3;" visible="false">
          <children>
-            <ImageView fitHeight="228.0" fitWidth="584.0" layoutX="35.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="599.0" fitWidth="643.0" layoutX="5.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/bg1.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="111.0" fitWidth="389.0" layoutX="95.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/logo.gif" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="261.0" fitWidth="577.0" layoutX="16.0" layoutY="111.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../img/winner.gif" />
                </image>
             </ImageView>
+            <Button fx:id="close" layoutX="324.0" layoutY="497.0" mnemonicParsing="false" onAction="#closeHandler" prefHeight="51.0" prefWidth="176.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="Close" />
+            <Label fx:id="winnerName" layoutX="65.0" layoutY="376.0" prefHeight="66.0" prefWidth="407.0" stylesheets="@twoplayer.css" text="         Label">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </Label>
+            <Button fx:id="newGame" layoutX="80.0" layoutY="497.0" mnemonicParsing="false" onAction="#newGameHandler" prefHeight="51.0" prefWidth="176.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="New Game" />
+         </children>
+      </Pane>
+      <Pane fx:id="loserpane" layoutX="4.0" layoutY="2.0" prefHeight="599.0" prefWidth="599.0" style="-fx-background-color: #fff0b3;" visible="false">
+         <children>
+            <ImageView fitHeight="600.0" fitWidth="608.0" layoutX="-4.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/bg1.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="111.0" fitWidth="389.0" layoutX="95.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/logo.gif" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="261.0" fitWidth="577.0" layoutX="146.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/loser.gif" />
+               </image>
+            </ImageView>
+            <Button fx:id="close1" layoutX="324.0" layoutY="497.0" mnemonicParsing="false" onAction="#closeHandler" prefHeight="51.0" prefWidth="176.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="Close" />
+            <Label fx:id="loserName" layoutX="65.0" layoutY="376.0" prefHeight="66.0" prefWidth="407.0" stylesheets="@twoplayer.css" text="         Label">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </Label>
+            <Button fx:id="newGame1" layoutX="80.0" layoutY="497.0" mnemonicParsing="false" onAction="#newGameHandler" prefHeight="51.0" prefWidth="176.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="New Game" />
          </children>
       </Pane>
    </children>
