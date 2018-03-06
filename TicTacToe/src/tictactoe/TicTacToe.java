@@ -28,22 +28,24 @@ public class TicTacToe extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
+
+        Parent root = FXMLLoader.load(getClass().getResource("/views/ChooseMode.fxml"));
+        Scene scene = new Scene(root, 600, 600);
+        primaryStage.setTitle("Tic Tac Toe");
+        primaryStage.setScene(scene);
+        primaryStage.show();
         try {
             primaryStage.setOnCloseRequest(t -> {
-                                                    
-                                                    String type = "LogOut";
-                                                    Request message = new Request(type);
-                                                    
-                                                    Client.client.sendRequest(message,Client.client );
-                                                    System.exit(0);
-                                                }
-                                          );
-            Parent root = FXMLLoader.load(getClass().getResource("/views/ChooseMode.fxml"));
-            Scene scene = new Scene(root, 600, 600);
-            primaryStage.setTitle("Tic Tac Toe");
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException e) {
+
+                String type = "LogOut";
+                Request message = new Request(type);
+                message.setData("userName", Client.client.player.getUsername());
+                Client.client.sendRequest(message, Client.client);
+                System.exit(0);
+            }
+            );
+        } catch (Exception e) {
+
         }
 
     }
