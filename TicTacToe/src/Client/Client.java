@@ -38,6 +38,7 @@ import javafx.stage.Stage;
  */
 public class Client implements Runnable {
 
+    private boolean connected = false;
     Socket mySocket;
     Thread th;
     ObjectInputStream inpObj;
@@ -53,16 +54,23 @@ public class Client implements Runnable {
 
     public Client() {
         try {
-            System.out.println(new Request("Hnan"));
+            System.out.println("new client");
             mySocket = new Socket("127.0.0.1", 5000);
             outObj = new ObjectOutputStream(mySocket.getOutputStream());
             inpObj = new ObjectInputStream(mySocket.getInputStream());
             System.out.println(mySocket);
             th = new Thread(this);
             th.start();
+            connected = true;
 
         } catch (IOException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                mySocket.close();
+                outObj.close();
+                inpObj.close();
+            } catch (Exception e) {
+//                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
     }
@@ -78,7 +86,7 @@ public class Client implements Runnable {
                 Request message = (Request) inpObj.readObject();
                 requestRedirection(message);
             } catch (Exception ex) {
-                ex.printStackTrace();
+//                ex.printStackTrace();
             }
         }
     }
@@ -112,16 +120,30 @@ public class Client implements Runnable {
         } else if ("UpdatePlayersList".equals(reqType)) {
             System.out.println("updateList");
             updatePlayersList(req);
+        } else if ("ServerDown".equals(reqType)) {
+            System.out.println("ServerDown");
+            serverDown(req);
         }
     }
 
     public void login(String userName, String password) {
-        Request request = new Request("Login");
-        request.setData("userName", userName);
-        request.setData("password", password);
-        player = new Player(userName, 0, password);
-        System.out.println("before request");
-        sendRequest(request, this);
+        if (connected) {
+            Request request = new Request("Login");
+            request.setData("userName", userName);
+            request.setData("password", password);
+            player = new Player(userName, 0, password);
+            System.out.println("before request");
+            sendRequest(request, this);
+        } else {
+            client = new Client();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Server Down");
+            alert.setHeaderText("Sorry");
+            alert.setContentText("Server is Down now, Try to connect later");
+            alert.showAndWait();
+            
+        }
+
     }
 
     private void loginResponse(Request req) {
@@ -148,11 +170,20 @@ public class Client implements Runnable {
     }
 
     public void signUp(String userName, String password) {
-        Request request = new Request("SignUp");
-        request.setData("userName", userName);
-        request.setData("password", password);
-        player = new Player(userName, 0, password);
-        sendRequest(request, this);
+        if (connected) {
+            Request request = new Request("SignUp");
+            request.setData("userName", userName);
+            request.setData("password", password);
+            player = new Player(userName, 0, password);
+            sendRequest(request, this);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Server Down");
+            alert.setHeaderText("Sorry");
+            alert.setContentText("Server is Down now, Try to connect later");
+            alert.showAndWait();
+            client = new Client();
+        }
     }
 
     private void signUpResponse(Request req) {
@@ -290,6 +321,32 @@ public class Client implements Runnable {
     public void updatePlayersList(Request req) {
         System.out.println("updateList2");
         initiateHome();
+    }
+
+    public void serverDown(Request req) {
+        Platform.runLater(() -> {
+            try {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Server Down");
+                alert.setHeaderText("Sorry");
+                alert.setContentText("Server is Down now, Try to connect later");
+                alert.showAndWait();
+                client = new Client();
+                OnlinePlayerController.homeRoot = (Pane) FXMLLoader.load(getClass().getResource("/views/ChooseMode.fxml"));
+                Scene homescene = new Scene(OnlinePlayerController.homeRoot);
+                if (OnlinePlayerController.homeStage != null) {
+                    OnlinePlayerController.homeStage.setScene(homescene);
+                } else {
+                    LoginController.stage.setScene(homescene);
+                }
+                outObj.close();
+                inpObj.close();
+                mySocket.close();
+            } catch (Exception e) {
+
+            }
+        });
+
     }
 //    private Request gameTurn() {
 //        Request req = new Request("GameTurn");

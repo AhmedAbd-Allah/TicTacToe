@@ -31,7 +31,6 @@ public class ServerApplication extends Application {
         stage.show();
         
         stage.setOnCloseRequest(e -> {
-            Server.running = false;
             Server.stopServer();
         });
         
