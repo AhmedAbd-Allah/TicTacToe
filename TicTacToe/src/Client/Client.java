@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import client.Request;
 import static controller.GameBoardController.grid;
+import static controller.GameBoardController.gridboard;
 import static controller.GameBoardController.imageo;
 import static controller.GameBoardController.imagex;
 import controller.LoginController;
@@ -54,9 +55,11 @@ public class Client implements Runnable {
     Player player2 = new Player();
     Player player1 = new Player();
     boolean isInitiator = true;
+    int flip = 0;
     boolean myTurn = true;
 
     Game game;//= new Game(player1, player2);
+    
 
     boolean auth = false;
     public static Client client = new Client();
@@ -282,6 +285,9 @@ public class Client implements Runnable {
                 if (alert.showAndWait().get() == ButtonType.YES) {
                     System.out.println("accepted");
                     isInitiator = false;
+                    flip =1;
+                    //invatation reciever who the one play first
+                    
                     this.player = player2;
 
                     myTurn = false;
@@ -310,6 +316,7 @@ public class Client implements Runnable {
                 player1.setUsername(req.getData("player1"));
                 player2.setUsername(req.getData("player2"));
                 game = new Game(player1, player2);
+                
 
                 System.out.println("Remote player" + player1.getUsername());
                 OnlinePlayerController.homeRoot = (Pane) FXMLLoader.load(getClass().getResource("/views/GameBoard.fxml"));
@@ -404,9 +411,12 @@ public class Client implements Runnable {
 
         //draw on GUI the move if it's valid
         if (game.validateMove(xpos, ypos)) {
-            String result = game.play(xpos, ypos);
+            gridboard[xpos][ypos] = flip;
+            //game.myTurn = false;
+            String result = game.play(xpos, ypos,flip);
             System.out.println("play status "+result);
             Node s = getNodeByRowColumnIndex(xpos, ypos, grid);
+           
             ImageView img;
             img = (ImageView) s;
             if (isInitiator) {
@@ -418,8 +428,7 @@ public class Client implements Runnable {
             //set request
             Request move = new Request("move");
             //set move
-            System.out.println("xxxx = " + xpos.getClass());
-            System.out.println("yyyy = " + ypos.getClass());
+          
             move.setPosition("xpos", xpos);
             move.setPosition("ypos", ypos);
 
@@ -430,7 +439,7 @@ public class Client implements Runnable {
                 move.setData("destination", player2.getUsername());
             }
             //send request
-            System.out.println("sendMove");
+//            System.out.println("sendMove");
             //disable board//
             sendRequest(move, this);
         }
@@ -439,14 +448,13 @@ public class Client implements Runnable {
 
     private void recieveMove(Request move) {
         //   if(!myTurn){
-        Integer xpos = new Integer(move.getPosition("xpos"));
-        Integer ypos = new Integer(move.getPosition("ypos"));
-        System.out.println("recieve mo0ove -x " + xpos + " : -y " + ypos);
+        Integer xpos = move.getPosition("xpos");
+        Integer ypos = move.getPosition("ypos");
+        //System.out.println("recieve mo0ove -x " + xpos + " : -y " + ypos+" grid: "+grid);
 
 //     //draw on GUI the move
         Node s = getNodeByRowColumnIndex(xpos, ypos, grid);
 
-        System.out.println("Node :" + s + "init : " + isInitiator);
         ImageView img;
         img = (ImageView) s;
         if (isInitiator) {
@@ -454,6 +462,10 @@ public class Client implements Runnable {
         } else {
             img.setImage(imageo);
         }
+        game.gridboard[xpos][ypos] = flip ==1?0:1;
+        gridboard[xpos][ypos] = flip ==1?0:1;
+        game.myTurn = true;
+
 
         //enable board //
 //        myTurn = true;
@@ -483,6 +495,7 @@ public class Client implements Runnable {
                 break;
             }
         }
+        System.out.println("node result is: "+result);
 
         return result;
     }

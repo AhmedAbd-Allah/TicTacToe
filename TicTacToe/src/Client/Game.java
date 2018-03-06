@@ -16,11 +16,11 @@ public class Game {
 
     public Player player1;
     public Player player2;
-    private boolean myTurn = true;
+    public boolean myTurn = true;
     public Player gameOn;
     public Player draw;
     private static int move = 0;
-    private int[][] gridboard = new int[3][3];
+    public int[][] gridboard = new int[3][3];
 
     public Game(Player play1, Player play2) {
         this.player1 = play1;
@@ -33,26 +33,27 @@ public class Game {
     public boolean validateMove(Integer xpos, Integer ypos) {
         if (gridboard[xpos][ypos] == -1 && myTurn) 
         {
+//            gridboard[xpos][ypos] = flip;
             myTurn = false;
             return true;
         }
-        else {
-            myTurn = true;
+        else  {
+            //myTurn = true;
             return false;
         }
     }
 
- public String play(int xpos, int ypos)
+ public String play(int xpos, int ypos , int flip)
     {
         if(gridboard[xpos][ypos]== -1)
         {
-            gridboard[xpos][ypos] = move%2 == 0 ? 0:1;
+            gridboard[xpos][ypos] = flip;//move%2 == 0 ? 0:1;
             String p = checkWinner();
             if(move <= 8)
             {
                 move++;
                
-                return null;
+                return p;
             }
             else
             {
