@@ -6,6 +6,7 @@
 package tictactoe;
 
 import Client.Client;
+import client.Request;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -29,6 +30,15 @@ public class TicTacToe extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         try {
+            primaryStage.setOnCloseRequest(t -> {
+                                                    
+                                                    String type = "LogOut";
+                                                    Request message = new Request(type);
+                                                    
+                                                    Client.client.sendRequest(message,Client.client );
+                                                    System.exit(0);
+                                                }
+                                          );
             Parent root = FXMLLoader.load(getClass().getResource("/views/ChooseMode.fxml"));
             Scene scene = new Scene(root, 600, 600);
             primaryStage.setTitle("Tic Tac Toe");

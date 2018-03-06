@@ -14,6 +14,10 @@ import java.util.HashMap;
  * @author MHassan
  */
 public class Request implements Serializable {
+
+    /**
+     *
+     */
     private String requestType;
     private HashMap<String, String>data;
     private HashMap<String, Player>players;
