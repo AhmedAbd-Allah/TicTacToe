@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import client.Request;
 import static controller.GameBoardController.grid;
+import static controller.GameBoardController.imageo;
 import static controller.GameBoardController.imagex;
 import controller.LoginController;
 import static controller.LoginController.root;
@@ -44,10 +45,13 @@ public class Client implements Runnable {
     ObjectOutputStream outObj;
     Request req;
     public Player player;
-    Player player1;
-    Player player2;
+    Player player2  = new Player();
+    Player player1 = new Player();
+    boolean isInitiator = true;
     boolean myTurn = true;
-//    Game game = new Game(player1, player2);
+    
+    Game game ;//= new Game(player1, player2);
+  
     boolean auth = false;
     private static Client client = new Client();
 
@@ -83,25 +87,6 @@ public class Client implements Runnable {
         }
     }
 
-//    private void startListening() {
-//        new Thread(() -> {
-//            while (true) {
-//                try {
-//                    Request message = (Request) inpObj.readObject();
-//                    requestRedirection(message);
-//                } catch (Exception ex) {
-//                    ex.printStackTrace();
-//                    break;
-//                }
-//            }
-//            try {
-//                mySocket.close();
-//                outObj.close();
-//                inpObj.close();
-//            } catch (IOException ex) {
-//            }
-//        }).start();
-//    }
     private void requestRedirection(Request req) {
         String reqType = req.getRequestType();
         System.out.println("before condition: " + reqType);
@@ -128,6 +113,9 @@ public class Client implements Runnable {
             startGame(req);
         } else if ("stopGame".equals(reqType)) {
             stopGame(req);
+        }else if("gameStatus".equals(reqType)){
+            //receive move and detect winner
+            recieveMove(req);
         }
     }
 
@@ -206,7 +194,7 @@ public class Client implements Runnable {
     }
 
     public void initiateHomeResponse(Request req) {
-        if ("playersList".equals(req.getRequestType())) {
+      //  if ("playersList".equals(req.getRequestType())) {
             Platform.runLater(() -> {
                 PlayersListController.players.clear();
                 req.getMap().entrySet().forEach(set -> {
@@ -237,7 +225,7 @@ public class Client implements Runnable {
 
                 System.out.println(OnlinePlayerController.homeRoot);
             });
-        }
+     //   }
     }
 
     public void requestGame(Request req) {
@@ -249,6 +237,10 @@ public class Client implements Runnable {
                 Request invitationReply;
                 if (alert.showAndWait().get() == ButtonType.YES) {
                     System.out.println("accepted");
+                    isInitiator = false;
+                    this.player= player2;
+
+                    myTurn = false;
                     invitationReply = new Request("InvitationAccepted");
                     invitationReply.setData("destination", src);
                     sendRequest(invitationReply, this);
@@ -270,6 +262,13 @@ public class Client implements Runnable {
         Platform.runLater(() -> {
             try {
                 System.out.println("start Game new fnc");
+                //set the other player
+                player1.setUsername(req.getData("player1"));
+                player2.setUsername(req.getData("player2"));
+                game = new Game(player1,player2);
+                
+                
+                System.out.println("Remote player"+player1.getUsername());
                 OnlinePlayerController.homeRoot = (Pane) FXMLLoader.load(getClass().getResource("/views/GameBoard.fxml"));
                 Scene homescene = new Scene(OnlinePlayerController.homeRoot);
                 OnlinePlayerController.homeStage.setScene(homescene);
@@ -319,149 +318,72 @@ public class Client implements Runnable {
 //        //sendRequest(Request message,this);
 //
 //    }
-    public void sendRequest(Request message, Client th) {
-        try {
+  
 
-            th.outObj.writeObject(message);
-
-        } catch (IOException ex) {
-            Logger.getLogger(Client.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
-//    private void getResponse(Request req) {
-//        System.out.println("response :" + req.getRequestType());
-//        if ("Successful login".equals(req.getRequestType())
-//                || "playersList".equals(req.getRequestType())
-//                || "Successful signup".equals(req.getRequestType())) {
-//
-//            auth = true;
-//        } else if ("failed login".equals(req.getRequestType())
-//                || "failed signup".equals(req.getRequestType())) {
-//            auth = false;
-//            //
-//        } else if ("playersList".equals(req.getRequestType())) {
-//            //
-//            System.out.println(req);
-//        }
-//    }
     public boolean isAuth() {
         return auth;
     }
+    public void sendMove(Integer xpos,Integer ypos){
+              
+        //draw on GUI the move if it's valid
+  //      if(myTurn){
+            Node s = getNodeByRowColumnIndex(xpos, ypos, grid);
+            ImageView img;
+            img = (ImageView) s;
+            if (isInitiator) {
+                img.setImage(imagex);
+            } else {
+                img.setImage(imageo);
+            }
 
+            //set request
+            Request move = new Request("move");
+            //set move
+            System.out.println("xxxx = " + xpos.getClass());
+            System.out.println("yyyy = " + ypos.getClass());
+            move.setPosition("xpos", xpos);
+            move.setPosition("ypos", ypos);
 
-//    private String winner(Request reply)
-//    {
-//        String status;
-//        Request reply = new Request("gameStatus");
-//        
-//        String gameStatus = req.getData("status");
-//        if(gameStatus == "gameOn")
-//        {
-//            gameturn();
-//        }
-//        else if (gameStatus == "End")
-//        {
-//            if(req.containsKey("draw"))
-//            {
-//                status = draw;
-//            }
-//            else
-//            {   
-//                String myStatus = req.getData("winner");
-//                if(myStatus == "player1")
-//                {
-//                    status = player1;
-//                }
-//                
-//                else if(myStatus == "player2")
-//                {
-//                    status = player2;
-//                }
-//                
-//            }
-//
-//        }
-//        return status;
-//    }   
-//    private void respondgame(String opponent, String answer) {
-//        Request request = new Request("ReplyOpponent");
-//        request.setData("destination", opponent);
-//        request.setData("reply", answer);
-//
-//        sendRequest(request, this);
-//    }
-//    public void prepareRequest() {
-//    private void requestgame(String opponent)
-//    {
-//        Request request = new Request("RequestOpponent");
-//        request.setData("destination", opponent);
-//        
-//        sendRequest(request, this);
-//        //return request;
-//        return null;
-//    }
-//    
-//    private void respondgame(String opponent, String answer)
-//    {
-//        Request request = new Request("ReplyOpponent");
-//        request.setData("destination", opponent);
-//        request.setData("reply", answer);
-//        
-//        
-//         sendRequest(request, this);
-//        return null;
-//    }
-//game is created in the accept method
-//    private void sendMove(int xpos, int ypos) {
-//
-//        if (myTurn) {
-//            if (game.validateMove(xpos, ypos)) {
-//                game.play(xpos, ypos);
-//                Request move = new Request("Move");
-//                move.setPosition("xpos", xpos);
-//                move.setPosition("ypos", ypos);
-//                move.setData("destination", player2.getUsername());
-//                sendRequest(move, this);
-//                myTurn = false;
-//            } else {
-//                // not a valid move
-//                //alert choose another cell
-//            }
-//
-//        } else {
-//            //Not my turn
-//            //alert wait for your opponent
-//        }
-//    }
-    
-
+            //set destination player name
+            if(this.player.getUsername() == player2.getUsername()){
+            move.setData("destination", player1.getUsername());
+            }else{
+                 move.setData("destination", player2.getUsername());
+            }
+            //send request
+            System.out.println("sendMove");
+            //disable board//
+            myTurn = false;
+            sendRequest(move, this);
+    //    }
+        
+    }
     private void recieveMove(Request move) {
-        int xpos = new Integer(move.getPosition("xpos"));
-        int ypos = new Integer(move.getPosition("ypos"));
-        myTurn = true;
+     //   if(!myTurn){
+        Integer xpos = new Integer(move.getPosition("xpos"));
+        Integer ypos = new Integer(move.getPosition("ypos"));
+        System.out.println("recieve mo0ove -x "+xpos+" : -y "+ypos);
         
 //     //draw on GUI the move
         Node s = getNodeByRowColumnIndex(xpos, ypos, grid);
+        
+        System.out.println("Node :"+s+"init : "+isInitiator);
         ImageView img ;
         img=(ImageView)s;
-        img.setImage(imagex);
+         if(isInitiator)
+            img.setImage(imagex);
+        else
+            img.setImage(imageo);
+         
+        //enable board //
+         myTurn = true;
         
-        //send request of type GameTurn to client
+//        //send request of type GameTurn to client
+//        Request gameTurn = new Request("GameTurn");
+     //   }
         
     }
-//    
 
-
-    private void gameturn() {
-        //recieve request of type gameStatus
-       //update board with client move
-       
-       //send request of type GameTurn to client
-    }
-    
     private Node getNodeByRowColumnIndex(final int row,  final int column, GridPane gridPane) {
         Node result =null;
         ObservableList<Node> childrens = gridPane.getChildren();
@@ -486,6 +408,17 @@ public class Client implements Runnable {
         }
 
         return result;
+    }
+      public void sendRequest(Request message, Client th) {
+        try {
+
+            th.outObj.writeObject(message);
+
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
 }

@@ -18,6 +18,7 @@ import java.util.HashMap;
 import Models.Player;
 import static server.Server.db;
 import client.Request;
+import java.util.Map;
 import server.Game;
 /**
  *
@@ -62,18 +63,20 @@ public class ClientThread implements Runnable {
     }
 
     private void requestRedirection(Request req) {
+        
         String reqType = req.getRequestType();
-
-        if ("Login".equals(reqType)) {
+        System.out.println("reqType : "+reqType);
+        if ("move".equals(reqType)) {
+     //  } else if ("gameStatus".equals(reqType)) {
+            System.out.println("before gameTurn");
+            gameTurn(req);
+        }else if ("Login".equals(reqType)) {
             System.out.println("login");
             login(req);
         } else if (req.getRequestType().equals("SignUp")) {
             signUp(req);
         } else if ("LogOut".equals(reqType)) {
             logOut(req);
-        } else if ("GameTurn".equals(reqType)) {
-     //  } else if ("gameStatus".equals(reqType)) {
-            gameTurn(req);
         } else if ("RequestOpponent".equals(reqType)) {
             requestGame(req);
         } else if ("ReplyOpponent".equals(reqType)) {
@@ -190,42 +193,42 @@ public class ClientThread implements Runnable {
     }
 
     private void gameTurn(Request turn) {
+               System.out.println("gameTurn");
+
         String dest = turn.getData("destination");
         String src = this.player.getUsername();
         ClientThread player2th = onlinePlayers.get(dest);
-        int xpos = turn.getPosition("xpos");
-        int ypos = turn.getPosition("ypos");
+        Integer xpos = turn.getPosition("xpos");
+        Integer ypos = turn.getPosition("ypos");
+        
         String winnerName = game.play(xpos, ypos);
         Request reply = new Request("gameStatus");
         if (winnerName == null) {
             reply.setData("status", "gameOn");
-//            sendRequest(reply, this);
-//            sendRequest(reply, player2th);
+
         } else if (winnerName.equals(player1.getUsername())) {
             reply.setData("status", "End");
             reply.setPlayer("winner", player1);
             reply.setPlayer("loser", player2);
             game = null;
-//            sendRequest(reply, this);
-//            sendRequest(reply, player2th);
+            
         } else if (winnerName.equals(player2.getUsername()))  {
             reply.setData("status", "End");
             reply.setPlayer("winner", player2);
             reply.setPlayer("loser", player1);
             game = null;
-//            sendRequest(reply, this);
-//            sendRequest(reply, player2th);
+
         } else if (winnerName.equals("draw")) {
             reply.setData("status", "End");
             reply.setData("draw", "draw");
             game = null;
-//            sendRequest(reply, this);
-//            sendRequest(reply, player2th);
+
         } else {
             reply.setData("status", "invalidMove");
         }
-        reply.setData("xpos", String.valueOf(xpos).toString());        
-        reply.setData("ypos", String.valueOf(ypos).toString());
+        reply.setPosition("xpos", xpos);        
+        reply.setPosition("ypos", ypos);
+       
 
          sendRequest(reply, this);
          sendRequest(reply, player2th);
@@ -258,15 +261,31 @@ public class ClientThread implements Runnable {
         String dest = req.getData("destination");
         String src = this.player.getUsername();
         Request startGame = new Request("startGame");
+       
+        //master
         startGame.setData("player1", dest);
+        
+        //player2
         startGame.setData("player2", src);
         ClientThread player1Th = onlinePlayers.get(dest);
+        
         player1 = onlinePlayers.get(dest).player;
         player2 = this.player;
         game = new Game(player1, player2);
         onlinePlayers.get(dest).game = game;
+        
         sendRequest(startGame, this);
         sendRequest(startGame, player1Th);
+    }
+    
+    private void showOnlinePlayers()
+    {
+        for (Map.Entry<String, ClientThread> entry : onlinePlayers.entrySet()) {
+            String key = entry.getKey();
+            ClientThread value = entry.getValue();
+             System.out.println(key + " : "+value);
+            
+        }
     }
     
     private void stopGame(Request req) {

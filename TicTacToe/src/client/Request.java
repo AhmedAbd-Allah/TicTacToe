@@ -22,6 +22,8 @@ public class Request implements Serializable {
     public Request(String reqType) {
         this.requestType = reqType;
         this.data = new HashMap<>();
+        this.players = new HashMap<>();
+        this.positions = new HashMap<>();
     }
     
     public String getRequestType()
@@ -72,6 +74,7 @@ public class Request implements Serializable {
     
     public void setPosition(String axis, Integer pos)
     {
+        System.out.println(axis +" :: "+pos.getClass()+"::"+pos);
         positions.put(axis, pos);
     }
     
