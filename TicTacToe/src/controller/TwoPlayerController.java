@@ -31,7 +31,7 @@ import static controller.OnlinePlayerController.online_mode;
 public class TwoPlayerController implements Initializable {
     static String player1Name="";
     static String player2Name="";
-    static boolean two_player_mode=false;
+    public static boolean two_player_mode=false;
     private Stage stage;
     private Pane root;
     @FXML
