@@ -94,10 +94,10 @@ public class OnePlayer {
         
         //here i reversed order of getWinner with defense to enable user to win
         //in some cases
-//        int defenseIndex = defense();
-//        if(defenseIndex !=-1 && getWinner(dummyBoard) != 1){
-//            return defenseIndex;
-//        }
+        int defenseIndex = defense();
+        if(defenseIndex !=-1 && getWinner(dummyBoard) != 1){
+            return defenseIndex;
+        }
         
         return getResult(freeCells);
     }
