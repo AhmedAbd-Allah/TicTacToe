@@ -124,14 +124,15 @@ public class GameBoardController implements Initializable {
             System.out.println("two players mode");
            
         }
-         if(gridboard[rowIndex][colIndex] == -1){
+      //   if(gridboard[rowIndex][colIndex] == -1){
                 
                 Client client  = Client.getInstance();
                 
                 client.sendMove(rowIndex,colIndex);
+                
                //Client.Client.sendRequest(message, th);
 
-           }
+    //       }
                 //getNodeByRowColumnIndex(1, 1, gridborder);
 
     }

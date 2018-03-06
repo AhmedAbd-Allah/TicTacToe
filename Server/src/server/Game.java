@@ -35,21 +35,21 @@ public class Game {
         if(gridboard[xpos][ypos]== -1)
         {
             gridboard[xpos][ypos] = move%2 == 0 ? 0:1;
-            String playerName = checkWinner();
-            if(move < 8)
+            String p = checkWinner();
+            if(move <= 8)
             {
                 move++;
-                return playerName;
+               
+                return null;
             }
             else
             {
                 return "draw";
-
             }
-
+            
         }
         return null;
-
+        
     }
     
     public String checkWinner()

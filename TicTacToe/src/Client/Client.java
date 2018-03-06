@@ -51,13 +51,13 @@ public class Client implements Runnable {
     ObjectOutputStream outObj;
     Request req;
     public Player player;
-    Player player2  = new Player();
+    Player player2 = new Player();
     Player player1 = new Player();
     boolean isInitiator = true;
     boolean myTurn = true;
-    
-    Game game ;//= new Game(player1, player2);
-  
+
+    Game game;//= new Game(player1, player2);
+
     boolean auth = false;
     private static Client client = new Client();
 
@@ -128,7 +128,7 @@ public class Client implements Runnable {
         } else if ("stopGame".equals(reqType)) {
             stopGame(req);
 
-        }else if("gameStatus".equals(reqType)){
+        } else if ("gameStatus".equals(reqType)) {
             //receive move and detect winner
             recieveMove(req);
         } else if ("UpdatePlayersList".equals(reqType)) {
@@ -155,7 +155,7 @@ public class Client implements Runnable {
             alert.setHeaderText("Sorry");
             alert.setContentText("Server is Down now, Try to connect later");
             alert.showAndWait();
-            
+
         }
 
     }
@@ -235,41 +235,41 @@ public class Client implements Runnable {
     }
 
     public void initiateHomeResponse(Request req) {
-      //  if ("playersList".equals(req.getRequestType())) {
-            Platform.runLater(() -> {
-                PlayersListController.players.clear();
-                req.getMap().entrySet().forEach(set -> {
-                    if (!set.getKey().equals(this.player.getUsername())) {
-                        int score = Integer.getInteger(set.getValue()) == null ? 0 : 1;
-                        Player p = new Player(set.getKey(), score, "x");
-                        PlayersListController.players.add(p);
-                    }
-                });
-                try {
-                    if (OnlinePlayerController.homeStage != null && !opened) {
-                        OnlinePlayerController.homeRoot = (Pane) FXMLLoader.load(getClass().getResource("/views/PlayersList.fxml"));
-                        Scene homescene = new Scene(OnlinePlayerController.homeRoot);
-                        OnlinePlayerController.homeStage.setScene(homescene);
-                        PlayersListController.tableView.setItems(PlayersListController.players);
-                        PlayersListController.tableView.getSelectionModel().selectedItemProperty().addListener((e, x, player) -> {
-                            Player p = (Player) player;
-                            String name = p.getUsername();
-                            System.out.println(name);
-                            Request opponent = new Request("RequestOpponent");
-                            opponent.setData("destination", name);
-                            sendRequest(opponent, this);
-                            System.out.println(opponent.getRequestType());
-                            System.out.println(p.getUsername());
-                        });
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
+        //  if ("playersList".equals(req.getRequestType())) {
+        Platform.runLater(() -> {
+            PlayersListController.players.clear();
+            req.getMap().entrySet().forEach(set -> {
+                if (!set.getKey().equals(this.player.getUsername())) {
+                    int score = Integer.getInteger(set.getValue()) == null ? 0 : 1;
+                    Player p = new Player(set.getKey(), score, "x");
+                    PlayersListController.players.add(p);
+                }
+            });
+            try {
+                if (OnlinePlayerController.homeStage != null && !opened) {
+                    OnlinePlayerController.homeRoot = (Pane) FXMLLoader.load(getClass().getResource("/views/PlayersList.fxml"));
+                    Scene homescene = new Scene(OnlinePlayerController.homeRoot);
+                    OnlinePlayerController.homeStage.setScene(homescene);
+                    PlayersListController.tableView.setItems(PlayersListController.players);
+                    PlayersListController.tableView.getSelectionModel().selectedItemProperty().addListener((e, x, player) -> {
+                        Player p = (Player) player;
+                        String name = p.getUsername();
+                        System.out.println(name);
+                        Request opponent = new Request("RequestOpponent");
+                        opponent.setData("destination", name);
+                        sendRequest(opponent, this);
+                        System.out.println(opponent.getRequestType());
+                        System.out.println(p.getUsername());
+                    });
                 }
 
-                System.out.println(OnlinePlayerController.homeRoot);
-            });
-     //   }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            System.out.println(OnlinePlayerController.homeRoot);
+        });
+        //   }
     }
 
     public void requestGame(Request req) {
@@ -282,7 +282,7 @@ public class Client implements Runnable {
                 if (alert.showAndWait().get() == ButtonType.YES) {
                     System.out.println("accepted");
                     isInitiator = false;
-                    this.player= player2;
+                    this.player = player2;
 
                     myTurn = false;
                     invitationReply = new Request("InvitationAccepted");
@@ -309,10 +309,9 @@ public class Client implements Runnable {
                 //set the other player
                 player1.setUsername(req.getData("player1"));
                 player2.setUsername(req.getData("player2"));
-                game = new Game(player1,player2);
-                
-                
-                System.out.println("Remote player"+player1.getUsername());
+                game = new Game(player1, player2);
+
+                System.out.println("Remote player" + player1.getUsername());
                 OnlinePlayerController.homeRoot = (Pane) FXMLLoader.load(getClass().getResource("/views/GameBoard.fxml"));
                 Scene homescene = new Scene(OnlinePlayerController.homeRoot);
                 if (OnlinePlayerController.homeStage != null) {
@@ -396,22 +395,24 @@ public class Client implements Runnable {
 //        //sendRequest(Request message,this);
 //
 //    }
-  
 
     public boolean isAuth() {
         return auth;
     }
-    public void sendMove(Integer xpos,Integer ypos){
-              
+
+    public void sendMove(Integer xpos, Integer ypos) {
+
         //draw on GUI the move if it's valid
-  //      if(myTurn){
+        if (game.validateMove(xpos, ypos)) {
+            String result = game.play(xpos, ypos);
+            System.out.println("play status "+result);
             Node s = getNodeByRowColumnIndex(xpos, ypos, grid);
             ImageView img;
             img = (ImageView) s;
             if (isInitiator) {
-                img.setImage(imagex);
-            } else {
                 img.setImage(imageo);
+            } else {
+                img.setImage(imagex);
             }
 
             //set request
@@ -423,71 +424,70 @@ public class Client implements Runnable {
             move.setPosition("ypos", ypos);
 
             //set destination player name
-            if(this.player.getUsername() == player2.getUsername()){
-            move.setData("destination", player1.getUsername());
-            }else{
-                 move.setData("destination", player2.getUsername());
+            if (this.player.getUsername() == player2.getUsername()) {
+                move.setData("destination", player1.getUsername());
+            } else {
+                move.setData("destination", player2.getUsername());
             }
             //send request
             System.out.println("sendMove");
             //disable board//
-            myTurn = false;
             sendRequest(move, this);
-    //    }
-        
-    }
-    private void recieveMove(Request move) {
-     //   if(!myTurn){
-        Integer xpos = new Integer(move.getPosition("xpos"));
-        Integer ypos = new Integer(move.getPosition("ypos"));
-        System.out.println("recieve mo0ove -x "+xpos+" : -y "+ypos);
-        
-//     //draw on GUI the move
-        Node s = getNodeByRowColumnIndex(xpos, ypos, grid);
-        
-        System.out.println("Node :"+s+"init : "+isInitiator);
-        ImageView img ;
-        img=(ImageView)s;
-         if(isInitiator)
-            img.setImage(imagex);
-        else
-            img.setImage(imageo);
-         
-        //enable board //
-         myTurn = true;
-        
-//        //send request of type GameTurn to client
-//        Request gameTurn = new Request("GameTurn");
-     //   }
-        
+        }
+
     }
 
-    private Node getNodeByRowColumnIndex(final int row,  final int column, GridPane gridPane) {
-        Node result =null;
+    private void recieveMove(Request move) {
+        //   if(!myTurn){
+        Integer xpos = new Integer(move.getPosition("xpos"));
+        Integer ypos = new Integer(move.getPosition("ypos"));
+        System.out.println("recieve mo0ove -x " + xpos + " : -y " + ypos);
+
+//     //draw on GUI the move
+        Node s = getNodeByRowColumnIndex(xpos, ypos, grid);
+
+        System.out.println("Node :" + s + "init : " + isInitiator);
+        ImageView img;
+        img = (ImageView) s;
+        if (isInitiator) {
+            img.setImage(imagex);
+        } else {
+            img.setImage(imageo);
+        }
+
+        //enable board //
+        myTurn = true;
+
+//        //send request of type GameTurn to client
+//        Request gameTurn = new Request("GameTurn");
+        //   }
+    }
+
+    private Node getNodeByRowColumnIndex(final int row, final int column, GridPane gridPane) {
+        Node result = null;
         ObservableList<Node> childrens = gridPane.getChildren();
-        
+
         for (Node node : childrens) {
-            
+
             Integer colIndex = GridPane.getColumnIndex(node);
             Integer rowIndex = GridPane.getRowIndex(node);
 
-            if(rowIndex==null)
-            {
-                rowIndex=0;
+            if (rowIndex == null) {
+                rowIndex = 0;
             }
-            if(colIndex==null)
-            {
-                colIndex=0;
+            if (colIndex == null) {
+                colIndex = 0;
             }
-                if (rowIndex == row && colIndex == column) {
-                    result = node;
-                    break;
-                }
+            if (rowIndex == row && colIndex == column) {
+                result = node;
+                break;
+            }
         }
 
         return result;
     }
-      public void sendRequest(Request message, Client th) {
+
+    public void sendRequest(Request message, Client th) {
 
         try {
 
@@ -500,6 +500,4 @@ public class Client implements Runnable {
 
     }
 
-
 }
-
