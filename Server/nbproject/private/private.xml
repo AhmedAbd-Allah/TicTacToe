@@ -5,6 +5,10 @@
         <group>
             <file>file:/home/aliaa/Desktop/TicTacToe/Server/src/server/ServerApplication.java</file>
             <file>file:/home/aliaa/Desktop/TicTacToe/Server/src/models/DBConnect.java</file>
+            <file>file:/home/aliaa/TicTacToe/Server/src/controllers/ServerAppController.java</file>
+            <file>file:/home/aliaa/TicTacToe/Server/src/server/ServerApplication.java</file>
+            <file>file:/home/aliaa/TicTacToe/Server/src/server/ClientThread.java</file>
+            <file>file:/home/aliaa/TicTacToe/Server/src/server/Server.java</file>
         </group>
     </open-files>
 </project-private>

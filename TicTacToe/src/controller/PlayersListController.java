@@ -38,11 +38,13 @@ public class PlayersListController implements Initializable {
     private TableColumn score;
     public static ObservableList<Player> players = FXCollections.observableArrayList();
     public static TableView tableView;
+    public static boolean opened = false;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        opened = true;
         tableView = table;
         name.setCellValueFactory(
                 new PropertyValueFactory<>("username"));

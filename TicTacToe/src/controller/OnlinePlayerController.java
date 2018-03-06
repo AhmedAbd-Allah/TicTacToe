@@ -27,7 +27,7 @@ import javafx.stage.Stage;
  */
 public class OnlinePlayerController implements Initializable {
 
-    static boolean online_mode = false;
+    public static boolean online_mode = false;
     public static Stage homeStage;
     public static Pane homeRoot;
     @FXML

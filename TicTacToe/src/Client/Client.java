@@ -31,6 +31,10 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import static controller.TwoPlayerController.two_player_mode;
+import static controller.OnlinePlayerController.online_mode;
+import static controller.OnePlayerController.one_player_mode;
+import static controller.PlayersListController.opened;
 
 /**
  *
@@ -232,7 +236,7 @@ public class Client implements Runnable {
                     }
                 });
                 try {
-                    if (OnlinePlayerController.homeStage != null) {
+                    if (OnlinePlayerController.homeStage != null && !opened) {
                         OnlinePlayerController.homeRoot = (Pane) FXMLLoader.load(getClass().getResource("/views/PlayersList.fxml"));
                         Scene homescene = new Scene(OnlinePlayerController.homeRoot);
                         OnlinePlayerController.homeStage.setScene(homescene);
