@@ -3,7 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/home/MHassan/TicTacToe/Server/src/server/ClientThread.java</file>
+=======
+            <file>file:/home/rania/data/ITI/Courses/24.Java%20Programming/project/Project%20/TicTacToe/Server/src/models/DBConnect.java</file>
+            <file>file:/home/rania/data/ITI/Courses/24.Java%20Programming/project/Project%20/TicTacToe/Server/src/server/ClientThread.java</file>
+            <file>file:/home/rania/data/ITI/Courses/24.Java%20Programming/project/Project%20/TicTacToe/Server/src/models/Database.java</file>
+>>>>>>> 9e6c82c27d137ca8d2a686a5bc25ad55b64ab594
         </group>
     </open-files>
 </project-private>

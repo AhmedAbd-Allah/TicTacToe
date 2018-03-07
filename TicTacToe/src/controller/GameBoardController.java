@@ -122,6 +122,13 @@ public class GameBoardController implements Initializable {
 
         }
     }
+       
+    @FXML
+    private void replayHandler(MouseEvent event){
+        
+        Client client  = Client.getInstance();
+        client.replay();
+    }
     
     @FXML
     private void BorderMouseEvent(MouseEvent event) {
