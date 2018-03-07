@@ -49,6 +49,7 @@ public class Game {
         {
             gridboard[xpos][ypos] = flip;//move%2 == 0 ? 0:1;
             String p = checkWinner();
+
             if(move < 4)
             {
                 move++;

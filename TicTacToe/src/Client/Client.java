@@ -72,6 +72,8 @@ public class Client implements Runnable {
         try {
 
             System.out.println("new client");
+
+            //use hassan's pc as a server instead of local host
             mySocket = new Socket("10.145.8.58", 5000);
             outObj = new ObjectOutputStream(mySocket.getOutputStream());
             inpObj = new ObjectInputStream(mySocket.getInputStream());
@@ -152,7 +154,6 @@ public class Client implements Runnable {
             Request request = new Request("Login");
             request.setData("userName", userName);
             request.setData("password", password);
-            player = new Player(userName, 0, password);
             System.out.println("before request");
             sendRequest(request, this);
         } else {
@@ -169,6 +170,10 @@ public class Client implements Runnable {
 
     private void loginResponse(Request req) {
         if ("Successful login".equals(req.getRequestType())) {
+            String userName = req.getData("userName");
+            String password = req.getData("password");
+            int score = Integer.getInteger(req.getData("score"));
+            player = new Player(userName, score, password);
             Platform.runLater(() -> {
                 try {
                     LoginController.root = (Pane) FXMLLoader.load(getClass().getResource("/views/OnlinePlayer.fxml"));
@@ -479,7 +484,7 @@ public class Client implements Runnable {
                 alert.setHeaderText("Game Finished ");
                 alert.setContentText("Draw");
                 alert.showAndWait();
-                
+
             });
         }
 
