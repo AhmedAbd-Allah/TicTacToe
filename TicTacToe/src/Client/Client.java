@@ -17,6 +17,10 @@ import static controller.GameBoardController.grid;
 import static controller.GameBoardController.gridboard;
 import static controller.GameBoardController.imageo;
 import static controller.GameBoardController.imagex;
+import static controller.GameBoardController.lose;
+import static controller.GameBoardController.loseName;
+import static controller.GameBoardController.win;
+import static controller.GameBoardController.winName;
 import controller.LoginController;
 import static controller.LoginController.root;
 import controller.OnlinePlayerController;
@@ -38,6 +42,7 @@ import static controller.TwoPlayerController.two_player_mode;
 import static controller.OnlinePlayerController.online_mode;
 import static controller.OnePlayerController.one_player_mode;
 import static controller.PlayersListController.opened;
+import static controller.TwoPlayerController.player1Name;
 
 /**
  *
@@ -59,7 +64,6 @@ public class Client implements Runnable {
     boolean myTurn = true;
 
     Game game;//= new Game(player1, player2);
-    
 
     boolean auth = false;
     public static Client client = new Client();
@@ -68,7 +72,8 @@ public class Client implements Runnable {
         try {
 
             System.out.println("new client");
-            mySocket = new Socket("127.0.0.1", 5000);
+            //use hassan's pc as a server instead of local host
+            mySocket = new Socket("10.145.8.58", 5000);
             outObj = new ObjectOutputStream(mySocket.getOutputStream());
             inpObj = new ObjectInputStream(mySocket.getInputStream());
             System.out.println(mySocket);
@@ -285,9 +290,9 @@ public class Client implements Runnable {
                 if (alert.showAndWait().get() == ButtonType.YES) {
                     System.out.println("accepted");
                     isInitiator = false;
-                    flip =1;
+                    flip = 1;
                     //invatation reciever who the one play first
-                    
+
                     this.player = player2;
 
                     myTurn = false;
@@ -316,7 +321,6 @@ public class Client implements Runnable {
                 player1.setUsername(req.getData("player1"));
                 player2.setUsername(req.getData("player2"));
                 game = new Game(player1, player2);
-                
 
                 System.out.println("Remote player" + player1.getUsername());
                 OnlinePlayerController.homeRoot = (Pane) FXMLLoader.load(getClass().getResource("/views/GameBoard.fxml"));
@@ -379,29 +383,6 @@ public class Client implements Runnable {
         });
 
     }
-//    private Request gameTurn() {
-//        Request req = new Request("GameTurn");
-//
-//        req.setData("destination", "");
-//        req.setData("xpos", "0");
-//        req.setData("ypos", "0");
-//
-//        return req;
-//    }
-//    private Request gameTurn() {
-//        Request req = new Request("GameTurn");
-//
-//        req.setData("destination", "");
-//        req.setData("xpos", "0");
-//        req.setData("ypos", "0");
-//
-//        return req;
-//    }
-//    public void prepareRequest() {
-//        //check which button clicked to set request type and send it to server
-//        //sendRequest(Request message,this);
-//
-//    }
 
     public boolean isAuth() {
         return auth;
@@ -413,10 +394,28 @@ public class Client implements Runnable {
         if (game.validateMove(xpos, ypos)) {
             gridboard[xpos][ypos] = flip;
             //game.myTurn = false;
-            String result = game.play(xpos, ypos,flip);
-            System.out.println("play status "+result);
+
+            String result = game.play(xpos, ypos, flip);
+            //set request
+            Request move = new Request("move");
+            //set move
+
+            move.setPosition("xpos", xpos);
+            move.setPosition("ypos", ypos);
+            move.setData("result", result);
+
+            if (result.equals("o")) {
+                win.setVisible(true);
+                lose.setVisible(false);
+                winName.setText("        " + player1.getUsername() + " Is The Winner :)");
+            } else if (result.equals("x")) {
+                win.setVisible(true);
+                lose.setVisible(false);
+                winName.setText("        " + player2.getUsername() + " Is The Winner :)");
+            }
+            System.out.println("play status " + result);
             Node s = getNodeByRowColumnIndex(xpos, ypos, grid);
-           
+
             ImageView img;
             img = (ImageView) s;
             if (isInitiator) {
@@ -424,13 +423,6 @@ public class Client implements Runnable {
             } else {
                 img.setImage(imagex);
             }
-
-            //set request
-            Request move = new Request("move");
-            //set move
-          
-            move.setPosition("xpos", xpos);
-            move.setPosition("ypos", ypos);
 
             //set destination player name
             if (this.player.getUsername() == player2.getUsername()) {
@@ -450,10 +442,20 @@ public class Client implements Runnable {
         //   if(!myTurn){
         Integer xpos = move.getPosition("xpos");
         Integer ypos = move.getPosition("ypos");
-        //System.out.println("recieve mo0ove -x " + xpos + " : -y " + ypos+" grid: "+grid);
+        System.out.print("final result: " + move.getData("result"));
 
+        //System.out.println("recieve mo0ove -x " + xpos + " : -y " + ypos+" grid: "+grid);
 //     //draw on GUI the move
         Node s = getNodeByRowColumnIndex(xpos, ypos, grid);
+        String result = move.getData("result");
+
+        if (result.equals("o") || result.equals("x")) {
+            lose.setVisible(true);
+//            lose.setVisible(false);
+            loseName.setText("Sorry You Lost, Try Again :(");
+        } else if (result.equals("draw")) {
+            
+        }
 
         ImageView img;
         img = (ImageView) s;
@@ -462,14 +464,12 @@ public class Client implements Runnable {
         } else {
             img.setImage(imageo);
         }
-        game.gridboard[xpos][ypos] = flip ==1?0:1;
-        gridboard[xpos][ypos] = flip ==1?0:1;
+        game.gridboard[xpos][ypos] = flip == 1 ? 0 : 1;
+        gridboard[xpos][ypos] = flip == 1 ? 0 : 1;
         game.myTurn = true;
-
 
         //enable board //
 //        myTurn = true;
-
 //        //send request of type GameTurn to client
 //        Request gameTurn = new Request("GameTurn");
         //   }
@@ -495,7 +495,7 @@ public class Client implements Runnable {
                 break;
             }
         }
-        System.out.println("node result is: "+result);
+        System.out.println("node result is: " + result);
 
         return result;
     }
