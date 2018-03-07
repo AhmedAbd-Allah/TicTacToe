@@ -39,7 +39,9 @@ public class TwoPlayer {
             }
         }
         else
-        {}
+        {
+            
+        }
         checkWinner();
     }
     public void checkWinner()
@@ -54,12 +56,6 @@ public class TwoPlayer {
           ||(gridboard[0][2]==0&&gridboard[1][1]==0&&gridboard[2][0]==0 )   
             )
         {
-//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//            alert.setTitle("Information Dialog");
-//            alert.setHeaderText(null);
-//            alert.setContentText("Player o Win :)");
-//            alert.showAndWait(); 
-//            System.exit(1);
             win.setVisible(true);
             lose.setVisible(false);
            winName.setText("        "+player1Name+" Is The Winner :)");
@@ -74,12 +70,6 @@ public class TwoPlayer {
           ||(gridboard[0][2]==1&&gridboard[1][1]==1&&gridboard[2][0]==1 )   
             )
         {
-//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//            alert.setTitle("Information Dialog");
-//            alert.setHeaderText(null);
-//            alert.setContentText("Player x Win :)");
-//            alert.showAndWait(); 
-//            System.exit(1);
             win.setVisible(true);
             lose.setVisible(false);
             winName.setText("       "+player2Name+" Is The Winner :)");

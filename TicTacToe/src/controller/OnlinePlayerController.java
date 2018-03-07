@@ -47,6 +47,7 @@ public class OnlinePlayerController implements Initializable {
 
     @FXML
     private void intiateHandler(ActionEvent event) throws IOException {
+        online_mode=true;
         //send initateGame request to server
         homeStage = (Stage) initiate.getScene().getWindow();
         Client client = Client.getInstance();
