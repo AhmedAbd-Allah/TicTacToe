@@ -16,22 +16,27 @@
             <Image url="@../img/bg1.jpg" />
          </image>
       </ImageView>
-      <TableView fx:id="table" layoutX="285.0" layoutY="22.0" prefHeight="547.0" prefWidth="314.0">
+      <TableView fx:id="table" layoutX="134.0" layoutY="102.0" prefHeight="401.0" prefWidth="314.0">
         <columns>
           <TableColumn fx:id="name" prefWidth="160.0" text="User Name" />
           <TableColumn fx:id="score" prefWidth="193.0" text="High Score         " />
         </columns>
       </TableView>
-      <Label layoutX="13.0" layoutY="446.0" prefHeight="30.0" prefWidth="273.0" stylesheets="@twoplayer.css" text="Player Name :">
+      <Label layoutX="175.0" layoutY="521.0" prefHeight="30.0" prefWidth="273.0" stylesheets="@twoplayer.css" text="Player Name :">
          <font>
             <Font size="22.0" />
          </font>
       </Label>
-      <Label layoutX="13.0" layoutY="485.0" prefHeight="30.0" prefWidth="179.0" stylesheets="@twoplayer.css" text="Score: ">
+      <Label layoutX="407.0" layoutY="521.0" prefHeight="30.0" prefWidth="179.0" stylesheets="@twoplayer.css" text="Score: ">
          <font>
             <Font size="19.0" />
          </font>
       </Label>
-      <Button fx:id="back" layoutX="4.0" layoutY="22.0" mnemonicParsing="false" onAction="#backAction" prefHeight="51.0" prefWidth="119.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="Back" />
+      <Button fx:id="back" layoutX="14.0" layoutY="511.0" mnemonicParsing="false" onAction="#backAction" prefHeight="51.0" prefWidth="119.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="Back" />
+      <ImageView fitHeight="101.0" fitWidth="402.0" layoutX="121.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/logo.gif" />
+         </image>
+      </ImageView>
    </children>
 </Pane>

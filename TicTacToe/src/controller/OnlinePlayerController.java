@@ -33,7 +33,7 @@ public class OnlinePlayerController implements Initializable {
     @FXML
     private Button initiate;
     @FXML
-    private Button join;
+    private Button back;
 
     /**
      * Initializes the controller class.
@@ -59,7 +59,7 @@ public class OnlinePlayerController implements Initializable {
     }
 
     @FXML
-    private void joinHandler(ActionEvent event) {
+    private void backHandler(ActionEvent event) {
     }
 
 }

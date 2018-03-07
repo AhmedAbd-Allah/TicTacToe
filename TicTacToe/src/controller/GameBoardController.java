@@ -86,6 +86,8 @@ public class GameBoardController implements Initializable {
     public static Label loseName;
     @FXML
     private Button newGame1;
+    @FXML
+    private Button back;
     //GridPane s;
     /**
      * Initializes the controller class.
@@ -176,4 +178,19 @@ public class GameBoardController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
+
+    @FXML
+    private void backHandler(ActionEvent event) throws IOException {
+        stage = (Stage) newGame.getScene().getWindow();
+        if(one_player_mode||two_player_mode)
+        {         
+            root = (Pane) FXMLLoader.load(getClass().getResource("/views/ChooseMode.fxml"));
         }
+        else
+        {
+            root = (Pane) FXMLLoader.load(getClass().getResource("/views/OnlinePlayer.fxml"));
+        }
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+    }
+}

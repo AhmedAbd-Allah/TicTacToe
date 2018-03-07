@@ -8,6 +8,9 @@ package controller;
 import Client.Client;
 import Models.Player;
 import client.Request;
+import static controller.LoginController.root;
+import static controller.LoginController.stage;
+import java.io.IOException;
 //import static com.sun.xml.internal.fastinfoset.alphabet.BuiltInRestrictedAlphabets.table;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,11 +18,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -80,8 +87,13 @@ public class PlayersListController implements Initializable {
     }
 
     @FXML
-    private void backAction(ActionEvent event) {
-        //opened =false;
+    private void backAction(ActionEvent event) throws IOException {
+            opened =false;
+            stage = (Stage) back.getScene().getWindow();
+            root = (Pane) FXMLLoader.load(getClass().getResource("/views/OnlinePlayer.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+        
     }
 
 }
