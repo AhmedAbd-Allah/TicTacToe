@@ -79,7 +79,7 @@ public class Game {
         {
 
             System.out.println("player o win");
-            return player1.getUsername();
+            return "o";
         }
         if ((gridboard[0][0] == 1 && gridboard[0][1] == 1 && gridboard[0][2] == 1)
                 || (gridboard[1][0] == 1 && gridboard[1][1] == 1 && gridboard[1][2] == 1)
@@ -90,7 +90,7 @@ public class Game {
                 || (gridboard[0][0] == 1 && gridboard[1][1] == 1 && gridboard[2][2] == 1)
                 || (gridboard[0][2] == 1 && gridboard[1][1] == 1 && gridboard[2][0] == 1)) {
             System.out.println("player x win");
-            return player2.getUsername();
+            return "x";
         }
         return "gameOn";
     }

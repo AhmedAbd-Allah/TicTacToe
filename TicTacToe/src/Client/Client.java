@@ -17,6 +17,9 @@ import static controller.GameBoardController.grid;
 import static controller.GameBoardController.gridboard;
 import static controller.GameBoardController.imageo;
 import static controller.GameBoardController.imagex;
+import static controller.GameBoardController.lose;
+import static controller.GameBoardController.win;
+import static controller.GameBoardController.winName;
 import controller.LoginController;
 import static controller.LoginController.root;
 import controller.OnlinePlayerController;
@@ -38,6 +41,7 @@ import static controller.TwoPlayerController.two_player_mode;
 import static controller.OnlinePlayerController.online_mode;
 import static controller.OnePlayerController.one_player_mode;
 import static controller.PlayersListController.opened;
+import static controller.TwoPlayerController.player1Name;
 
 /**
  *
@@ -412,6 +416,18 @@ public class Client implements Runnable {
             gridboard[xpos][ypos] = flip;
             //game.myTurn = false;
             String result = game.play(xpos, ypos, flip);
+            if(result.equals("o"))
+            {
+                 win.setVisible(true);
+                 lose.setVisible(false);
+                 winName.setText("        "+player1.getUsername()+" Is The Winner :)");
+            }
+            else if(result.equals("x"))
+            {
+                 win.setVisible(true);
+                 lose.setVisible(false);
+                 winName.setText("        "+player2.getUsername()+" Is The Winner :)");
+            }
             System.out.println("play status " + result);
             Node s = getNodeByRowColumnIndex(xpos, ypos, grid);
 
@@ -429,6 +445,7 @@ public class Client implements Runnable {
 
             move.setPosition("xpos", xpos);
             move.setPosition("ypos", ypos);
+            move.setData("result", result);
 
             //set destination player name
             if (this.player.getUsername() == player2.getUsername()) {

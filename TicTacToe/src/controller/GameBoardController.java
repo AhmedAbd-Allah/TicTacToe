@@ -86,8 +86,6 @@ public class GameBoardController implements Initializable {
     public static Label loseName;
     @FXML
     private Button newGame1;
-    @FXML
-    private Button back;
     //GridPane s;
     /**
      * Initializes the controller class.
@@ -182,7 +180,6 @@ public class GameBoardController implements Initializable {
         stage.setScene(scene);
     }
 
-    @FXML
     private void backHandler(ActionEvent event) throws IOException {
         stage = (Stage) newGame.getScene().getWindow();
         if(one_player_mode||two_player_mode)
