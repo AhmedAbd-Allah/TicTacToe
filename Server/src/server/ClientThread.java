@@ -52,7 +52,7 @@ public class ClientThread implements Runnable {
             th = new Thread(this);
             th.start();
         } catch (Exception e) {
-
+            
         }
     }
 

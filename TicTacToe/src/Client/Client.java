@@ -80,7 +80,7 @@ public class Client implements Runnable {
             th.start();
             connected = true;
 
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             try {
                 mySocket.close();
                 outObj.close();
@@ -271,7 +271,7 @@ public class Client implements Runnable {
                 }
 
             } catch (Exception e) {
-                
+
             }
 
             System.out.println(OnlinePlayerController.homeRoot);
@@ -411,17 +411,15 @@ public class Client implements Runnable {
                 win.setVisible(true);
                 lose.setVisible(false);
                 winName.setText("        " + player2.getUsername() + " Is The Winner :)");
-            }
-            else if(result.equals("gameOn"))
-            {
-                
-            }else{
+            } else if (result.equals("gameOn")) {
+
+            } else {
                 Platform.runLater(() -> {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Information Dialog");
-                alert.setHeaderText("Game Finished ");
-                alert.setContentText("Draw");
-                alert.showAndWait();
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Dialog");
+                    alert.setHeaderText("Game Finished ");
+                    alert.setContentText("Draw");
+                    alert.showAndWait();
                 });
             }
             System.out.println("play status " + result);
@@ -458,21 +456,6 @@ public class Client implements Runnable {
         Node s = getNodeByRowColumnIndex(xpos, ypos, grid);
         String result = move.getData("result");
 
-        if (result.equals("o") || result.equals("x")) {
-            loseName.setText("Sorry You Lost, Try Again :(");
-            lose.setVisible(true);
-
-        } else if (result.equals("draw")) {
-            System.out.println("inside receve draw");
-                Platform.runLater(() -> {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Information Dialog");
-                alert.setHeaderText("Game Finished ");
-                alert.setContentText("Draw");
-                alert.showAndWait();
-                });
-        }
-
         ImageView img;
         img = (ImageView) s;
         if (isInitiator) {
@@ -483,6 +466,22 @@ public class Client implements Runnable {
         game.gridboard[xpos][ypos] = flip == 1 ? 0 : 1;
         gridboard[xpos][ypos] = flip == 1 ? 0 : 1;
         game.myTurn = true;
+
+        if (result.equals("o") || result.equals("x")) {
+            loseName.setText("Sorry You Lost, Try Again :(");
+            lose.setVisible(true);
+
+        } else if (result.equals("draw")) {
+            System.out.println("inside receve draw");
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText("Game Finished ");
+                alert.setContentText("Draw");
+                alert.showAndWait();
+                
+            });
+        }
 
         //enable board //
 //        myTurn = true;
