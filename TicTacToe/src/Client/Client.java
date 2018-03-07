@@ -271,7 +271,7 @@ public class Client implements Runnable {
                 }
 
             } catch (Exception e) {
-                e.printStackTrace();
+                
             }
 
             System.out.println(OnlinePlayerController.homeRoot);
@@ -443,14 +443,11 @@ public class Client implements Runnable {
         Integer ypos = move.getPosition("ypos");
         System.out.print("final result: " + move.getData("result"));
 
-        //System.out.println("recieve mo0ove -x " + xpos + " : -y " + ypos+" grid: "+grid);
-//     //draw on GUI the move
         Node s = getNodeByRowColumnIndex(xpos, ypos, grid);
         String result = move.getData("result");
 
         if (result.equals("o") || result.equals("x")) {
             lose.setVisible(true);
-//            lose.setVisible(false);
             loseName.setText("Sorry You Lost, Try Again :(");
         } else if (result.equals("draw")) {
             

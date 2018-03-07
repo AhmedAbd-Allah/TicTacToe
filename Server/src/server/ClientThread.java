@@ -52,7 +52,7 @@ public class ClientThread implements Runnable {
             th = new Thread(this);
             th.start();
         } catch (Exception e) {
-            
+
         }
     }
 
@@ -64,7 +64,7 @@ public class ClientThread implements Runnable {
                 requestRedirection(req);
             }
         } catch (Exception e) {
-            
+
         }
     }
 
@@ -123,7 +123,7 @@ public class ClientThread implements Runnable {
                 };
 
             } catch (Exception e) {
-                
+
             }
         } else {
             Request loginFail = new Request("failed login");
@@ -237,34 +237,17 @@ public class ClientThread implements Runnable {
         String result = turn.getData("result");
         String winnerName = game.play(xpos, ypos);
         Request reply = new Request("gameStatus");
-//        if (winnerName == null) {
-//            reply.setData("status", "gameOn");
-//
-//        } else if (winnerName.equals(player1.getUsername())) {
-//            reply.setData("status", "End");
-//            reply.setPlayer("winner", player1);
-//            reply.setPlayer("loser", player2);
-//            game = null;
-//
-//        } else if (winnerName.equals(player2.getUsername())) {
-//            reply.setData("status", "End");
-//            reply.setPlayer("winner", player2);
-//            reply.setPlayer("loser", player1);
-//            game = null;
-//
-//        } else if (winnerName.equals("draw")) {
-//            reply.setData("status", "End");
-//            reply.setData("draw", "draw");
-//            game = null;
-//
-//        } else {
-//            reply.setData("status", "invalidMove");
-//        }
         reply.setPosition("xpos", xpos);
         reply.setPosition("ypos", ypos);
-        reply.setData("result",result);
+        reply.setData("result", result);
         System.out.println("in game turn");
         sendRequest(reply, player2th);
+        if (result.equals("o") || result.equals("x") || result.equals("draw")) {
+            PlayersMap.put(src,player);
+            PlayersMap.put(dest,onlinePlayers.get(dest).player);
+            Request newList = new Request("UpdatePlayersList");
+            sendToAll(newList);
+        }
 
     }
 
