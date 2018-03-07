@@ -3,40 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-<<<<<<< HEAD
-            <file>file:/home/MHassan/TicTacToe/TicTacToe/src/controller/OnePlayerController.java</file>
-            <file>file:/home/MHassan/TicTacToe/TicTacToe/src/controller/OnlinePlayerController.java</file>
-            <file>file:/home/MHassan/TicTacToe/TicTacToe/src/controller/GameBoardController.java</file>
-            <file>file:/home/MHassan/TicTacToe/TicTacToe/src/controller/PlayersListController.java</file>
-            <file>file:/home/MHassan/TicTacToe/TicTacToe/src/tictactoe/TicTacToe.java</file>
-            <file>file:/home/MHassan/TicTacToe/TicTacToe/src/Client/Client.java</file>
-            <file>file:/home/MHassan/TicTacToe/TicTacToe/src/controller/ChooseModeController.java</file>
-            <file>file:/home/MHassan/TicTacToe/TicTacToe/src/controller/TwoPlayerController.java</file>
-=======
             <file>file:/home/rania/data/ITI/Courses/24.Java%20Programming/project/Project%20/TicTacToe/TicTacToe/src/Client/Client.java</file>
             <file>file:/home/rania/data/ITI/Courses/24.Java%20Programming/project/Project%20/TicTacToe/TicTacToe/src/controller/GameBoardController.java</file>
             <file>file:/home/rania/data/ITI/Courses/24.Java%20Programming/project/Project%20/TicTacToe/TicTacToe/src/Client/Game.java</file>
             <file>file:/home/rania/data/ITI/Courses/24.Java%20Programming/project/Project%20/TicTacToe/TicTacToe/src/tictactoe/TicTacToe.java</file>
->>>>>>> 50bef9a7d65a160bb424c18d15d94a6ad2e0fcde
-=======
-<<<<<<< HEAD
-            <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/controller/TwoPlayerController.java</file>
-            <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/controller/ChooseModeController.java</file>
-            <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/controller/OnlinePlayerController.java</file>
-            <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/tictactoe/TicTacToe.java</file>
-            <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/controller/GameBoardController.java</file>
-            <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/Client/Client.java</file>
-            <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/views/OnlinePlayer.fxml</file>
-            <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/controller/PlayersListController.java</file>
-            <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/client/Request.java</file>
-            <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/tictactoe/TwoPlayer.java</file>
-            <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/controller/SignupController.java</file>
-            <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/Client/Game.java</file>
-=======
-            <file>file:/home/aliaa/Desktop/TicTacToe/TicTacToe/src/tictactoe/TicTacToe.java</file>
->>>>>>> 3a467e64bbb0de14ceaa3c62d208d02a2bd25308
->>>>>>> 77097e3596060f7b4c9bca7675f88d5405bee43b
         </group>
     </open-files>
 </project-private>
