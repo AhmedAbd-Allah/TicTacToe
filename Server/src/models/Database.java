@@ -209,6 +209,54 @@ public void createGame (int user1ID, int user2ID)
 				}
 }
 
+public void playerScore (String userName)
+{
+     try
+	{
+		con = connection.Connect_to();
+		stmt = con.createStatement() ;
+		queryString = new String("update user set high_score = high_score + 10 where user_name = '"+userName+"'");
+		rs = stmt.executeQuery(queryString);
+		
+	}
+	catch(SQLException ex)
+				{
+					ex.printStackTrace();
+				}
+}
+
+//public int getGameID (int user1ID, int user2ID)
+//{
+//     try
+//	{
+//		con = connection.Connect_to();
+//		stmt = con.createStatement() ;
+//		queryString = new String("select  from game where user1_id = '"+user1ID+"' and user2_id = '"+user2ID+"' and game_id = '"+gameID+"'");
+//		rs = stmt.executeQuery(queryString);
+//		
+//	}
+//	catch(SQLException ex)
+//				{
+//					ex.printStackTrace();
+//				}
+//}
+//
+//public String getMoves (int user1ID, int user2ID, int gameID)
+//{
+//     try
+//	{
+//		con = connection.Connect_to();
+//		stmt = con.createStatement() ;
+//		queryString = new String("select moves from game where user1_id = '"+user1ID+"' and user2_id = '"+user2ID+"' and game_id = '"+gameID+"'");
+//		rs = stmt.executeQuery(queryString);
+//                
+//		
+//	}
+//	catch(SQLException ex)
+//				{
+//					ex.printStackTrace();
+//				}
+//}
 //public static void main(String args[])
 //		{
 //			Database d = new Database();

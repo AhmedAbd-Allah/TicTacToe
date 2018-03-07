@@ -3,22 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/controller/TwoPlayerController.java</file>
-            <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/controller/ChooseModeController.java</file>
+            <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/Client/Client.java</file>
             <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/controller/OnlinePlayerController.java</file>
             <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/tictactoe/TicTacToe.java</file>
-            <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/controller/GameBoardController.java</file>
-            <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/Client/Client.java</file>
-            <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/views/OnlinePlayer.fxml</file>
-            <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/controller/PlayersListController.java</file>
-            <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/client/Request.java</file>
             <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/tictactoe/TwoPlayer.java</file>
+            <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/controller/PlayersListController.java</file>
+            <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/controller/TwoPlayerController.java</file>
+            <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/views/OnlinePlayer.fxml</file>
+            <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/controller/GameBoardController.java</file>
             <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/controller/SignupController.java</file>
+            <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/controller/ChooseModeController.java</file>
             <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/Client/Game.java</file>
-=======
-            <file>file:/home/aliaa/Desktop/TicTacToe/TicTacToe/src/tictactoe/TicTacToe.java</file>
->>>>>>> 3a467e64bbb0de14ceaa3c62d208d02a2bd25308
+            <file>file:/home/ahmedabdallah/Desktop/Java%20Project/pull/TicTacToe/TicTacToe/src/client/Request.java</file>
         </group>
     </open-files>
 </project-private>
