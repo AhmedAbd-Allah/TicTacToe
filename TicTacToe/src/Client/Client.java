@@ -43,6 +43,9 @@ import static controller.OnlinePlayerController.online_mode;
 import static controller.OnePlayerController.one_player_mode;
 import static controller.PlayersListController.opened;
 import static controller.TwoPlayerController.player1Name;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 /**
  *
@@ -340,6 +343,39 @@ public class Client implements Runnable {
         });
     }
 
+    public void replay() {
+        Platform.runLater(() -> {
+            try {
+                System.err.println("replay function ");
+
+                OnlinePlayerController.homeRoot = (Pane) FXMLLoader.load(getClass().getResource("/views/GameBoard.fxml"));
+                Scene homescene = new Scene(OnlinePlayerController.homeRoot);
+                if (OnlinePlayerController.homeStage != null) {
+                    OnlinePlayerController.homeStage.setScene(homescene);
+                    //start draw
+                    int[] board = reterveBoard();
+                    for (int i = 0; i < game.gridboard.length; i++) {
+                        for (int j = 0; j < game.gridboard[i].length; j++) {
+                            final int xpos = i;
+                            final int ypos = j;
+
+                            //wait
+                            final KeyFrame kfi = new KeyFrame(Duration.seconds(i + 1), e -> drawMove(xpos, ypos));
+                            final Timeline timeline = new Timeline(kfi);
+                            Platform.runLater(timeline::play);
+                        }
+                    }
+
+                } else {
+                    LoginController.stage.setScene(homescene);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        });
+    }
+
     public void stopGame(Request req) {
         Platform.runLater(() -> {
             try {
@@ -461,6 +497,17 @@ public class Client implements Runnable {
         Node s = getNodeByRowColumnIndex(xpos, ypos, grid);
         String result = move.getData("result");
 
+        ImageView img;
+        img = (ImageView) s;
+        if (isInitiator) {
+            img.setImage(imagex);
+        } else {
+            img.setImage(imageo);
+        }
+        game.gridboard[xpos][ypos] = flip == 1 ? 0 : 1;
+        gridboard[xpos][ypos] = flip == 1 ? 0 : 1;
+        game.myTurn = true;
+
         if (result.equals("o") || result.equals("x")) {
             loseName.setText("Sorry You Lost, Try Again :(");
             lose.setVisible(true);
@@ -477,17 +524,6 @@ public class Client implements Runnable {
                 reterveBoard();
             });
         }
-
-        ImageView img;
-        img = (ImageView) s;
-        if (isInitiator) {
-            img.setImage(imagex);
-        } else {
-            img.setImage(imageo);
-        }
-        game.gridboard[xpos][ypos] = flip == 1 ? 0 : 1;
-        gridboard[xpos][ypos] = flip == 1 ? 0 : 1;
-        game.myTurn = true;
 
         //enable board //
 //        myTurn = true;
@@ -534,12 +570,28 @@ public class Client implements Runnable {
 
     }
 
-    public void reterveBoard() {
+    public int[] reterveBoard() {
         System.err.println("game grid board" + game.gridboard.length);
+        int arr[] = new int[9];
+        int k = 0;
         for (int i = 0; i < game.gridboard.length; i++) {
             for (int j = 0; j < game.gridboard[i].length; j++) {
+                arr[k++] = game.gridboard[i][j];
                 System.out.println(game.gridboard[i][j]);
             }
+        }
+        return arr;
+    }
+
+    public final void drawMove(int xpos, int ypos) {
+        Node s = getNodeByRowColumnIndex(xpos, ypos, grid);
+
+        ImageView img;
+        img = (ImageView) s;
+        if (isInitiator) {
+            img.setImage(imagex);
+        } else {
+            img.setImage(imageo);
         }
     }
 
