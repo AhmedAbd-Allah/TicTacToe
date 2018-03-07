@@ -354,11 +354,12 @@ public class Client implements Runnable {
                     OnlinePlayerController.homeStage.setScene(homescene);
                     //start draw
                     int[] board = reterveBoard();
+                    System.out.println("before replay");
                     for (int i = 0; i < game.gridboard.length; i++) {
                         for (int j = 0; j < game.gridboard[i].length; j++) {
                             final int xpos = i;
                             final int ypos = j;
-
+                            System.out.println("i :"+i+" j:"+j);
                             //wait
                             final KeyFrame kfi = new KeyFrame(Duration.seconds(i + 1), e -> drawMove(xpos, ypos));
                             final Timeline timeline = new Timeline(kfi);
@@ -584,14 +585,17 @@ public class Client implements Runnable {
     }
 
     public final void drawMove(int xpos, int ypos) {
-        Node s = getNodeByRowColumnIndex(xpos, ypos, grid);
+        if (game.gridboard[xpos][ypos] != -1) {
+            int move = game.gridboard[xpos][ypos];
+            Node s = getNodeByRowColumnIndex(xpos, ypos, grid);
 
-        ImageView img;
-        img = (ImageView) s;
-        if (isInitiator) {
-            img.setImage(imagex);
-        } else {
-            img.setImage(imageo);
+            ImageView img;
+            img = (ImageView) s;
+            if (move == 0) {
+                img.setImage(imageo);
+            } else {
+                img.setImage(imagex);
+            }
         }
     }
 

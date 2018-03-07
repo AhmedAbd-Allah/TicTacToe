@@ -85,6 +85,8 @@
                </font>
             </Label>
             <Button fx:id="newGame" layoutX="80.0" layoutY="497.0" mnemonicParsing="false" onAction="#newGameHandler" prefHeight="51.0" prefWidth="176.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="New Game" />
+            <Button fx:id="replay" layoutX="120.0" layoutY="400.0" mnemonicParsing="false" onAction="#replayHandler" prefHeight="51.0" prefWidth="176.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="Replay" />
+        
          </children>
       </Pane>
       <Pane fx:id="loserpane" layoutX="4.0" layoutY="2.0" prefHeight="599.0" prefWidth="599.0" style="-fx-background-color: #fff0b3;" visible="false">
@@ -111,7 +113,7 @@
                </font>
             </Label>
             <Button fx:id="newGame1" layoutX="80.0" layoutY="497.0" mnemonicParsing="false" onAction="#newGameHandler" prefHeight="51.0" prefWidth="176.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="New Game" />
-            <Button fx:id="replay" layoutX="120.0" layoutY="400.0" mnemonicParsing="false" onAction="#replayHandler" prefHeight="51.0" prefWidth="176.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="Replay" />
+            <Button fx:id="replay1" layoutX="120.0" layoutY="400.0" mnemonicParsing="false" onAction="#replayHandler" prefHeight="51.0" prefWidth="176.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="Replay" />
 
          </children>
       </Pane>
