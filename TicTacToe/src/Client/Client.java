@@ -87,7 +87,7 @@ public class Client implements Runnable {
             th.start();
             connected = true;
 
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             try {
                 mySocket.close();
                 outObj.close();
@@ -159,7 +159,6 @@ public class Client implements Runnable {
             Request request = new Request("Login");
             request.setData("userName", userName);
             request.setData("password", password);
-            player = new Player(userName, 0, password);
             System.out.println("before request");
             sendRequest(request, this);
         } else {
@@ -176,6 +175,10 @@ public class Client implements Runnable {
 
     private void loginResponse(Request req) {
         if ("Successful login".equals(req.getRequestType())) {
+            String userName = req.getData("userName");
+            String password = req.getData("password");
+            int score = Integer.getInteger(req.getData("score"));
+            player = new Player(userName, score, password);
             Platform.runLater(() -> {
                 try {
                     LoginController.root = (Pane) FXMLLoader.load(getClass().getResource("/views/OnlinePlayer.fxml"));
@@ -278,7 +281,7 @@ public class Client implements Runnable {
                 }
 
             } catch (Exception e) {
-                e.printStackTrace();
+
             }
 
             System.out.println(OnlinePlayerController.homeRoot);
@@ -494,6 +497,7 @@ public class Client implements Runnable {
         Integer ypos = move.getPosition("ypos");
         System.out.print("final result: " + move.getData("result"));
 
+
 //     //draw on GUI the move
         Node s = getNodeByRowColumnIndex(xpos, ypos, grid);
         String result = move.getData("result");
@@ -512,6 +516,7 @@ public class Client implements Runnable {
         if (result.equals("o") || result.equals("x")) {
             loseName.setText("Sorry You Lost, Try Again :(");
             lose.setVisible(true);
+
             reterveBoard();
 //            lose.setVisible(false);
         } else if (result.equals("draw")) {
@@ -522,6 +527,7 @@ public class Client implements Runnable {
                 alert.setHeaderText("Game Finished ");
                 alert.setContentText("Draw");
                 alert.showAndWait();
+
                 reterveBoard();
             });
         }

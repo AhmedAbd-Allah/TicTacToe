@@ -64,7 +64,7 @@ public class ClientThread implements Runnable {
                 requestRedirection(req);
             }
         } catch (Exception e) {
-            
+
         }
     }
 
@@ -109,6 +109,9 @@ public class ClientThread implements Runnable {
                     onlinePlayers.put(userName, this);
                     PlayersMap.put(userName, player);
                     Request loginSuccess = new Request("Successful login");
+                    loginSuccess.setData("userName", userName);
+                    loginSuccess.setData("password", password);
+                    loginSuccess.setData("score", Integer.toString(score));
                     sendRequest(loginSuccess, this);
                     Request updatePlayersList = new Request("UpdatePlayersList");
                     sendToAll(updatePlayersList);
@@ -123,7 +126,7 @@ public class ClientThread implements Runnable {
                 };
 
             } catch (Exception e) {
-                
+
             }
         } else {
             Request loginFail = new Request("failed login");
@@ -237,6 +240,7 @@ public class ClientThread implements Runnable {
         String result = turn.getData("result");
         String winnerName = game.play(xpos, ypos);
         Request reply = new Request("gameStatus");
+
 //@TODO  insertMoves when result != gameOn
         reply.setPosition("xpos", xpos);
         reply.setPosition("ypos", ypos);
@@ -248,6 +252,12 @@ public class ClientThread implements Runnable {
         }
         System.out.println("in game turn");
         sendRequest(reply, player2th);
+        if (result.equals("o") || result.equals("x") || result.equals("draw")) {
+            PlayersMap.put(src,player);
+            PlayersMap.put(dest,onlinePlayers.get(dest).player);
+            Request newList = new Request("UpdatePlayersList");
+            sendToAll(newList);
+        }
 
     }
 
