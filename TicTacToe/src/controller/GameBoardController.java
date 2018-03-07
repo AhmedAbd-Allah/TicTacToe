@@ -122,13 +122,6 @@ public class GameBoardController implements Initializable {
 
         }
     }
-       
-    @FXML
-    private void replayHandler(MouseEvent event){
-        
-        Client client  = Client.getInstance();
-        client.replay();
-    }
     
     @FXML
     private void BorderMouseEvent(MouseEvent event) {
@@ -177,6 +170,13 @@ public class GameBoardController implements Initializable {
         root = (Pane) FXMLLoader.load(getClass().getResource("/views/ChooseMode.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
+    }
+    
+    @FXML
+    private void replayHandler(ActionEvent event) throws IOException {
+        
+        Client client  = Client.getInstance();
+        client.replay();
     }
 
     @FXML
