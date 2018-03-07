@@ -26,8 +26,8 @@ public class DBConnect
 		{
                     System.out.println("DBConnect trying");
                     String url = "jdbc:mysql://localhost:3306/xoo";
-                    String username = "aliaa";
-                    String password = "aliaa123";
+                    String username = "mhassan";
+                    String password = "iti38";
 
                     con = DriverManager.getConnection(url, username, password);
 		}

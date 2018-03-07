@@ -18,6 +18,7 @@ import static controller.GameBoardController.gridboard;
 import static controller.GameBoardController.imageo;
 import static controller.GameBoardController.imagex;
 import static controller.GameBoardController.lose;
+import static controller.GameBoardController.loseName;
 import static controller.GameBoardController.win;
 import static controller.GameBoardController.winName;
 import controller.LoginController;
@@ -381,29 +382,6 @@ public class Client implements Runnable {
         });
 
     }
-//    private Request gameTurn() {
-//        Request req = new Request("GameTurn");
-//
-//        req.setData("destination", "");
-//        req.setData("xpos", "0");
-//        req.setData("ypos", "0");
-//
-//        return req;
-//    }
-//    private Request gameTurn() {
-//        Request req = new Request("GameTurn");
-//
-//        req.setData("destination", "");
-//        req.setData("xpos", "0");
-//        req.setData("ypos", "0");
-//
-//        return req;
-//    }
-//    public void prepareRequest() {
-//        //check which button clicked to set request type and send it to server
-//        //sendRequest(Request message,this);
-//
-//    }
 
     public boolean isAuth() {
         return auth;
@@ -415,18 +393,24 @@ public class Client implements Runnable {
         if (game.validateMove(xpos, ypos)) {
             gridboard[xpos][ypos] = flip;
             //game.myTurn = false;
+
             String result = game.play(xpos, ypos, flip);
-            if(result.equals("o"))
-            {
-                 win.setVisible(true);
-                 lose.setVisible(false);
-                 winName.setText("        "+player1.getUsername()+" Is The Winner :)");
-            }
-            else if(result.equals("x"))
-            {
-                 win.setVisible(true);
-                 lose.setVisible(false);
-                 winName.setText("        "+player2.getUsername()+" Is The Winner :)");
+            //set request
+            Request move = new Request("move");
+            //set move
+
+            move.setPosition("xpos", xpos);
+            move.setPosition("ypos", ypos);
+            move.setData("result", result);
+
+            if (result.equals("o")) {
+                win.setVisible(true);
+                lose.setVisible(false);
+                winName.setText("        " + player1.getUsername() + " Is The Winner :)");
+            } else if (result.equals("x")) {
+                win.setVisible(true);
+                lose.setVisible(false);
+                winName.setText("        " + player2.getUsername() + " Is The Winner :)");
             }
             System.out.println("play status " + result);
             Node s = getNodeByRowColumnIndex(xpos, ypos, grid);
@@ -438,14 +422,6 @@ public class Client implements Runnable {
             } else {
                 img.setImage(imagex);
             }
-
-            //set request
-            Request move = new Request("move");
-            //set move
-
-            move.setPosition("xpos", xpos);
-            move.setPosition("ypos", ypos);
-            move.setData("result", result);
 
             //set destination player name
             if (this.player.getUsername() == player2.getUsername()) {
@@ -465,10 +441,20 @@ public class Client implements Runnable {
         //   if(!myTurn){
         Integer xpos = move.getPosition("xpos");
         Integer ypos = move.getPosition("ypos");
-        //System.out.println("recieve mo0ove -x " + xpos + " : -y " + ypos+" grid: "+grid);
+        System.out.print("final result: " + move.getData("result"));
 
+        //System.out.println("recieve mo0ove -x " + xpos + " : -y " + ypos+" grid: "+grid);
 //     //draw on GUI the move
         Node s = getNodeByRowColumnIndex(xpos, ypos, grid);
+        String result = move.getData("result");
+
+        if (result.equals("o") || result.equals("x")) {
+            lose.setVisible(true);
+//            lose.setVisible(false);
+            loseName.setText("Sorry You Lost, Try Again :(");
+        } else if (result.equals("draw")) {
+            
+        }
 
         ImageView img;
         img = (ImageView) s;
