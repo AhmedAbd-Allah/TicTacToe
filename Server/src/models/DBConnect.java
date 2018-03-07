@@ -25,13 +25,14 @@ public class DBConnect
 		try
 		{
                     System.out.println("DBConnect trying");
-//                    String url = "jdbc:mysql://localhost:3306/xoo";
-//                    String username = "mhassan";
-//                    String password = "iti38";
                     String url = "jdbc:mysql://localhost:3306/xoo";
-
-                    String username = "ahmed";
-                    String password = "ahmed";
+<<<<<<< HEAD
+                    String username = "rania";
+                    String password = "rania2017";
+=======
+                    String username = "aliaa";
+                    String password = "aliaa123";
+>>>>>>> 9ede4b9d72b79f13a2006ce10e01080d9d191d6a
 
                     con = DriverManager.getConnection(url, username, password);
 		}

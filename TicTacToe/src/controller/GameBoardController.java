@@ -86,8 +86,6 @@ public class GameBoardController implements Initializable {
     public static Label loseName;
     @FXML
     private Button newGame1;
-    @FXML
-    private Button back;
     //GridPane s;
     /**
      * Initializes the controller class.
@@ -101,7 +99,8 @@ public class GameBoardController implements Initializable {
         winName=winnerName;
         System.out.println(winName);
         loseName=loserName;
-
+        
+        grid=gridborder;
         imagex = new Image(getClass().getResource("/img/x.jpg").toExternalForm());
         imageo = new Image(getClass().getResource("/img/o.png").toExternalForm());
         for(int i=0 ;i<gridboard.length;i++)
@@ -150,15 +149,17 @@ public class GameBoardController implements Initializable {
             System.out.println("two players mode");
            
         }
-      //   if(gridboard[rowIndex][colIndex] == -1){
+         if(gridboard[rowIndex][colIndex] == -1){
                 
+                //mark cell as busy cell regardless has which image
+//                gridboard[rowIndex][colIndex] = 0;
                 Client client  = Client.getInstance();
                 
                 client.sendMove(rowIndex,colIndex);
                 
                //Client.Client.sendRequest(message, th);
 
-    //       }
+           }
                 //getNodeByRowColumnIndex(1, 1, gridborder);
 
     }
@@ -179,7 +180,6 @@ public class GameBoardController implements Initializable {
         stage.setScene(scene);
     }
 
-    @FXML
     private void backHandler(ActionEvent event) throws IOException {
         stage = (Stage) newGame.getScene().getWindow();
         if(one_player_mode||two_player_mode)

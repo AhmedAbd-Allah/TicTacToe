@@ -61,7 +61,6 @@
             <Image url="@../img/logo.gif" />
          </image>
       </ImageView>
-      <Button fx:id="back" layoutX="4.0" layoutY="6.0" mnemonicParsing="false" onAction="#backHandler" prefHeight="51.0" prefWidth="118.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="Back" />
       <Pane fx:id="winnerpane" layoutX="-3.0" layoutY="-2.0" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: #fff0b3;" visible="false">
          <children>
             <ImageView fitHeight="599.0" fitWidth="643.0" layoutX="5.0" pickOnBounds="true" preserveRatio="true">
@@ -106,7 +105,7 @@
                </image>
             </ImageView>
             <Button fx:id="close1" layoutX="324.0" layoutY="497.0" mnemonicParsing="false" onAction="#closeHandler" prefHeight="51.0" prefWidth="176.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="Close" />
-            <Label fx:id="loserName" layoutX="65.0" layoutY="376.0" prefHeight="66.0" prefWidth="407.0" stylesheets="@twoplayer.css" text="         Label">
+            <Label fx:id="loserName" layoutX="65.0" layoutY="376.0" prefHeight="66.0" prefWidth="407.0" stylesheets="@twoplayer.css" text="Sorry You Lost, Try Again :(">
                <font>
                   <Font size="27.0" />
                </font>

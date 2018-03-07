@@ -18,12 +18,14 @@ import java.util.HashMap;
 import Models.Player;
 import static server.Server.db;
 import client.Request;
+import static controllers.ServerAppController.players;
+import static controllers.ServerAppController.tableView;
 
 import models.Database;
 
 import java.util.Map;
+import javafx.application.Platform;
 import server.Game;
-
 
 /**
  *
@@ -49,9 +51,8 @@ public class ClientThread implements Runnable {
             outObj = new ObjectOutputStream(s.getOutputStream());
             th = new Thread(this);
             th.start();
-
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 
@@ -63,20 +64,17 @@ public class ClientThread implements Runnable {
                 requestRedirection(req);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 
     private void requestRedirection(Request req) {
-        
+
         String reqType = req.getRequestType();
-        System.out.println("reqType : "+reqType);
         if ("move".equals(reqType)) {
-     //  } else if ("gameStatus".equals(reqType)) {
-            System.out.println("before gameTurn");
+            //  } else if ("gameStatus".equals(reqType)) {
             gameTurn(req);
-        }else if ("Login".equals(reqType)) {
-            System.out.println("login");
+        } else if ("Login".equals(reqType)) {
             login(req);
         } else if (req.getRequestType().equals("SignUp")) {
             signUp(req);
@@ -89,7 +87,7 @@ public class ClientThread implements Runnable {
         } else if ("initiateHome".equals(reqType)) {
             initGame(req);
         } else if ("InvitationAccepted".equals(reqType)) {
-            System.out.println("InvitationAccepted");
+            // System.out.println("InvitationAccepted");
             startGame(req);
         } else if ("InvitationRejected".equals(reqType)) {
             stopGame(req);
@@ -100,8 +98,6 @@ public class ClientThread implements Runnable {
     private void login(Request req) {
         String userName = req.getData("userName");
         String password = req.getData("password");
-        System.out.println(userName);
-        System.out.println(password);
 
         if (db.authUser(userName, password)) {
             try {
@@ -116,61 +112,80 @@ public class ClientThread implements Runnable {
                     sendRequest(loginSuccess, this);
                     Request updatePlayersList = new Request("UpdatePlayersList");
                     sendToAll(updatePlayersList);
-//                    syncPlayersList();
 
+                    Platform.runLater(() -> {
+                        players.clear();
+                        onlinePlayers.entrySet().forEach((player) -> {
+                            players.add(player.getValue().player);
+                        });
+                        tableView.setItems(players);
+                    });
                 };
 
             } catch (Exception e) {
-                e.printStackTrace();
+                
             }
         } else {
             Request loginFail = new Request("failed login");
             sendRequest(loginFail, this);
-        };
+        }
+        ;
     }
 
     private void logOut(Request req) {
         String userName = req.getData("userName");
+        System.out.println(userName + " is logging out");
         if (onlinePlayers.containsKey(userName)) {
             Request removedPlayer = new Request("removePlayer");
             removedPlayer.setData(userName, userName);
-            
+
             PlayersMap.remove(userName);
             ClientThread myth = onlinePlayers.get("userName");
             onlinePlayers.remove(userName);
-            myth.killthread (this);
-            
-//            syncPlayersList();
+            Request updatePlayersList = new Request("UpdatePlayersList");
+            sendToAll(updatePlayersList);
+
+            Platform.runLater(() -> {
+                players.clear();
+                onlinePlayers.entrySet().forEach((player) -> {
+                    players.add(player.getValue().player);
+                });
+                tableView.setItems(players);
+            });
+            try {
+                myth.killthread(this);
+            } catch (Exception e) {
+            }
         }
     }
 
-    private void killthread (ClientThread thread)
-    {
-        thread.th.stop();
+    private void killthread(ClientThread thread) {
+
+        try {
+            outObj.close();
+            inpObj.close();
+            thread.th.stop();
+        } catch (Exception e) {
+
+        }
+
     }
+
     private void signUp(Request req) {
         String userName = req.getData("userName");
         String password = req.getData("password");
-        System.out.println(userName);
-        System.out.println(password);
 
         Integer score = 0;
 
         player = new Player(userName, score, password);
-        System.out.println(player);
+        // System.out.println(player);
         boolean check = db.insertUser(userName, password, score);
-        System.out.println("checked is " + check);
         if (check) {
 
             onlinePlayers.put(userName, this);
             PlayersMap.put(userName, player);
-//            syncPlayersList();
             Request signupSuccess = new Request("Successful signup");
             sendRequest(signupSuccess, this);
-//            Request AddedPlayer = new Request("addPlayer");
-//            AddedPlayer.setplayer(userName, player);
-//            this.sendToAll(AddedPlayer);
-
         } else {
             Request signupFailed = new Request("failed signup");
             sendRequest(signupFailed, this);
@@ -181,7 +196,7 @@ public class ClientThread implements Runnable {
     private void requestGame(Request recieved) {
         String dest = recieved.getData("destination");
         String src = player.getUsername();
-        System.out.println("Source: " + src + " Destination: " + dest);
+        // System.out.println("Source: " + src + " Destination: " + dest);
         ClientThread opponent = onlinePlayers.get(dest);
         Request sendReq = new Request("RequestGame");
         sendReq.setData("source", src);
@@ -206,59 +221,38 @@ public class ClientThread implements Runnable {
             int player1_id = player1.getId();
             int player2_id = player2.getId();
             Database mydata = new Database();
-            mydata.createGame(player1_id, player2_id); 
-
-
+            mydata.createGame(player1_id, player2_id);
 
         }
         return replyReq;
     }
 
     private void gameTurn(Request turn) {
-               System.out.println("gameTurn");
 
         String dest = turn.getData("destination");
         String src = this.player.getUsername();
         ClientThread player2th = onlinePlayers.get(dest);
         Integer xpos = turn.getPosition("xpos");
         Integer ypos = turn.getPosition("ypos");
-        
+        String result = turn.getData("result");
         String winnerName = game.play(xpos, ypos);
         Request reply = new Request("gameStatus");
-        if (winnerName == null) {
-            reply.setData("status", "gameOn");
-
-        } else if (winnerName.equals(player1.getUsername())) {
-            reply.setData("status", "End");
-            reply.setPlayer("winner", player1);
-            reply.setPlayer("loser", player2);
-            game = null;
-            
-        } else if (winnerName.equals(player2.getUsername()))  {
-            reply.setData("status", "End");
-            reply.setPlayer("winner", player2);
-            reply.setPlayer("loser", player1);
-            game = null;
-
-        } else if (winnerName.equals("draw")) {
-            reply.setData("status", "End");
-            reply.setData("draw", "draw");
-            game = null;
-
-        } else {
-            reply.setData("status", "invalidMove");
-        }
-        reply.setPosition("xpos", xpos);        
+//@TODO  insertMoves when result != gameOn
+        reply.setPosition("xpos", xpos);
         reply.setPosition("ypos", ypos);
-       
-
-         //sendRequest(reply, this);
-         sendRequest(reply, player2th);
+        reply.setData("result",result);
+        
+        if(result !="gameOn"){
+            //insert all moves
+          //  Database.prepareMoves([][]);
+        }
+        System.out.println("in game turn");
+        sendRequest(reply, player2th);
 
     }
 
     private void initGame(Request req) {
-        System.out.println("hello from init");
+        //  System.out.println("hello from init");
         Request playersList = new Request("playersList");
         PlayersMap.entrySet().forEach((playerSet) -> {
             String name1 = playerSet.getKey();
@@ -279,23 +273,23 @@ public class ClientThread implements Runnable {
     }
 
     private void startGame(Request req) {
-        System.out.println("hello from start game");
+        // System.out.println("hello from start game");
         String dest = req.getData("destination");
         String src = this.player.getUsername();
         Request startGame = new Request("startGame");
-       
+
         //master
         startGame.setData("player1", dest);
-        
+
         //player2
         startGame.setData("player2", src);
         ClientThread player1Th = onlinePlayers.get(dest);
-        
+
         player1 = onlinePlayers.get(dest).player;
         player2 = this.player;
         game = new Game(player1, player2);
         onlinePlayers.get(dest).game = game;
-        
+
         sendRequest(startGame, this);
         sendRequest(startGame, player1Th);
         PlayersMap.remove(src);
@@ -303,17 +297,15 @@ public class ClientThread implements Runnable {
         Request newList = new Request("UpdatePlayersList");
         sendToAll(newList);
     }
-    
-    private void showOnlinePlayers()
-    {
+
+    private void showOnlinePlayers() {
         for (Map.Entry<String, ClientThread> entry : onlinePlayers.entrySet()) {
             String key = entry.getKey();
             ClientThread value = entry.getValue();
-             System.out.println(key + " : "+value);
-            
+            System.out.println(key + " : " + value);
+
         }
     }
-    
 
     private void stopGame(Request req) {
         System.out.println("hello from stop game");
