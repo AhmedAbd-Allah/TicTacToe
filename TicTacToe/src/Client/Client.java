@@ -175,10 +175,11 @@ public class Client implements Runnable {
 
     private void loginResponse(Request req) {
         if ("Successful login".equals(req.getRequestType())) {
-            String userName = req.getData("userName");
-            String password = req.getData("password");
-            int score = Integer.getInteger(req.getData("score"));
-            player = new Player(userName, score, password);
+            String name = req.getData("userName");
+            String pass = req.getData("password");
+            String score = req.getData("score");
+            int sco = Integer.parseInt(req.getData("score"));
+            player = new Player(name,sco,pass);
             Platform.runLater(() -> {
                 try {
                     LoginController.root = (Pane) FXMLLoader.load(getClass().getResource("/views/OnlinePlayer.fxml"));
@@ -257,7 +258,7 @@ public class Client implements Runnable {
             PlayersListController.players.clear();
             req.getMap().entrySet().forEach(set -> {
                 if (!set.getKey().equals(this.player.getUsername())) {
-                    int score = Integer.getInteger(set.getValue()) == null ? 0 : 1;
+                    int score = Integer.getInteger(set.getValue()) == null?0:Integer.getInteger(set.getValue());
                     Player p = new Player(set.getKey(), score, "x");
                     PlayersListController.players.add(p);
                 }
