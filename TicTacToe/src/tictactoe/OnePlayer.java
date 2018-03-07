@@ -295,12 +295,12 @@ public class OnePlayer {
        
        if(getWinner(board) ==1){;
            lose.setVisible(true);
-           loseName.setText("   Sorry "+player+" Is The Loser :( ");
+           loseName.setText("Sorry You Lost, Try Again :(");
            
        }else if(getWinner(board) == 0){
 
             win.setVisible(true);
-           winName.setText("        "+player+" Is The Winner :)");
+           winName.setText("You Are The Winner :)");
        }
        else if (gameEnded(board)){
             System.out.println("Tie");

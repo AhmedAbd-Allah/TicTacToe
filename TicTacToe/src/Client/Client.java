@@ -72,7 +72,7 @@ public class Client implements Runnable {
         try {
 
             System.out.println("new client");
-            mySocket = new Socket("127.0.0.1", 5000);
+            mySocket = new Socket("10.145.8.58", 5000);
             outObj = new ObjectOutputStream(mySocket.getOutputStream());
             inpObj = new ObjectInputStream(mySocket.getInputStream());
             System.out.println(mySocket);
@@ -406,11 +406,23 @@ public class Client implements Runnable {
             if (result.equals("o")) {
                 win.setVisible(true);
                 lose.setVisible(false);
-                winName.setText("        " + player1.getUsername() + " Is The Winner :)");
+                winName.setText("You Are The Winner :)");
             } else if (result.equals("x")) {
                 win.setVisible(true);
                 lose.setVisible(false);
                 winName.setText("        " + player2.getUsername() + " Is The Winner :)");
+            }
+            else if(result.equals("gameOn"))
+            {
+                
+            }else{
+                Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText("Game Finished ");
+                alert.setContentText("Draw");
+                alert.showAndWait();
+                });
             }
             System.out.println("play status " + result);
             Node s = getNodeByRowColumnIndex(xpos, ypos, grid);
@@ -447,10 +459,18 @@ public class Client implements Runnable {
         String result = move.getData("result");
 
         if (result.equals("o") || result.equals("x")) {
-            lose.setVisible(true);
             loseName.setText("Sorry You Lost, Try Again :(");
+            lose.setVisible(true);
+
         } else if (result.equals("draw")) {
-            
+            System.out.println("inside receve draw");
+                Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText("Game Finished ");
+                alert.setContentText("Draw");
+                alert.showAndWait();
+                });
         }
 
         ImageView img;
