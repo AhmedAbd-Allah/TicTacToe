@@ -72,9 +72,11 @@ public class Client implements Runnable {
         try {
 
             System.out.println("new client");
-            
+
             //use hassan's pc as a server instead of local host
-            mySocket = new Socket("10.145.8.58", 5000);
+//            mySocket = new Socket("10.145.8.58", 5000);
+            mySocket = new Socket("127.0.0.1", 5000);
+
             outObj = new ObjectOutputStream(mySocket.getOutputStream());
             inpObj = new ObjectInputStream(mySocket.getInputStream());
             System.out.println(mySocket);
@@ -413,17 +415,15 @@ public class Client implements Runnable {
                 win.setVisible(true);
                 lose.setVisible(false);
                 winName.setText("        " + player2.getUsername() + " Is The Winner :)");
-            }
-            else if(result.equals("gameOn"))
-            {
-                
-            }else{
+            } else if (result.equals("gameOn")) {
+
+            } else {
                 Platform.runLater(() -> {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Information Dialog");
-                alert.setHeaderText("Game Finished ");
-                alert.setContentText("Draw");
-                alert.showAndWait();
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Dialog");
+                    alert.setHeaderText("Game Finished ");
+                    alert.setContentText("Draw");
+                    alert.showAndWait();
                 });
             }
             System.out.println("play status " + result);
@@ -457,7 +457,6 @@ public class Client implements Runnable {
         Integer ypos = move.getPosition("ypos");
         System.out.print("final result: " + move.getData("result"));
 
-        //System.out.println("recieve mo0ove -x " + xpos + " : -y " + ypos+" grid: "+grid);
 //     //draw on GUI the move
         Node s = getNodeByRowColumnIndex(xpos, ypos, grid);
         String result = move.getData("result");
@@ -465,16 +464,18 @@ public class Client implements Runnable {
         if (result.equals("o") || result.equals("x")) {
             loseName.setText("Sorry You Lost, Try Again :(");
             lose.setVisible(true);
+            reterveBoard();
 //            lose.setVisible(false);
         } else if (result.equals("draw")) {
             System.out.println("inside receve draw");
-                Platform.runLater(() -> {
+            Platform.runLater(() -> {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Information Dialog");
                 alert.setHeaderText("Game Finished ");
                 alert.setContentText("Draw");
                 alert.showAndWait();
-                });
+                reterveBoard();
+            });
         }
 
         ImageView img;
@@ -531,6 +532,15 @@ public class Client implements Runnable {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    public void reterveBoard() {
+        System.err.println("game grid board" + game.gridboard.length);
+        for (int i = 0; i < game.gridboard.length; i++) {
+            for (int j = 0; j < game.gridboard[i].length; j++) {
+                System.out.println(game.gridboard[i][j]);
+            }
+        }
     }
 
 }

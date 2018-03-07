@@ -3,21 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
             <file>file:/home/rania/data/ITI/Courses/24.Java%20Programming/project/Project%20/TicTacToe/TicTacToe/src/Client/Client.java</file>
-            <file>file:/home/rania/data/ITI/Courses/24.Java%20Programming/project/Project%20/TicTacToe/TicTacToe/src/controller/GameBoardController.java</file>
             <file>file:/home/rania/data/ITI/Courses/24.Java%20Programming/project/Project%20/TicTacToe/TicTacToe/src/Client/Game.java</file>
             <file>file:/home/rania/data/ITI/Courses/24.Java%20Programming/project/Project%20/TicTacToe/TicTacToe/src/tictactoe/TicTacToe.java</file>
-=======
-<<<<<<< HEAD
-            <file>file:/home/MHassan/TicTacToe/TicTacToe/src/tictactoe/TicTacToe.java</file>
-            <file>file:/home/MHassan/TicTacToe/TicTacToe/src/Client/Client.java</file>
-=======
-            <file>file:/home/aliaa/Desktop/TicTacToe/TicTacToe/src/tictactoe/TicTacToe.java</file>
-            <file>file:/home/aliaa/Desktop/TicTacToe/TicTacToe/src/Client/Client.java</file>
-            <file>file:/home/aliaa/Desktop/TicTacToe/TicTacToe/src/Client/Game.java</file>
->>>>>>> 378eb32cdfc791e24ca6d54682841a4871bebd58
->>>>>>> c102a44c66b915c139325933b7e2cc311a5a02c0
+            <file>file:/home/rania/data/ITI/Courses/24.Java%20Programming/project/Project%20/TicTacToe/TicTacToe/src/controller/OnePlayerController.java</file>
+            <file>file:/home/rania/data/ITI/Courses/24.Java%20Programming/project/Project%20/TicTacToe/TicTacToe/src/tictactoe/OnePlayer.java</file>
         </group>
     </open-files>
 </project-private>

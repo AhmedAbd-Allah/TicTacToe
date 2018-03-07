@@ -3,18 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
+            <file>file:/home/rania/data/ITI/Courses/24.Java%20Programming/project/Project%20/TicTacToe/Server/src/models/DBConnect.java</file>
             <file>file:/home/rania/data/ITI/Courses/24.Java%20Programming/project/Project%20/TicTacToe/Server/src/server/ClientThread.java</file>
-=======
-<<<<<<< HEAD
-            <file>file:/home/MHassan/TicTacToe/Server/src/controllers/ServerAppController.java</file>
-            <file>file:/home/MHassan/TicTacToe/Server/src/server/ClientThread.java</file>
-            <file>file:/home/MHassan/TicTacToe/Server/src/models/DBConnect.java</file>
-=======
-            <file>file:/home/aliaa/Desktop/TicTacToe/Server/src/server/ClientThread.java</file>
-            <file>file:/home/aliaa/Desktop/TicTacToe/Server/src/server/ServerApplication.java</file>
->>>>>>> 378eb32cdfc791e24ca6d54682841a4871bebd58
->>>>>>> c102a44c66b915c139325933b7e2cc311a5a02c0
+            <file>file:/home/rania/data/ITI/Courses/24.Java%20Programming/project/Project%20/TicTacToe/Server/src/models/Database.java</file>
         </group>
     </open-files>
 </project-private>
