@@ -13,10 +13,13 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import client.Request;
+import static controller.GameBoardController.closereplay;
 import static controller.GameBoardController.grid;
 import static controller.GameBoardController.gridboard;
 import static controller.GameBoardController.imageo;
 import static controller.GameBoardController.imagex;
+import static controller.GameBoardController.pl1;
+import static controller.GameBoardController.pl2;
 import static controller.GameBoardController.lose;
 import static controller.GameBoardController.loseName;
 import static controller.GameBoardController.win;
@@ -337,6 +340,8 @@ public class Client implements Runnable {
 
                 System.out.println("Remote player" + player1.getUsername());
                 OnlinePlayerController.homeRoot = (Pane) FXMLLoader.load(getClass().getResource("/views/GameBoard.fxml"));
+                pl1.setText(player1.getUsername());
+                pl2.setText(player2.getUsername());
                 Scene homescene = new Scene(OnlinePlayerController.homeRoot);
                 if (OnlinePlayerController.homeStage != null) {
                     OnlinePlayerController.homeStage.setScene(homescene);
@@ -357,21 +362,34 @@ public class Client implements Runnable {
 
                 OnlinePlayerController.homeRoot = (Pane) FXMLLoader.load(getClass().getResource("/views/GameBoard.fxml"));
                 Scene homescene = new Scene(OnlinePlayerController.homeRoot);
+                closereplay.setVisible(true);
                 if (OnlinePlayerController.homeStage != null) {
                     OnlinePlayerController.homeStage.setScene(homescene);
                     //start draw
                     int[] board = reterveBoard();
                     System.out.println("before replay");
-                    for (int i = 0; i < game.gridboard.length; i++) {
-                        for (int j = 0; j < game.gridboard[i].length; j++) {
-                            final int xpos = i;
-                            final int ypos = j;
-                            System.out.println("i :" + i + " j:" + j);
+
+//                    for (int i = 0; i < game.gridboard.length; i++) {
+//                        for (int j = 0; j < game.gridboard[i].length; j++) {
+//                            final int xpos = i;
+//                            final int ypos = j;
+//                            System.out.println("i :"+i+" j:"+j);
+//                            //wait
+//                            final KeyFrame kfi = new KeyFrame(Duration.seconds(i + 1), e -> drawMove(xpos, ypos));
+//                            final Timeline timeline = new Timeline(kfi);
+//                            Platform.runLater(timeline::play);
+//                        }
+//                    }
+                    for (int i = 0; i < game.xpositons.length; i++) {
+                       // for (int j = 0; j < game.gridboard[i].length; j++) {
+                            final int xpos = game.xpositons[i];
+                            final int ypos = game.ypositions[i];
+                           // System.out.println("i :"+i+" j:"+j);
                             //wait
                             final KeyFrame kfi = new KeyFrame(Duration.seconds(i + 1), e -> drawMove(xpos, ypos));
                             final Timeline timeline = new Timeline(kfi);
                             Platform.runLater(timeline::play);
-                        }
+                      //  }
                     }
 
                 } else {
@@ -461,10 +479,9 @@ public class Client implements Runnable {
             } else if (result.equals("x")) {
                 win.setVisible(true);
                 lose.setVisible(false);
-                winName.setText("        " + player2.getUsername() + " Is The Winner :)");
                 String winnerName = player2.getUsername();
                 move.setData("winner", winnerName);
-
+                winName.setText("You Are The Winner :)");
             } else if (result.equals("gameOn")) {
 
             } else {
@@ -474,6 +491,8 @@ public class Client implements Runnable {
                     alert.setHeaderText("Game Finished ");
                     alert.setContentText("Draw");
                     alert.showAndWait();
+                    opened=false;
+                    client.initiateHome();
                 });
             }
             System.out.println("play status " + result);
@@ -519,6 +538,8 @@ public class Client implements Runnable {
             img.setImage(imageo);
         }
         game.gridboard[xpos][ypos] = flip == 1 ? 0 : 1;
+         game.xpositons [game.i] =  xpos;
+         game.ypositions[game.i++] = ypos;
         gridboard[xpos][ypos] = flip == 1 ? 0 : 1;
         game.myTurn = true;
 
@@ -536,7 +557,8 @@ public class Client implements Runnable {
                 alert.setHeaderText("Game Finished ");
                 alert.setContentText("Draw");
                 alert.showAndWait();
-
+                opened=false;
+                client.initiateHome();
                 reterveBoard();
             });
         }

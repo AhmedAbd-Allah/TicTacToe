@@ -58,6 +58,7 @@ public class TwoPlayer {
         {
             win.setVisible(true);
             lose.setVisible(false);
+            rep.setVisible(false);
            winName.setText("        "+player1Name+" Is The Winner :)");
         }
         if((gridboard[0][0]==1&&gridboard[0][1]==1&&gridboard[0][2]==1)
@@ -72,6 +73,7 @@ public class TwoPlayer {
         {
             win.setVisible(true);
             lose.setVisible(false);
+            rep.setVisible(false);
             winName.setText("       "+player2Name+" Is The Winner :)");
         }
         

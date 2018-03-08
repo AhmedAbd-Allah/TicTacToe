@@ -21,6 +21,10 @@ public class Game {
     public Player draw;
     private static int move = 0;
     public int[][] gridboard = new int[3][3];
+    public int[] xpositons = new int[9];
+    public int[] ypositions = new int[9];
+    public int i = 0 ;
+    public int j = 0;
 
     public Game(Player play1, Player play2) {
         this.player1 = play1;
@@ -48,6 +52,8 @@ public class Game {
         if(gridboard[xpos][ypos]== -1)
         {
             gridboard[xpos][ypos] = flip;//move%2 == 0 ? 0:1;
+            xpositons [i] =  xpos;
+            ypositions[i++] = ypos;
             String p = checkWinner();
 
             if(move < 4)
