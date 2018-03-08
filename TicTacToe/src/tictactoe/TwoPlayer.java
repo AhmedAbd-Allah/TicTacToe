@@ -17,9 +17,12 @@ import static controller.TwoPlayerController.player2Name;
  * @author aliaa
  */
 public class TwoPlayer {
+    private int move =0;
     
         public void play(int row,int col)
     {
+        move++;
+        System.out.println("current move = "+move);
         if(gridboard[row][col]==-1)
         {
             ImageView m1 = (ImageView)source;
@@ -75,6 +78,15 @@ public class TwoPlayer {
             lose.setVisible(false);
             rep.setVisible(false);
             winName.setText("       "+player2Name+" Is The Winner :)");
+        }
+        if(move == 9){
+            System.out.println("Tieeeeeeeee");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText("Game Finished ");
+            alert.setContentText("Draw");
+            alert.showAndWait(); 
+           // System.exit(1);
         }
         
     }

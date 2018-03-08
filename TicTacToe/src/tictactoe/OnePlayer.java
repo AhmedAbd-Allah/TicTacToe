@@ -311,7 +311,7 @@ public class OnePlayer {
             alert.setHeaderText("Game Finished ");
             alert.setContentText("Draw");
             alert.showAndWait(); 
-            System.exit(1);
+            //System.exit(1);
        }
     }
     public void seti(int player,int cell)
