@@ -57,7 +57,7 @@ public class GameBoardController implements Initializable {
     public static Image imagex;
     public static Image imageo;
     public static Node source;
-    public static int gridboard[][]=new int[3][3];
+    public static int gridboard[][];
     public static int counter=-1;
     OnePlayer p1;
     TwoPlayer p2;
@@ -105,6 +105,7 @@ public class GameBoardController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        gridboard=new int[3][3];
         p1= new OnePlayer();
         p2 = new TwoPlayer();
         win=winnerpane;
@@ -221,18 +222,4 @@ public class GameBoardController implements Initializable {
             client.initiateHome();
         }
     }
-
-//    private void backHandler(ActionEvent event) throws IOException {
-//        stage = (Stage) newGame.getScene().getWindow();
-//        if(one_player_mode||two_player_mode)
-//        {         
-//            root = (Pane) FXMLLoader.load(getClass().getResource("/views/ChooseMode.fxml"));
-//        }
-//        else
-//        {
-//            root = (Pane) FXMLLoader.load(getClass().getResource("/views/OnlinePlayer.fxml"));
-//        }
-//            Scene scene = new Scene(root);
-//            stage.setScene(scene);
-//    }
 }

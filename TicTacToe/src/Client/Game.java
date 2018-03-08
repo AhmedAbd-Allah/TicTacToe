@@ -19,7 +19,7 @@ public class Game {
     public boolean myTurn = true;
     public Player gameOn;
     public Player draw;
-    private static int move = 0;
+    private int move = 0;
     public int[][] gridboard = new int[3][3];
     public int[] xpositons = new int[9];
     public int[] ypositions = new int[9];
@@ -64,6 +64,7 @@ public class Game {
             }
             else
             {
+//                move = 0;
                 return "draw";
             }
             
@@ -85,6 +86,7 @@ public class Game {
           )
         {
 
+//            move = 0;
             System.out.println("player o win");
             return "o";
         }
@@ -96,6 +98,7 @@ public class Game {
                 || (gridboard[0][2] == 1 && gridboard[1][2] == 1 && gridboard[2][2] == 1)
                 || (gridboard[0][0] == 1 && gridboard[1][1] == 1 && gridboard[2][2] == 1)
                 || (gridboard[0][2] == 1 && gridboard[1][1] == 1 && gridboard[2][0] == 1)) {
+//             move = 0;
             System.out.println("player x win");
             return "x";
         }

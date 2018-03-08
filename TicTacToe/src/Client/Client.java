@@ -81,7 +81,7 @@ public class Client implements Runnable {
 
             //use hassan's pc as a server instead of local host
 //            mySocket = new Socket("10.145.8.58", 5000);
-            mySocket = new Socket("127.0.0.1", 5000);
+            mySocket = new Socket("10.145.8.58", 5000);
 
             outObj = new ObjectOutputStream(mySocket.getOutputStream());
             inpObj = new ObjectInputStream(mySocket.getInputStream());
@@ -368,23 +368,9 @@ public class Client implements Runnable {
                     //start draw
                     int[] board = reterveBoard();
                     System.out.println("before replay");
-
-//                    for (int i = 0; i < game.gridboard.length; i++) {
-//                        for (int j = 0; j < game.gridboard[i].length; j++) {
-//                            final int xpos = i;
-//                            final int ypos = j;
-//                            System.out.println("i :"+i+" j:"+j);
-//                            //wait
-//                            final KeyFrame kfi = new KeyFrame(Duration.seconds(i + 1), e -> drawMove(xpos, ypos));
-//                            final Timeline timeline = new Timeline(kfi);
-//                            Platform.runLater(timeline::play);
-//                        }
-//                    }
                     for (int i = 0; i < game.xpositons.length; i++) {
-                       // for (int j = 0; j < game.gridboard[i].length; j++) {
                             final int xpos = game.xpositons[i];
                             final int ypos = game.ypositions[i];
-                           // System.out.println("i :"+i+" j:"+j);
                             //wait
                             final KeyFrame kfi = new KeyFrame(Duration.seconds(i + 1), e -> drawMove(xpos, ypos));
                             final Timeline timeline = new Timeline(kfi);
