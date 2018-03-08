@@ -358,16 +358,27 @@ public class Client implements Runnable {
                     //start draw
                     int[] board = reterveBoard();
                     System.out.println("before replay");
-                    for (int i = 0; i < game.gridboard.length; i++) {
-                        for (int j = 0; j < game.gridboard[i].length; j++) {
-                            final int xpos = i;
-                            final int ypos = j;
-                            System.out.println("i :"+i+" j:"+j);
+//                    for (int i = 0; i < game.gridboard.length; i++) {
+//                        for (int j = 0; j < game.gridboard[i].length; j++) {
+//                            final int xpos = i;
+//                            final int ypos = j;
+//                            System.out.println("i :"+i+" j:"+j);
+//                            //wait
+//                            final KeyFrame kfi = new KeyFrame(Duration.seconds(i + 1), e -> drawMove(xpos, ypos));
+//                            final Timeline timeline = new Timeline(kfi);
+//                            Platform.runLater(timeline::play);
+//                        }
+//                    }
+                    for (int i = 0; i < game.xpositons.length; i++) {
+                       // for (int j = 0; j < game.gridboard[i].length; j++) {
+                            final int xpos = game.xpositons[i];
+                            final int ypos = game.ypositions[i];
+                           // System.out.println("i :"+i+" j:"+j);
                             //wait
                             final KeyFrame kfi = new KeyFrame(Duration.seconds(i + 1), e -> drawMove(xpos, ypos));
                             final Timeline timeline = new Timeline(kfi);
                             Platform.runLater(timeline::play);
-                        }
+                      //  }
                     }
 
                 } else {
@@ -510,6 +521,8 @@ public class Client implements Runnable {
             img.setImage(imageo);
         }
         game.gridboard[xpos][ypos] = flip == 1 ? 0 : 1;
+         game.xpositons [game.i] =  xpos;
+         game.ypositions[game.i++] = ypos;
         gridboard[xpos][ypos] = flip == 1 ? 0 : 1;
         game.myTurn = true;
 

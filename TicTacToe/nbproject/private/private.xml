@@ -3,18 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/home/MHassan/TicTacToe/TicTacToe/src/controller/GameBoardController.java</file>
-            <file>file:/home/MHassan/TicTacToe/TicTacToe/src/tictactoe/TicTacToe.java</file>
-            <file>file:/home/MHassan/TicTacToe/TicTacToe/src/Client/Client.java</file>
-=======
             <file>file:/home/rania/data/ITI/Courses/24.Java%20Programming/project/Project%20/TicTacToe/TicTacToe/src/Client/Client.java</file>
             <file>file:/home/rania/data/ITI/Courses/24.Java%20Programming/project/Project%20/TicTacToe/TicTacToe/src/controller/GameBoardController.java</file>
             <file>file:/home/rania/data/ITI/Courses/24.Java%20Programming/project/Project%20/TicTacToe/TicTacToe/src/views/GameBoard.fxml</file>
             <file>file:/home/rania/data/ITI/Courses/24.Java%20Programming/project/Project%20/TicTacToe/TicTacToe/src/tictactoe/TicTacToe.java</file>
             <file>file:/home/rania/data/ITI/Courses/24.Java%20Programming/project/Project%20/TicTacToe/TicTacToe/src/controller/OnePlayerController.java</file>
             <file>file:/home/rania/data/ITI/Courses/24.Java%20Programming/project/Project%20/TicTacToe/TicTacToe/src/tictactoe/OnePlayer.java</file>
->>>>>>> 9e6c82c27d137ca8d2a686a5bc25ad55b64ab594
         </group>
     </open-files>
 </project-private>
