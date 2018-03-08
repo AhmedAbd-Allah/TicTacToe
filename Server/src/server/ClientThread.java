@@ -109,6 +109,7 @@ public class ClientThread implements Runnable {
                     onlinePlayers.put(userName, this);
                     PlayersMap.put(userName, player);
                     Request loginSuccess = new Request("Successful login");
+                    System.out.println("Score equals:"+Integer.toString(score));
                     loginSuccess.setData("userName", userName);
                     loginSuccess.setData("password", password);
                     loginSuccess.setData("score", Integer.toString(score));
@@ -262,7 +263,7 @@ public class ClientThread implements Runnable {
     }
 
     private void initGame(Request req) {
-        //  System.out.println("hello from init");
+          System.out.println("hello from init");
         Request playersList = new Request("playersList");
         PlayersMap.entrySet().forEach((playerSet) -> {
             String name1 = playerSet.getKey();
@@ -271,7 +272,9 @@ public class ClientThread implements Runnable {
                 System.out.println(name1 + " not equals " + name2);
                 Player p = playerSet.getValue();
                 String name = playerSet.getKey();
-                int scoreInt = playerSet.getValue().getScore();
+                int scoreInt = p.getScore();
+                System.out.println("Hell=============================");
+                System.out.println("Hell============================="+scoreInt);
                 String score = Integer.toString(scoreInt);
                 playersList.setData(name, score);
             } else {

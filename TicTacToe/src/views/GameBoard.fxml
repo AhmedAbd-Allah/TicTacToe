@@ -29,7 +29,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fitHeight="122.0" fitWidth="136.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="122.0" fitWidth="133.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fitHeight="122.0" fitWidth="136.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
             <ImageView fitHeight="117.0" fitWidth="136.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2" />
             <ImageView fitHeight="122.0" fitWidth="138.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
@@ -78,14 +78,14 @@
                   <Image url="@../img/winner.gif" />
                </image>
             </ImageView>
-            <Button fx:id="close" layoutX="324.0" layoutY="497.0" mnemonicParsing="false" onAction="#closeHandler" prefHeight="51.0" prefWidth="176.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="Close" />
+            <Button fx:id="close" layoutX="410.0" layoutY="502.0" mnemonicParsing="false" onAction="#closeHandler" prefHeight="51.0" prefWidth="176.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="Close" />
             <Label fx:id="winnerName" layoutX="65.0" layoutY="376.0" prefHeight="66.0" prefWidth="407.0" stylesheets="@twoplayer.css" text="         Label">
                <font>
                   <Font size="27.0" />
                </font>
             </Label>
-            <Button fx:id="newGame" layoutX="80.0" layoutY="497.0" mnemonicParsing="false" onAction="#newGameHandler" prefHeight="51.0" prefWidth="176.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="New Game" />
-            <Button fx:id="replay" layoutX="120.0" layoutY="400.0" mnemonicParsing="false" onAction="#replayHandler" prefHeight="51.0" prefWidth="176.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="Replay" />
+            <Button fx:id="newGame" layoutX="12.0" layoutY="504.0" mnemonicParsing="false" onAction="#newGameHandler" prefHeight="51.0" prefWidth="176.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="New Game" />
+            <Button fx:id="replay" layoutX="205.0" layoutY="505.0" mnemonicParsing="false" onAction="#replayHandler" prefHeight="51.0" prefWidth="185.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="Replay Game" />
         
          </children>
       </Pane>
@@ -106,16 +106,17 @@
                   <Image url="@../img/loser.gif" />
                </image>
             </ImageView>
-            <Button fx:id="close1" layoutX="324.0" layoutY="497.0" mnemonicParsing="false" onAction="#closeHandler" prefHeight="51.0" prefWidth="176.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="Close" />
+            <Button fx:id="close1" layoutX="398.0" layoutY="498.0" mnemonicParsing="false" onAction="#closeHandler" prefHeight="51.0" prefWidth="176.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="Close" />
             <Label fx:id="loserName" layoutX="65.0" layoutY="376.0" prefHeight="66.0" prefWidth="407.0" stylesheets="@twoplayer.css" text="Sorry You Lost, Try Again :(">
                <font>
                   <Font size="27.0" />
                </font>
             </Label>
-            <Button fx:id="newGame1" layoutX="80.0" layoutY="497.0" mnemonicParsing="false" onAction="#newGameHandler" prefHeight="51.0" prefWidth="176.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="New Game" />
-            <Button fx:id="replay1" layoutX="120.0" layoutY="400.0" mnemonicParsing="false" onAction="#replayHandler" prefHeight="51.0" prefWidth="176.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="Replay" />
+            <Button fx:id="newGame1" layoutX="20.0" layoutY="496.0" mnemonicParsing="false" onAction="#newGameHandler" prefHeight="51.0" prefWidth="176.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="New Game" />
+            <Button fx:id="replay1" layoutX="209.0" layoutY="497.0" mnemonicParsing="false" onAction="#replayHandler" prefHeight="51.0" prefWidth="176.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="Replay" />
 
-         </children>
+               </children>
       </Pane>
+      <Button fx:id="closeReplay" layoutX="230.0" layoutY="475.0" mnemonicParsing="false" onAction="#closeHandler" prefHeight="51.0" prefWidth="134.0" styleClass="big-yellow" stylesheets="@twoplayer.css" text="close" />
    </children>
 </Pane>

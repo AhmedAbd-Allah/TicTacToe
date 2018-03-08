@@ -22,12 +22,12 @@
           <TableColumn fx:id="score" prefWidth="193.0" text="High Score         " />
         </columns>
       </TableView>
-      <Label layoutX="175.0" layoutY="521.0" prefHeight="30.0" prefWidth="273.0" stylesheets="@twoplayer.css" text="Player Name :">
+      <Label fx:id="p_name" layoutX="175.0" layoutY="521.0" prefHeight="30.0" prefWidth="273.0" stylesheets="@twoplayer.css" text="Player Name :">
          <font>
             <Font size="22.0" />
          </font>
       </Label>
-      <Label layoutX="407.0" layoutY="521.0" prefHeight="30.0" prefWidth="179.0" stylesheets="@twoplayer.css" text="Score: ">
+      <Label fx:id="p_score" layoutX="407.0" layoutY="521.0" prefHeight="30.0" prefWidth="179.0" stylesheets="@twoplayer.css" text="Score: ">
          <font>
             <Font size="19.0" />
          </font>
