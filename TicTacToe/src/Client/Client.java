@@ -179,7 +179,7 @@ public class Client implements Runnable {
             String pass = req.getData("password");
             String score = req.getData("score");
             int sco = Integer.parseInt(req.getData("score"));
-            player = new Player(name,sco,pass);
+            player = new Player(name, sco, pass);
             Platform.runLater(() -> {
                 try {
                     LoginController.root = (Pane) FXMLLoader.load(getClass().getResource("/views/OnlinePlayer.fxml"));
@@ -258,8 +258,11 @@ public class Client implements Runnable {
             PlayersListController.players.clear();
             req.getMap().entrySet().forEach(set -> {
                 if (!set.getKey().equals(this.player.getUsername())) {
-                    int score = Integer.getInteger(set.getValue()) == null?0:Integer.getInteger(set.getValue());
-                    Player p = new Player(set.getKey(), score, "x");
+                    String u = set.getKey();
+                    String s = set.getValue();
+                    String y = s;
+                    int score = Integer.parseInt(y);
+                    Player p = new Player(u, score, "x");
                     PlayersListController.players.add(p);
                 }
             });
@@ -363,7 +366,7 @@ public class Client implements Runnable {
                         for (int j = 0; j < game.gridboard[i].length; j++) {
                             final int xpos = i;
                             final int ypos = j;
-                            System.out.println("i :"+i+" j:"+j);
+                            System.out.println("i :" + i + " j:" + j);
                             //wait
                             final KeyFrame kfi = new KeyFrame(Duration.seconds(i + 1), e -> drawMove(xpos, ypos));
                             final Timeline timeline = new Timeline(kfi);
@@ -452,10 +455,16 @@ public class Client implements Runnable {
                 win.setVisible(true);
                 lose.setVisible(false);
                 winName.setText("You Are The Winner :)");
+                String winnerName = player1.getUsername();
+                move.setData("winner", winnerName);
+
             } else if (result.equals("x")) {
                 win.setVisible(true);
                 lose.setVisible(false);
                 winName.setText("        " + player2.getUsername() + " Is The Winner :)");
+                String winnerName = player2.getUsername();
+                move.setData("winner", winnerName);
+
             } else if (result.equals("gameOn")) {
 
             } else {
@@ -497,7 +506,6 @@ public class Client implements Runnable {
         Integer xpos = move.getPosition("xpos");
         Integer ypos = move.getPosition("ypos");
         System.out.print("final result: " + move.getData("result"));
-
 
 //     //draw on GUI the move
         Node s = getNodeByRowColumnIndex(xpos, ypos, grid);

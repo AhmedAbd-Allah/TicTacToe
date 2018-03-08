@@ -251,6 +251,15 @@ public class ClientThread implements Runnable {
             //insert all moves
           //  Database.prepareMoves([][]);
         }
+        
+        if (turn.getData("winner") != null)
+        {
+            Database mydata = new Database();
+            String winner = turn.getData("winner");
+            System.out.println(winner);
+            mydata.playerScore(winner); 
+        }
+        
         System.out.println("in game turn");
         sendRequest(reply, player2th);
         if (result.equals("o") || result.equals("x") || result.equals("draw")) {
@@ -263,18 +272,14 @@ public class ClientThread implements Runnable {
     }
 
     private void initGame(Request req) {
-          System.out.println("hello from init");
         Request playersList = new Request("playersList");
         PlayersMap.entrySet().forEach((playerSet) -> {
             String name1 = playerSet.getKey();
             String name2 = this.player.getUsername();
             if (!name1.equals(name2)) {
-                System.out.println(name1 + " not equals " + name2);
                 Player p = playerSet.getValue();
                 String name = playerSet.getKey();
                 int scoreInt = p.getScore();
-                System.out.println("Hell=============================");
-                System.out.println("Hell============================="+scoreInt);
                 String score = Integer.toString(scoreInt);
                 playersList.setData(name, score);
             } else {
