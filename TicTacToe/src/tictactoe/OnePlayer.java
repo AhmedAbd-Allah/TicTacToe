@@ -295,19 +295,21 @@ public class OnePlayer {
        
        if(getWinner(board) ==1){;
            lose.setVisible(true);
+           rep1.setVisible(false);
            loseName.setText("Sorry You Lost, Try Again :(");
            
        }else if(getWinner(board) == 0){
-
+           
             win.setVisible(true);
+            rep.setVisible(false);
            winName.setText("You Are The Winner :)");
        }
        else if (gameEnded(board)){
             System.out.println("Tie");
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information Dialog");
-            alert.setHeaderText(null);
-            alert.setContentText("Game Finished Draw");
+            alert.setHeaderText("Game Finished ");
+            alert.setContentText("Draw");
             alert.showAndWait(); 
             System.exit(1);
        }

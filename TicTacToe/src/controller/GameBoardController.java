@@ -36,9 +36,11 @@ import tictactoe.TwoPlayer;
 import static controller.OnePlayerController.one_player_mode;
 ////import static tictactoe.OnePlayerController.one_player;
 import static controller.OnePlayerController.player;
+import static controller.OnlinePlayerController.homeStage;
 import static controller.TwoPlayerController.player1Name;
 import static controller.TwoPlayerController.player2Name;
 import static controller.TwoPlayerController.two_player_mode;
+import static controller.PlayersListController.opened;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -64,8 +66,10 @@ public class GameBoardController implements Initializable {
     public static GridPane grid;
     @FXML
     private Label player2;
+    public static Label pl2;
     @FXML
     private Label player1;
+    public static Label pl1;
     @FXML
     private Pane winnerpane;
     public static Pane win;
@@ -86,6 +90,15 @@ public class GameBoardController implements Initializable {
     public static Label loseName;
     @FXML
     private Button newGame1;
+    @FXML
+    private Button replay;
+    public static Button rep;
+    @FXML
+    private Button replay1;
+    public static Button rep1;
+    @FXML
+    private Button closeReplay;
+    public static Button closereplay;
     //GridPane s;
     /**
      * Initializes the controller class.
@@ -97,10 +110,15 @@ public class GameBoardController implements Initializable {
         win=winnerpane;
         lose=loserpane;
         winName=winnerName;
+        rep=replay;
+        rep1=replay1;
         System.out.println(winName);
         loseName=loserName;
-        
         grid=gridborder;
+        pl1=player1;
+        pl2=player2;
+        closeReplay.setVisible(false);
+        closereplay=closeReplay;
         imagex = new Image(getClass().getResource("/img/x.jpg").toExternalForm());
         imageo = new Image(getClass().getResource("/img/o.png").toExternalForm());
         for(int i=0 ;i<gridboard.length;i++)
@@ -149,27 +167,34 @@ public class GameBoardController implements Initializable {
             System.out.println("two players mode");
            
         }
+        else{
          if(gridboard[rowIndex][colIndex] == -1){
                 
                 //mark cell as busy cell regardless has which image
-//                gridboard[rowIndex][colIndex] = 0;
                 Client client  = Client.getInstance();
                 
                 client.sendMove(rowIndex,colIndex);
-                
-               //Client.Client.sendRequest(message, th);
-
            }
-                //getNodeByRowColumnIndex(1, 1, gridborder);
-
+        }
     }
 
     @FXML
     private void closeHandler(ActionEvent event) throws IOException {
-        stage = (Stage) close.getScene().getWindow();
-        root = (Pane) FXMLLoader.load(getClass().getResource("/views/ChooseMode.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
+        if(one_player_mode||two_player_mode)
+        {
+            stage = (Stage) close.getScene().getWindow();
+
+            root = (Pane) FXMLLoader.load(getClass().getResource("/views/ChooseMode.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+        }
+        else
+        {
+            homeStage = (Stage) close.getScene().getWindow();
+            opened=false;
+            Client client = Client.getInstance();
+            client.initiateHome();
+        }
     }
     
     @FXML
@@ -181,23 +206,33 @@ public class GameBoardController implements Initializable {
 
     @FXML
     private void newGameHandler(ActionEvent event) throws IOException {
-        stage = (Stage) newGame.getScene().getWindow();
-        root = (Pane) FXMLLoader.load(getClass().getResource("/views/GameBoard.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-    }
-
-    private void backHandler(ActionEvent event) throws IOException {
-        stage = (Stage) newGame.getScene().getWindow();
         if(one_player_mode||two_player_mode)
-        {         
-            root = (Pane) FXMLLoader.load(getClass().getResource("/views/ChooseMode.fxml"));
+        {
+            stage = (Stage) newGame.getScene().getWindow();
+            root = (Pane) FXMLLoader.load(getClass().getResource("/views/GameBoard.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
         }
         else
         {
-            root = (Pane) FXMLLoader.load(getClass().getResource("/views/OnlinePlayer.fxml"));
+            homeStage = (Stage) newGame.getScene().getWindow();
+            opened=false;
+            Client client = Client.getInstance();
+            client.initiateHome();
         }
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
     }
+
+//    private void backHandler(ActionEvent event) throws IOException {
+//        stage = (Stage) newGame.getScene().getWindow();
+//        if(one_player_mode||two_player_mode)
+//        {         
+//            root = (Pane) FXMLLoader.load(getClass().getResource("/views/ChooseMode.fxml"));
+//        }
+//        else
+//        {
+//            root = (Pane) FXMLLoader.load(getClass().getResource("/views/OnlinePlayer.fxml"));
+//        }
+//            Scene scene = new Scene(root);
+//            stage.setScene(scene);
+//    }
 }

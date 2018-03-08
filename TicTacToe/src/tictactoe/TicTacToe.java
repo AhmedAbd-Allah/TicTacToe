@@ -7,6 +7,7 @@ package tictactoe;
 
 import Client.Client;
 import client.Request;
+import static controller.OnlinePlayerController.online_mode;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -33,15 +34,19 @@ public class TicTacToe extends Application {
         Scene scene = new Scene(root, 600, 600);
         primaryStage.setTitle("Tic Tac Toe");
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
         primaryStage.show();
         try {
             primaryStage.setOnCloseRequest(t -> {
-
-                String type = "LogOut";
-                Request message = new Request(type);
-                message.setData("userName", Client.client.player.getUsername());
-                Client.client.sendRequest(message, Client.client);
-                System.exit(0);
+                if (online_mode) {
+                    String type = "LogOut";
+                    Request message = new Request(type);
+                    message.setData("userName", Client.client.player.getUsername());
+                    Client.client.sendRequest(message, Client.client);
+                    System.exit(0);
+                } else {
+                    System.exit(1);
+                }
             }
             );
         } catch (Exception e) {
@@ -54,7 +59,7 @@ public class TicTacToe extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
+      
         launch(args);
     }
 

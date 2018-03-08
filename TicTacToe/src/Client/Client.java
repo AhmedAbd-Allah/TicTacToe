@@ -13,10 +13,13 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import client.Request;
+import static controller.GameBoardController.closereplay;
 import static controller.GameBoardController.grid;
 import static controller.GameBoardController.gridboard;
 import static controller.GameBoardController.imageo;
 import static controller.GameBoardController.imagex;
+import static controller.GameBoardController.pl1;
+import static controller.GameBoardController.pl2;
 import static controller.GameBoardController.lose;
 import static controller.GameBoardController.loseName;
 import static controller.GameBoardController.win;
@@ -334,6 +337,8 @@ public class Client implements Runnable {
 
                 System.out.println("Remote player" + player1.getUsername());
                 OnlinePlayerController.homeRoot = (Pane) FXMLLoader.load(getClass().getResource("/views/GameBoard.fxml"));
+                pl1.setText(player1.getUsername());
+                pl2.setText(player2.getUsername());
                 Scene homescene = new Scene(OnlinePlayerController.homeRoot);
                 if (OnlinePlayerController.homeStage != null) {
                     OnlinePlayerController.homeStage.setScene(homescene);
@@ -354,6 +359,7 @@ public class Client implements Runnable {
 
                 OnlinePlayerController.homeRoot = (Pane) FXMLLoader.load(getClass().getResource("/views/GameBoard.fxml"));
                 Scene homescene = new Scene(OnlinePlayerController.homeRoot);
+                closereplay.setVisible(true);
                 if (OnlinePlayerController.homeStage != null) {
                     OnlinePlayerController.homeStage.setScene(homescene);
                     //start draw
@@ -455,7 +461,7 @@ public class Client implements Runnable {
             } else if (result.equals("x")) {
                 win.setVisible(true);
                 lose.setVisible(false);
-                winName.setText("        " + player2.getUsername() + " Is The Winner :)");
+                winName.setText("You Are The Winner :)");
             } else if (result.equals("gameOn")) {
 
             } else {
@@ -465,6 +471,8 @@ public class Client implements Runnable {
                     alert.setHeaderText("Game Finished ");
                     alert.setContentText("Draw");
                     alert.showAndWait();
+                    opened=false;
+                    client.initiateHome();
                 });
             }
             System.out.println("play status " + result);
@@ -528,7 +536,8 @@ public class Client implements Runnable {
                 alert.setHeaderText("Game Finished ");
                 alert.setContentText("Draw");
                 alert.showAndWait();
-
+                opened=false;
+                client.initiateHome();
                 reterveBoard();
             });
         }

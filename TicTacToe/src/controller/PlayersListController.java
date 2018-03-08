@@ -22,6 +22,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -46,6 +47,10 @@ public class PlayersListController implements Initializable {
     public static ObservableList<Player> players = FXCollections.observableArrayList();
     public static TableView tableView;
     public static boolean opened = false;
+    @FXML
+    private Label p_name;
+    @FXML
+    private Label p_score;
     /**
      * Initializes the controller class.
      */
@@ -53,6 +58,8 @@ public class PlayersListController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         opened = true;
         tableView = table;
+        p_name.setText("    "+Client.client.player.getUsername());
+        p_score.setText("Score : "+Client.client.player.getScore());
         name.setCellValueFactory(
                 new PropertyValueFactory<>("username"));
         score.setCellValueFactory(
