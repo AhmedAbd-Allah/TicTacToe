@@ -11,6 +11,11 @@ import static controller.GameBoardController.*;
 import static controller.OnePlayerController.player;
 import static controller.TwoPlayerController.player1Name;
 import static controller.TwoPlayerController.player2Name;
+import java.io.IOException;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 //import static tictactoe.controller.GameBoardController;
 /**
  *
@@ -19,7 +24,7 @@ import static controller.TwoPlayerController.player2Name;
 public class TwoPlayer {
     private int move =0;
     
-        public void play(int row,int col)
+        public void play(int row,int col) throws IOException
     {
         move++;
         System.out.println("current move = "+move);
@@ -47,7 +52,7 @@ public class TwoPlayer {
         }
         checkWinner();
     }
-    public void checkWinner()
+    public void checkWinner() throws IOException
     {
         if((gridboard[0][0]==0&&gridboard[0][1]==0&&gridboard[0][2]==0)
           ||(gridboard[1][0]==0&&gridboard[1][1]==0&&gridboard[1][2]==0 )   
@@ -86,7 +91,10 @@ public class TwoPlayer {
             alert.setHeaderText("Game Finished ");
             alert.setContentText("Draw");
             alert.showAndWait(); 
-           // System.exit(1);
+            stage = (Stage) pl1.getScene().getWindow();
+            root = (Pane) FXMLLoader.load(getClass().getResource("/views/TwoPlayer.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
         }
         
     }

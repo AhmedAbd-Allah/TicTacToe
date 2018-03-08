@@ -18,6 +18,11 @@ import static controller.GameBoardController.imagex;
 import static controller.GameBoardController.source;
 import static controller.GameBoardController.*;
 import static controller.OnePlayerController.player;
+import java.io.IOException;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 /**
  *
@@ -228,7 +233,7 @@ public class OnePlayer {
         return (IntStream.of(board).allMatch(x -> x != -1));  
     }
     
-    public void play(int row , int col){
+    public void play(int row , int col) throws IOException{
         int cellIndex=-1;
         if(row==0 && col==0)
         {
@@ -311,7 +316,10 @@ public class OnePlayer {
             alert.setHeaderText("Game Finished ");
             alert.setContentText("Draw");
             alert.showAndWait(); 
-            //System.exit(1);
+            stage = (Stage) pl1.getScene().getWindow();
+            root = (Pane) FXMLLoader.load(getClass().getResource("/views/OnePlayer.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
        }
     }
     public void seti(int player,int cell)

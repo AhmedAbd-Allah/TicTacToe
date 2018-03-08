@@ -52,8 +52,8 @@ import javafx.stage.Stage;
  * @author aliaa
  */
 public class GameBoardController implements Initializable {
-    Pane root;
-    Stage stage;
+    public static Pane root;
+    public static Stage stage;
     public static Image imagex;
     public static Image imageo;
     public static Node source;
@@ -142,7 +142,7 @@ public class GameBoardController implements Initializable {
     }
     
     @FXML
-    private void BorderMouseEvent(MouseEvent event) {
+    private void BorderMouseEvent(MouseEvent event) throws IOException {
         grid=gridborder;
         source = (Node)event.getTarget();
         
