@@ -154,14 +154,14 @@ public class Database {
             con = connection.Connect_to();
             stmt = con.createStatement();
             queryString = new String("update game set moves = '" + gameMoves + "' where game_id = '" + gameID + "'");
-            rs = stmt.executeQuery(queryString);
+            int s = stmt.executeUpdate(queryString);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-    
-    public static String prepareMoves(int[][] board ){
+
+    public static String prepareMoves(int[][] board) {
         ArrayList<Integer> oneDArray = new ArrayList<>();
         int k = 0;
         for (int i = 0; i < board.length; i++) {
@@ -171,7 +171,7 @@ public class Database {
         }
         return StringUtils.join(oneDArray, ",");
     }
-    
+
     public void createGame(int user1ID, int user2ID) {
         try {
             con = connection.Connect_to();
@@ -184,21 +184,17 @@ public class Database {
         }
     }
 
-public void playerScore (String userName)
-{
-     try
-	{
-		con = connection.Connect_to();
-		stmt = con.createStatement() ;
-		queryString = new String("update user set high_score = high_score + 10 where user_name = '"+userName+"'");
-		rs = stmt.executeQuery(queryString);
-		
-	}
-	catch(SQLException ex)
-				{
-					ex.printStackTrace();
-				}
-}
+    public void playerScore(String userName) {
+        try {
+            con = connection.Connect_to();
+            stmt = con.createStatement();
+            queryString = new String("update user set `high_score` = high_score+10 where user_name = '" + userName + "'");
+            int s = stmt.executeUpdate(queryString);    
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 
 //public int getGameID (int user1ID, int user2ID)
 //{
